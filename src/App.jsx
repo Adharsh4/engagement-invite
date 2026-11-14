@@ -231,35 +231,7 @@ class RomanticAudioEngine {
   }
 
   playNote(freq, duration = 2.8, volume = 0.038, type = 'sine', attack = 0.16) {
-    // if (!this.ctx || !this.isPlaying) return;
-    // const now = this.ctx.currentTime;
-    // const osc = this.ctx.createOscillator();
-    // const osc2 = this.ctx.createOscillator();
-    // const gain = this.ctx.createGain();
-    // const filter = this.ctx.createBiquadFilter();
-
-    // osc.type = type;
-    // osc.frequency.setValueAtTime(freq, now);
-
-    // osc2.type = 'triangle';
-    // osc2.frequency.setValueAtTime(freq * 1.002, now);
-
-    // filter.type = 'lowpass';
-    // filter.frequency.setValueAtTime(1150, now);
-
-    // gain.gain.setValueAtTime(0.0001, now);
-    // gain.gain.linearRampToValueAtTime(volume, now + attack);
-    // gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-
-    // osc.connect(filter);
-    // osc2.connect(filter);
-    // filter.connect(gain);
-    // gain.connect(this.ctx.destination);
-
-    // osc.start(now);
-    // osc2.start(now);
-    // osc.stop(now + duration);
-    // osc2.stop(now + duration);
+    // Background loop muted per user preference; seal chime & bloom arpeggio remain active
   }
 
   start() {
@@ -547,8 +519,8 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
             <circle cx="0" cy="-4" r="2.8" fill="#E9D5FF" />
           </g>
         ))}
-        </g>
-      </svg>
+      </g>
+    </svg>
   );
 };
 
@@ -1635,7 +1607,7 @@ const EnvelopeIntroOverlay = ({ stage, onTriggerOpen, monogram }) => {
               PASTEL LAVENDER SILK RIBBON BOW & WAX SEAL AT THE ENVELOPE HEART
           ================================================================ */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-30"
+            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-30"
             style={{ top: '52%' }}
           >
             {/* Left & Right Pastel Purple Silk Ribbons that Untie & Slide Away in Stage 1 */}
@@ -1663,7 +1635,7 @@ const EnvelopeIntroOverlay = ({ stage, onTriggerOpen, monogram }) => {
               {/* Outer Beaded Relief Ring */}
               <div className="lux-wax-seal-inner">
                 {/* Top Botanical Flourish */}
-                <svg viewBox="0 0 60 20" className="w-11 h-4 text-[#7D5BA6] opacity-85">
+                <svg viewBox="0 0 60 20" className="w-11 h-4 text-[#7D5BA6] opacity-85 shrink-0">
                   <path
                     d="M 10 15 Q 30 3 50 15 M 22 10 L 18 5 M 30 8 L 30 3 M 38 10 L 42 5"
                     fill="none"
@@ -1673,11 +1645,11 @@ const EnvelopeIntroOverlay = ({ stage, onTriggerOpen, monogram }) => {
                   />
                 </svg>
 
-                {/* Embossed Calligraphic Monogram */}
+                {/* Embossed Calligraphic Monogram (Centered cleanly without offset) */}
                 <span className="lux-wax-monogram font-script">{monogram}</span>
 
                 {/* Bottom Botanical Flourish */}
-                <svg viewBox="0 0 60 20" className="w-11 h-4 text-[#7D5BA6] opacity-85 rotate-180">
+                <svg viewBox="0 0 60 20" className="w-11 h-4 text-[#7D5BA6] opacity-85 rotate-180 shrink-0">
                   <path
                     d="M 10 15 Q 30 3 50 15 M 22 10 L 18 5 M 30 8 L 30 3 M 38 10 L 42 5"
                     fill="none"
@@ -1691,19 +1663,6 @@ const EnvelopeIntroOverlay = ({ stage, onTriggerOpen, monogram }) => {
               {/* Breathing Halo Ring in Idle State */}
               {stage === 0 && <span className="lux-seal-halo" />}
             </button>
-
-            {/* Luxury Prompt Pill Below Seal */}
-            <div
-              onClick={onTriggerOpen}
-              className="lux-seal-prompt"
-              style={{
-                opacity: stage === 0 ? 1 : 0,
-                transform: stage === 0 ? 'translateY(0)' : 'translateY(12px)',
-              }}
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#E9D5FF]" />
-              <span>Tap Seal to Unfold Invitation</span>
-            </div>
           </div>
         </div>
       </div>
@@ -1840,17 +1799,42 @@ export default function App() {
     showToast(`${label} copied to clipboard`);
   };
 
+  // Lock the front-page height while the envelope is closed/opening so the 4 flaps
+  // and wax seal never stretch across the 3000px scroll container on Vercel builds
+  const isEnvelopeLocked = introStage < 4;
+
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-center relative transition-colors duration-[4500ms] selection:bg-[#6B3FA0] selection:text-[#FAF5FF] ${
+      className={`min-h-[100dvh] w-full flex flex-col items-center justify-center relative overflow-x-hidden transition-colors duration-[4500ms] selection:bg-[#6B3FA0] selection:text-[#FAF5FF] ${
         isPastelPurpleTheme ? 'bg-[#1D102B] text-[#3B1E54]' : 'bg-[#1A070E] text-[#4A1222]'
       }`}
     >
+      {/* Preload Google Fonts reliably in production builds */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap"
+      />
+
       {/* ====================================================================
-          SELF-CONTAINED LUXURY CSS & SLOW CEREMONIAL KEYFRAME ANIMATIONS
+          SELF-CONTAINED LUXURY CSS & PRODUCTION RESET FOR VERCEL
       ==================================================================== */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap');
+        /* Crucial Reset: Overrides Vite's default App.css / index.css (#root padding/max-width & body flex) on Vercel */
+        html, body, #root {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+          max-width: none !important;
+          min-height: 100dvh;
+          overflow-x: hidden;
+          display: block !important;
+          text-align: initial;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        *, *::before, *::after {
+          box-sizing: border-box;
+        }
 
         .font-serif-editorial {
           font-family: 'Cormorant Garamond', Georgia, serif;
@@ -1915,10 +1899,14 @@ export default function App() {
           }
         }
 
-        /* Envelope Overlay Container */
+        /* Envelope Overlay Container — Always locked to exact 1st screen height */
         .lux-envelope-overlay {
-          position: fixed;
-          inset: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 100dvh;
+          max-height: 100%;
           z-index: 45;
           overflow: hidden;
           perspective: 1800px;
@@ -1926,7 +1914,7 @@ export default function App() {
 
         @media (min-width: 640px) {
           .phone-frame-active .lux-envelope-overlay {
-            position: absolute;
+            height: 100%;
             border-radius: 40px;
           }
         }
@@ -2086,8 +2074,8 @@ export default function App() {
         /* 3D Embossed Wax Seal Button with Slow Ceremonial Press & Lavender Glow (1200ms) */
         .lux-wax-seal-btn {
           position: relative;
-          width: 128px;
-          height: 158px;
+          width: 114px;
+          height: 144px;
           border-radius: 9999px;
           display: flex;
           align-items: center;
@@ -2127,6 +2115,7 @@ export default function App() {
           flex-direction: column;
           align-items: center;
           justify-content: center;
+          padding: 6px 4px;
           background: radial-gradient(ellipse at 38% 35%, #FCF9FF 0%, #EDE2F8 74%, #D4C0E8 100%);
           box-shadow:
             inset 0 3px 7px rgba(112, 80, 148, 0.38),
@@ -2134,14 +2123,16 @@ export default function App() {
         }
 
         .lux-wax-monogram {
-          font-size: 28px;
-          line-height: 1;
+          display: block;
+          width: 100%;
+          text-align: center;
+          font-size: 27px;
+          line-height: 1.1;
           color: #634288;
           text-shadow: 0 1px 1px rgba(255, 255, 255, 0.95), 0 -1px 1px rgba(78, 48, 112, 0.25);
           user-select: none;
-          margin: 3px 0;
-          position: relative;
-          left: -5px;
+          margin: 2px 0;
+          padding-right: 4px; /* Balances Pinyon Script italic right-slant */
         }
 
         /* Pulsing Halo & Double Slow Royal Pastel-Purple Shimmer Bursts */
@@ -2221,7 +2212,6 @@ export default function App() {
           border: 1px solid rgba(233, 213, 255, 0.35);
           cursor: pointer;
           transition: opacity 800ms ease, transform 800ms ease;
-          display: none;
         }
 
         /* Ultra-Slow Hero Staggered Blur-to-Crisp Cascade (2400ms each) */
@@ -2375,51 +2365,40 @@ export default function App() {
       `}</style>
 
       {/* ====================================================================
-          TOP FLOATING CONTROL BAR (Replay Envelope Intro, Phone/Full View, Vercel Info)
+          TOP FLOATING CONTROL BAR (Replay Envelope Intro, Phone/Full View)
       ==================================================================== */}
-      {introStage <= 0 && <div className="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2B0916]/90 backdrop-blur-md border border-[#F4EEF1]/20 text-[#F4EEF1] shadow-2xl text-xs font-sans-clean">
-        {introStage <= 0 && <button
-          onClick={handleReplayEnvelope}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-white/15 transition cursor-pointer"
-          title="Replay 3D Wax Seal & Lace Envelope Opening"
-        >
-          {introStage > 0 && <RotateCcw className="w-3.5 h-3.5 text-[#F2D5E0]" />}
-          <span>{introStage > 0 ? 'Replay Envelope' : 'Tap Seal Below'}</span>
-        </button>}
+      {introStage <= 0 && (
+        <div className="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2B0916]/90 backdrop-blur-md border border-[#F4EEF1]/20 text-[#F4EEF1] shadow-2xl text-xs font-sans-clean whitespace-nowrap">
+          <button
+            onClick={handleReplayEnvelope}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-white/15 transition cursor-pointer"
+            title="Tap Wax Seal to Open"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#F2D5E0]" />
+            <span>Tap Seal Below</span>
+          </button>
 
-        <span className="h-3 w-[1px] bg-white/20 hidden sm:inline-block" />
+          <span className="h-3 w-[1px] bg-white/20 hidden sm:inline-block" />
 
-        <button
-          onClick={() => setMobileShowcaseMode(!mobileShowcaseMode)}
-          className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-white/15 transition cursor-pointer"
-          title="Toggle Phone Showcase vs Full Screen"
-        >
-          {mobileShowcaseMode ? (
-            <>
-              <Maximize2 className="w-3.5 h-3.5 text-[#F2D5E0]" />
-              <span>Full Screen</span>
-            </>
-          ) : (
-            <>
-              <Smartphone className="w-3.5 h-3.5 text-[#F2D5E0]" />
-              <span>Phone Frame</span>
-            </>
-          )}
-        </button>
-
-        <span className="h-3 w-[1px] bg-white/20" />
-
-        <button
-          onClick={() => setActiveModal('vercel')}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F4EEF1]/15 hover:bg-[#F4EEF1]/25 transition cursor-pointer text-[#F8F4F6]"
-          style={
-            {display: "none"}
-          }
-        >
-          <Code className="w-3.5 h-3.5 text-[#F2D5E0]" />
-          <span>Vercel Guide</span>
-        </button>
-      </div>}
+          <button
+            onClick={() => setMobileShowcaseMode(!mobileShowcaseMode)}
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-white/15 transition cursor-pointer"
+            title="Toggle Phone Showcase vs Full Screen"
+          >
+            {mobileShowcaseMode ? (
+              <>
+                <Maximize2 className="w-3.5 h-3.5 text-[#F2D5E0]" />
+                <span>Full Screen</span>
+              </>
+            ) : (
+              <>
+                <Smartphone className="w-3.5 h-3.5 text-[#F2D5E0]" />
+                <span>Phone Frame</span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
 
       {/* ====================================================================
           TOAST NOTIFICATION BANNER
@@ -2433,16 +2412,21 @@ export default function App() {
 
       {/* ====================================================================
           MAIN INVITATION VIEWPORT (Phone Showcase on Desktop / 100% on Mobile)
-          Smoothly transitions into Pastel Purple (.pastel-purple-active) when opened!
+          Locks height to 100dvh / 844px while the envelope is closed so the front
+          page alignment is identical on localhost, Vercel, and mobile browsers!
       ==================================================================== */}
       <div
         id="invitation-scroll-container"
-        className={`relative w-full bg-invitation-surface overflow-x-hidden ${
+        className={`relative w-full mx-auto bg-invitation-surface overflow-x-hidden ${
           isPastelPurpleTheme ? 'pastel-purple-active' : ''
         } ${
           mobileShowcaseMode
             ? 'phone-frame-active sm:max-w-[430px] sm:my-14 sm:rounded-[48px] sm:shadow-[0_30px_85px_rgba(0,0,0,0.85)] sm:border-[8px] sm:border-[#2B163D]'
-            : 'max-w-xl mx-auto'
+            : 'max-w-xl'
+        } ${
+          isEnvelopeLocked
+            ? 'h-[100dvh] sm:h-[844px] overflow-y-hidden'
+            : 'min-h-[100dvh]'
         }`}
       >
         {/* MULTI-STAGE 3D PEARL & LACE ENVELOPE OVERLAY */}
@@ -2452,28 +2436,10 @@ export default function App() {
           monogram={WEDDING_CONFIG.couple.monogram}
         />
 
-        {/* PERSISTENT FLOATING SOUND TOGGLE BUTTON (Matches Video 00:08 - 00:27) */}
-        {/* <button
-          onClick={handleToggleAudio}
-          aria-label="Toggle Background Music"
-          className="fixed bottom-6 right-6 sm:right-[calc(50%-195px)] z-40 w-11 h-11 rounded-full bg-[#EDE2F6]/90 backdrop-blur-md border border-[#4A1222]/25 shadow-xl flex items-center justify-center text-[#4A1222] hover:scale-105 active:scale-95 transition cursor-pointer"
-        >
-          {isPlayingMusic ? (
-            <div className="flex items-center gap-0.5 h-4">
-              <Volume2 className="w-4 h-4 mr-0.5" />
-              <span className="sound-bar" style={{ animationDelay: '0ms' }} />
-              <span className="sound-bar" style={{ animationDelay: '200ms' }} />
-              <span className="sound-bar" style={{ animationDelay: '400ms' }} />
-            </div>
-          ) : (
-            <VolumeX className="w-5 h-5 opacity-75" />
-          )}
-        </button> */}
-
         {/* ==================================================================
             SECTION 1: HERO OVAL LACE CAMEO FRAME (Slowly Morphs to Pastel Purple)
         ================================================================== */}
-        <section className="relative min-h-[94vh] flex flex-col items-center justify-center px-6 py-16 overflow-hidden">
+        <section className="relative min-h-[100dvh] sm:min-h-[828px] flex flex-col items-center justify-center px-6 py-14 overflow-hidden">
           {/* Full-bleed Sculpted Pastel-Lavender Oval Chantilly Lace Cameo Border */}
           <svg
             viewBox="0 0 420 720"
@@ -2545,12 +2511,12 @@ export default function App() {
           </svg>
 
           {/* Staggered Hero Calligraphy & Chandelier Reveal (Slow & Royal Cascade) */}
-          <div className="relative z-10 text-center max-w-xs mx-auto">
+          <div className="relative z-10 w-full max-w-[270px] mx-auto flex flex-col items-center justify-center text-center px-2">
             <p
               style={{ transitionDelay: '150ms' }}
               className={`lux-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } font-serif-editorial text-sm sm:text-base text-[#4A1222]/85 leading-snug mb-3`}
+              } font-serif-editorial text-sm sm:text-base text-[#4A1222]/85 leading-snug mb-2`}
             >
               Together with
               <br />
@@ -2561,34 +2527,34 @@ export default function App() {
               style={{ transitionDelay: '650ms' }}
               className={`lux-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } font-script text-5xl sm:text-6xl text-[#4A1222] leading-[1.08] my-2`}
+              } font-script text-5xl sm:text-[54px] text-[#4A1222] leading-[1.12] my-1 w-full text-center`}
             >
-              {WEDDING_CONFIG.couple.bride}
-              <span className="block text-2xl my-0.5 font-serif-editorial italic font-light">
+              <span className="block pr-1">{WEDDING_CONFIG.couple.bride}</span>
+              <span className="block text-2xl my-1 font-serif-editorial italic font-light">
                 &amp;
               </span>
-              {WEDDING_CONFIG.couple.groom}
+              <span className="block pr-1">{WEDDING_CONFIG.couple.groom}</span>
             </h1>
 
             <p
               style={{ transitionDelay: '1150ms' }}
               className={`lux-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } font-serif-editorial tracking-[0.22em] text-sm sm:text-base text-[#4A1222] mt-4 mb-3`}
+              } font-serif-editorial tracking-[0.22em] text-sm sm:text-base text-[#4A1222] mt-3 mb-2`}
             >
               {WEDDING_CONFIG.date.displayDots}
             </p>
 
             <div
               style={{ transitionDelay: '1650ms' }}
-              className={`lux-hero-item ${heroRevealed ? 'is-revealed' : ''}`}
+              className={`lux-hero-item ${heroRevealed ? 'is-revealed' : ''} w-full flex justify-center`}
             >
               <ChandelierIllustration />
             </div>
 
             <div
               style={{ transitionDelay: '2150ms' }}
-              className={`lux-hero-item ${heroRevealed ? 'is-revealed' : ''} mt-3`}
+              className={`lux-hero-item ${heroRevealed ? 'is-revealed' : ''} mt-2`}
             >
               <p className="font-serif-editorial text-xl sm:text-2xl text-[#4A1222] tracking-wide">
                 {WEDDING_CONFIG.venue.name}
@@ -2602,7 +2568,7 @@ export default function App() {
               style={{ transitionDelay: '2650ms' }}
               className={`lux-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } mt-8 flex flex-col items-center opacity-60 animate-bounce`}
+              } mt-6 flex flex-col items-center opacity-60 animate-bounce`}
             >
               <ChevronDown className="w-4 h-4 text-[#4A1222]" />
             </div>
@@ -2688,7 +2654,6 @@ export default function App() {
           <RevealOnScroll delay={350}>
             <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
               <button
-                // onClick={() => setActiveModal('map')}
                 onClick={() => window.open(WEDDING_CONFIG.venue.mapsUrl, '_blank')}
                 className="px-8 py-3 rounded-full border border-[#4A1222]/60 text-[#4A1222] font-sans-clean text-[10px] tracking-[0.25em] uppercase hover:bg-[#4A1222] hover:text-[#F4EEF1] transition cursor-pointer"
               >
@@ -2796,16 +2761,6 @@ export default function App() {
                 <span>Replay Seal &amp; Envelope Opening</span>
               </button>
             </div>
-
-            {/* <p className="font-sans-clean text-[10px] text-[#4A1222]/60">
-              Made with love by{' '}
-              <button
-                onClick={() => setActiveModal('vercel')}
-                className="underline hover:text-[#4A1222] cursor-pointer"
-              >
-                {WEDDING_CONFIG.footer.creditName}
-              </button>
-            </p> */}
           </RevealOnScroll>
         </footer>
       </div>
@@ -2839,7 +2794,7 @@ export default function App() {
                   </p>
                   <p className="flex items-center gap-2">
                     <Navigation className="w-4 h-4 shrink-0" />
-                    <span>Madurai</span>
+                    <span>Panoramic Gianicolo Hilltop overlooking historic Rome</span>
                   </p>
                 </div>
                 <div className="flex gap-2 justify-center pt-2">
