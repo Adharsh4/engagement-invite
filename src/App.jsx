@@ -2380,7 +2380,7 @@ export default function App() {
 
           <span className="h-3 w-[1px] bg-white/20 hidden sm:inline-block" />
 
-          <button
+          {/* <button
             onClick={() => setMobileShowcaseMode(!mobileShowcaseMode)}
             className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-white/15 transition cursor-pointer"
             title="Toggle Phone Showcase vs Full Screen"
@@ -2396,7 +2396,7 @@ export default function App() {
                 <span>Phone Frame</span>
               </>
             )}
-          </button>
+          </button> */}
         </div>
       )}
 
