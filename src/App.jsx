@@ -866,7 +866,7 @@ export default function App() {
                     >
                       <div className="w-14 h-14 rounded-full border border-[#F8F5FC]/50 flex flex-col items-center justify-center">
                         <span className="font-serif text-base sm:text-lg text-[#FDFBFF] tracking-widest font-semibold drop-shadow">
-                          A&amp;M
+                          A&amp;H
                         </span>
                         <span className="text-[7px] uppercase tracking-[0.22em] text-[#EFE8F8]">
                           Open
