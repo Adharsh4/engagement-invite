@@ -342,7 +342,7 @@ const RevealOnScroll = ({ children, className = '', delay = 0, variant = 'fade-u
   );
 };
 
-/** Scalloped Chantilly Lace Divider framing the Velvet Midnight Plum Countdown Section */
+/** Scalloped Chantilly Lace Divider framing the Velvet Emerald Countdown Section */
 const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
   const isTop = position === 'top';
   const uid = isTop ? 'top' : 'bottom';
@@ -360,7 +360,7 @@ const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
         viewBox="0 0 800 130"
         preserveAspectRatio="none"
         className="w-full h-full"
-        style={{ filter: 'drop-shadow(0 5px 12px rgba(18, 6, 30, 0.45))' }}
+        style={{ filter: 'drop-shadow(0 5px 12px rgba(4, 18, 13, 0.48))' }}
       >
         <defs>
           <pattern id={`chantillyMesh-${uid}`} width="10" height="10" patternUnits="userSpaceOnUse">
@@ -371,13 +371,13 @@ const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
               strokeWidth="0.45"
               strokeOpacity="0.58"
             />
-            <circle cx="5" cy="5" r="0.7" fill="#DFC28B" fillOpacity="0.45" />
+            <circle cx="5" cy="5" r="0.7" fill="#E5CA8C" fillOpacity="0.5" />
           </pattern>
 
           <pattern id={`royalScallop-${uid}`} width="160" height="130" patternUnits="userSpaceOnUse">
             <path
               d="M 0 0 L 160 0 L 160 28 Q 140 54 120 38 Q 80 94 40 38 Q 20 54 0 28 Z"
-              fill="#F4EFF9"
+              fill="#F7F5EE"
             />
             <path
               d="M 0 0 L 160 0 L 160 74 Q 140 96 120 74 Q 80 124 40 74 Q 20 96 0 74 Z"
@@ -385,16 +385,16 @@ const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
             />
             <path
               d="M 0 0 L 160 0 L 160 60 Q 140 82 120 62 Q 80 112 40 62 Q 20 82 0 60 Z"
-              fill="#FAF7FD"
-              fillOpacity="0.72"
+              fill="#FCFBF7"
+              fillOpacity="0.74"
             />
             <path
               d="M 0 74 Q 20 96 40 74 Q 80 124 120 74 Q 140 96 160 74"
               fill="none"
-              stroke="#DFC28B"
+              stroke="#E5CA8C"
               strokeWidth="1.35"
               strokeDasharray="1.5 2.5"
-              strokeOpacity="0.85"
+              strokeOpacity="0.88"
             />
             <path
               d="M 0 60 Q 20 82 40 62 Q 80 112 120 62 Q 140 82 160 60"
@@ -403,10 +403,10 @@ const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
               strokeWidth="2"
               strokeOpacity="0.92"
             />
-            <g transform="translate(80, 58)" stroke="#FFFFFF" fill="#FBF9FE" fillOpacity="0.86">
+            <g transform="translate(80, 58)" stroke="#FFFFFF" fill="#FDFCF9" fillOpacity="0.88">
               <circle cx="0" cy="0" r="15" strokeWidth="1.4" />
-              <circle cx="0" cy="0" r="9" strokeWidth="1.1" fill="#EFE8F6" />
-              <circle cx="0" cy="0" r="3.6" fill="#C5A059" stroke="none" />
+              <circle cx="0" cy="0" r="9" strokeWidth="1.1" fill="#F0EDE2" />
+              <circle cx="0" cy="0" r="3.6" fill="#C8A252" stroke="none" />
               {[0, 60, 120, 180, 240, 300].map((deg) => (
                 <ellipse
                   key={deg}
@@ -425,7 +425,7 @@ const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
             {[20, 140].map((bx) => (
               <g key={bx} transform={`translate(${bx}, 44)`} stroke="#FFFFFF" fill="#FFFFFF" fillOpacity="0.78">
                 <circle cx="0" cy="0" r="7.5" strokeWidth="1.1" />
-                <circle cx="0" cy="0" r="2.6" fill="#C5A059" stroke="none" />
+                <circle cx="0" cy="0" r="2.6" fill="#C8A252" stroke="none" />
               </g>
             ))}
           </pattern>
@@ -437,18 +437,18 @@ const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
 };
 
 // ============================================================================
-// BLOOMING PURPLE FLOWERS & INTERACTIVE SCRATCH-TO-REVEAL COUNTDOWN CARD
+// BLOOMING CHAMPAGNE-GOLD & JADE BOTANICAL FLOWERS & SCRATCH COUNTDOWN CARD
 // ============================================================================
-const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
+const EmeraldGoldFlowerSVG = ({ variant = 0, size = 36 }) => {
   if (variant % 3 === 0) {
     return (
       <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-md">
         <defs>
-          <radialGradient id="purpleRoseGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#F8EEFF" />
-            <stop offset="38%" stopColor="#D6A4F2" />
-            <stop offset="74%" stopColor="#8F49BA" />
-            <stop offset="100%" stopColor="#4F1B75" />
+          <radialGradient id="champagneRoseGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#FFFDF7" />
+            <stop offset="38%" stopColor="#F5E2B8" />
+            <stop offset="74%" stopColor="#D4AF6A" />
+            <stop offset="100%" stopColor="#8C6828" />
           </radialGradient>
         </defs>
         <g transform="translate(32,32)">
@@ -460,10 +460,10 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
               rx="9"
               ry="14"
               transform={`rotate(${deg})`}
-              fill="url(#purpleRoseGrad)"
-              stroke="#F7EBFF"
+              fill="url(#champagneRoseGrad)"
+              stroke="#FFFBF0"
               strokeWidth="0.6"
-              opacity="0.92"
+              opacity="0.94"
             />
           ))}
           {[22, 82, 142, 202, 262, 322].map((deg) => (
@@ -474,13 +474,13 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
               rx="6.5"
               ry="10"
               transform={`rotate(${deg})`}
-              fill="#E5C2F9"
-              stroke="#5A2285"
+              fill="#F7ECCE"
+              stroke="#9A7832"
               strokeWidth="0.6"
             />
           ))}
-          <circle cx="0" cy="0" r="5.2" fill="#FDF2FF" />
-          <circle cx="0" cy="0" r="2.4" fill="#DFC28B" />
+          <circle cx="0" cy="0" r="5.2" fill="#FFFDF7" />
+          <circle cx="0" cy="0" r="2.4" fill="#C8A252" />
         </g>
       </svg>
     );
@@ -494,8 +494,8 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
               key={deg}
               d="M 0 0 C -10 -12, -12 -25, 0 -27 C 12 -25, 10 -12, 0 0 Z"
               transform={`rotate(${deg})`}
-              fill="#C084FC"
-              stroke="#F3E8FF"
+              fill="#6AB396"
+              stroke="#EBF9F3"
               strokeWidth="0.9"
             />
           ))}
@@ -504,11 +504,11 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
               key={deg}
               d="M 0 0 C -6 -8, -7 -17, 0 -19 C 7 -17, 6 -8, 0 0 Z"
               transform={`rotate(${deg})`}
-              fill="#E9D5FF"
-              opacity="0.9"
+              fill="#CBEAD9"
+              opacity="0.92"
             />
           ))}
-          <circle cx="0" cy="0" r="4.5" fill="#DFC28B" stroke="#9E7B3B" strokeWidth="0.8" />
+          <circle cx="0" cy="0" r="4.5" fill="#E5CA8C" stroke="#9A7832" strokeWidth="0.8" />
         </g>
       </svg>
     );
@@ -516,7 +516,7 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-md">
       <g transform="translate(32,32) rotate(-20)">
-        <path d="M 0 24 Q 2 0 0 -24" stroke="#B7C9B5" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+        <path d="M 0 24 Q 2 0 0 -24" stroke="#E5CA8C" strokeWidth="1.5" fill="none" strokeLinecap="round" />
         {[-18, -11, -4, 3, 10].map((y, idx) => (
           <g key={idx} transform={`translate(0, ${y})`}>
             <ellipse
@@ -525,8 +525,8 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
               rx="5.5"
               ry="3.2"
               transform="rotate(-32 -6 -2)"
-              fill="#9E57D4"
-              stroke="#F3E8FF"
+              fill="#3E8A6E"
+              stroke="#EBF9F3"
               strokeWidth="0.6"
             />
             <ellipse
@@ -535,11 +535,11 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36 }) => {
               rx="5.5"
               ry="3.2"
               transform="rotate(32 6 -2)"
-              fill="#C084FC"
-              stroke="#F3E8FF"
+              fill="#6AB396"
+              stroke="#EBF9F3"
               strokeWidth="0.6"
             />
-            <circle cx="0" cy="-4" r="2.6" fill="#EDE0F7" />
+            <circle cx="0" cy="-4" r="2.6" fill="#F7ECCE" />
           </g>
         ))}
       </g>
@@ -600,11 +600,11 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
       ctx.globalCompositeOperation = 'source-over';
 
       const grad = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-      grad.addColorStop(0, '#D8C094');
-      grad.addColorStop(0.28, '#F3EAF9');
-      grad.addColorStop(0.5, '#DFC28B');
-      grad.addColorStop(0.75, '#F6EFFA');
-      grad.addColorStop(1, '#C5A059');
+      grad.addColorStop(0, '#D8BE86');
+      grad.addColorStop(0.28, '#F6F3E8');
+      grad.addColorStop(0.5, '#E5CA8C');
+      grad.addColorStop(0.75, '#FAF8F0');
+      grad.addColorStop(1, '#C8A252');
 
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, rect.width, rect.height);
@@ -618,34 +618,34 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
         ctx.stroke();
       }
 
-      ctx.strokeStyle = 'rgba(46, 26, 59, 0.34)';
+      ctx.strokeStyle = 'rgba(15, 51, 41, 0.34)';
       ctx.lineWidth = 1.2;
       ctx.strokeRect(12, 12, Math.max(1, rect.width - 24), Math.max(1, rect.height - 24));
 
       ctx.setLineDash([4, 3]);
-      ctx.strokeStyle = 'rgba(158, 123, 59, 0.65)';
+      ctx.strokeStyle = 'rgba(154, 120, 50, 0.65)';
       ctx.strokeRect(18, 18, Math.max(1, rect.width - 36), Math.max(1, rect.height - 36));
       ctx.setLineDash([]);
 
       const cx = rect.width / 2;
       const cy = rect.height / 2;
 
-      ctx.fillStyle = 'rgba(46, 26, 59, 0.06)';
+      ctx.fillStyle = 'rgba(15, 51, 41, 0.06)';
       ctx.beginPath();
       ctx.arc(cx, cy - 16, 34, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#2E1A3B';
+      ctx.fillStyle = '#0F3329';
       ctx.font = 'italic 22px "Cormorant Garamond", Georgia, serif';
       ctx.textAlign = 'center';
       ctx.fillText('Scratch to Reveal', cx, cy - 8);
 
       ctx.font = '500 9.5px "Montserrat", sans-serif';
-      ctx.fillStyle = 'rgba(46, 26, 59, 0.85)';
+      ctx.fillStyle = 'rgba(15, 51, 41, 0.85)';
       ctx.fillText('OUR SPECIAL DATE & COUNTDOWN', cx, cy + 16);
 
       ctx.font = '300 9px "Montserrat", sans-serif';
-      ctx.fillStyle = 'rgba(90, 58, 115, 0.85)';
+      ctx.fillStyle = 'rgba(53, 94, 82, 0.88)';
       ctx.fillText('Rub gently with your finger or cursor', cx, cy + 37);
     } catch {
       // Ignore canvas initialization issues
@@ -777,7 +777,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
           {flowerParticles.map((p) => (
             <div
               key={p.id}
-              className="purple-flower-particle"
+              className="emerald-flower-particle"
               style={{
                 '--tx': p.tx,
                 '--ty': p.ty,
@@ -786,13 +786,13 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
                 animationDelay: `${p.delay}ms`,
               }}
             >
-              <PurpleFlowerSVG variant={p.variant} size={p.size} />
+              <EmeraldGoldFlowerSVG variant={p.variant} size={p.size} />
             </div>
           ))}
         </div>
       )}
 
-      <div className="relative rounded-3xl bg-[#1A0A28] border border-[#DFC28B]/35 px-5 py-9 shadow-2xl overflow-hidden">
+      <div className="relative rounded-3xl bg-[#081E17] border border-[#E5CA8C]/35 px-5 py-9 shadow-2xl overflow-hidden">
         {isRevealed &&
           cornerBlossoms.map((cb, idx) => (
             <div
@@ -800,7 +800,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
               className={`absolute ${cb.pos} pointer-events-none z-20 corner-flower-pop`}
               style={{ animationDelay: cb.delay }}
             >
-              <PurpleFlowerSVG variant={cb.variant} size={cb.size} />
+              <EmeraldGoldFlowerSVG variant={cb.variant} size={cb.size} />
             </div>
           ))}
 
@@ -811,12 +811,12 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
               : 'opacity-45 scale-95 translate-y-2'
           }`}
         >
-          <p className="font-sans-clean text-[9px] tracking-[0.28em] uppercase text-[#DFC28B] mb-1">
+          <p className="font-sans-clean text-[9px] tracking-[0.28em] uppercase text-[#E5CA8C] mb-1">
             Save Our Date
           </p>
 
           <h3
-            className={`font-serif-editorial text-2xl sm:text-3xl text-[#F5EEFB] tracking-wide mb-1 ${
+            className={`font-serif-editorial text-2xl sm:text-3xl text-[#F6F4EC] tracking-wide mb-1 ${
               isRevealed ? 'date-number-rise' : ''
             }`}
           >
@@ -824,7 +824,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
           </h3>
 
           <p
-            className={`font-sans-clean text-[10px] tracking-[0.18em] uppercase text-[#DFC28B]/90 mb-6 ${
+            className={`font-sans-clean text-[10px] tracking-[0.18em] uppercase text-[#E5CA8C]/90 mb-6 ${
               isRevealed ? 'date-number-rise' : ''
             }`}
             style={{ animationDelay: '140ms' }}
@@ -832,7 +832,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
             {dateConfig.displayTime}
           </p>
 
-          <div className="grid grid-cols-4 gap-2 max-w-[260px] mx-auto pt-3 border-t border-[#DFC28B]/25">
+          <div className="grid grid-cols-4 gap-2 max-w-[260px] mx-auto pt-3 border-t border-[#E5CA8C]/25">
             {[
               { value: timeLeft.days, label: 'DAYS', delay: '220ms' },
               { value: timeLeft.hours, label: 'HOURS', delay: '340ms' },
@@ -844,10 +844,10 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
                 className={`flex flex-col items-center ${isRevealed ? 'countdown-digit-pop' : ''}`}
                 style={{ animationDelay: item.delay }}
               >
-                <span className="font-serif-editorial text-3xl sm:text-4xl font-light tracking-wider text-[#F5EEFB] drop-shadow">
+                <span className="font-serif-editorial text-3xl sm:text-4xl font-light tracking-wider text-[#F6F4EC] drop-shadow">
                   {String(item.value).padStart(2, '0')}
                 </span>
-                <span className="font-sans-clean text-[8px] tracking-[0.22em] text-[#DFC28B]/85 mt-1">
+                <span className="font-sans-clean text-[8px] tracking-[0.22em] text-[#E5CA8C]/85 mt-1">
                   {item.label}
                 </span>
               </div>
@@ -876,9 +876,9 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
           <button
             type="button"
             onClick={triggerFullReveal}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5EEFB]/10 border border-[#DFC28B]/45 text-[10px] font-sans-clean tracking-[0.2em] uppercase text-[#F5EEFB] hover:bg-[#DFC28B]/20 transition cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F6F4EC]/10 border border-[#E5CA8C]/45 text-[10px] font-sans-clean tracking-[0.2em] uppercase text-[#F6F4EC] hover:bg-[#E5CA8C]/20 transition cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#DFC28B]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#E5CA8C]" />
             <span>
               {scratchPercent > 0
                 ? `Scratched ${scratchPercent}% · Tap to Bloom`
@@ -890,16 +890,16 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
             <button
               type="button"
               onClick={handleReplayBloom}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#C5A059]/20 border border-[#DFC28B]/55 text-[10px] font-sans-clean tracking-[0.18em] uppercase text-[#F5EEFB] hover:bg-[#C5A059]/35 transition cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#C8A252]/20 border border-[#E5CA8C]/55 text-[10px] font-sans-clean tracking-[0.18em] uppercase text-[#F6F4EC] hover:bg-[#C8A252]/35 transition cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#DFC28B]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#E5CA8C]" />
               <span>Bloom Flowers</span>
             </button>
 
             <button
               type="button"
               onClick={handleResetScratchCard}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[#F5EEFB]/30 text-[10px] font-sans-clean tracking-[0.16em] uppercase text-[#F5EEFB]/85 hover:bg-[#F5EEFB]/10 transition cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[#F6F4EC]/30 text-[10px] font-sans-clean tracking-[0.16em] uppercase text-[#F6F4EC]/85 hover:bg-[#F6F4EC]/10 transition cursor-pointer"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Reset Foil</span>
@@ -913,7 +913,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
               }&details=${encodeURIComponent(coupleConfig.invitationText)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#DFC28B]/45 text-[10px] font-sans-clean tracking-[0.2em] uppercase text-[#DFC28B] hover:bg-[#DFC28B]/15 transition"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#E5CA8C]/45 text-[10px] font-sans-clean tracking-[0.2em] uppercase text-[#E5CA8C] hover:bg-[#E5CA8C]/15 transition"
             >
               <Calendar className="w-3.5 h-3.5" />
               <span>Save the Date</span>
@@ -926,7 +926,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
 };
 
 // ============================================================================
-// FINE-LINE ETCHED ILLUSTRATIONS (Deep Royal Plum #2E1A3B & Antique Gold #C5A059)
+// FINE-LINE ETCHED ILLUSTRATIONS (Deep Royal Emerald #0F3329 & Gold #C8A252)
 // ============================================================================
 
 /** Architectural Stationery Frame for Section 1 Letterpress Hero */
@@ -936,7 +936,7 @@ const HeroStationeryFrameSVG = () => (
     preserveAspectRatio="none"
     className="absolute inset-4 sm:inset-5 w-[calc(100%-2rem)] sm:w-[calc(100%-2.5rem)] h-[calc(100%-2rem)] sm:h-[calc(100%-2.5rem)] pointer-events-none select-none"
   >
-    <g fill="none" stroke="#C5A059" strokeLinecap="round" strokeLinejoin="round">
+    <g fill="none" stroke="#C8A252" strokeLinecap="round" strokeLinejoin="round">
       <path
         d="M 22 4 L 358 4 A 18 18 0 0 0 376 22 L 376 758 A 18 18 0 0 0 358 776 L 22 776 A 18 18 0 0 0 4 758 L 4 22 A 18 18 0 0 0 22 4 Z"
         strokeWidth="1"
@@ -956,7 +956,7 @@ const HeroStationeryFrameSVG = () => (
         <polygon
           key={idx}
           points={`${cx},${cy - 3.5} ${cx + 3.5},${cy} ${cx},${cy + 3.5} ${cx - 3.5},${cy}`}
-          fill="#C5A059"
+          fill="#C8A252"
           fillOpacity="0.65"
           stroke="none"
         />
@@ -967,7 +967,7 @@ const HeroStationeryFrameSVG = () => (
 
 /** Minimal Top Gold Diamond Ornament for Section 1 */
 const HeroTopOrnamentSVG = () => (
-  <svg viewBox="0 0 120 24" className="w-24 h-5 mx-auto text-[#C5A059] select-none">
+  <svg viewBox="0 0 120 24" className="w-24 h-5 mx-auto text-[#C8A252] select-none">
     <g fill="none" stroke="currentColor" strokeWidth="0.85" strokeLinecap="round" strokeLinejoin="round">
       <line x1="8" y1="12" x2="46" y2="12" strokeOpacity="0.65" />
       <line x1="74" y1="12" x2="112" y2="12" strokeOpacity="0.65" />
@@ -981,17 +981,17 @@ const HeroTopOrnamentSVG = () => (
 
 /** Section 2: Kissing Swans Illustration */
 const SwansIllustration = () => (
-  <svg viewBox="0 0 220 120" className="w-44 h-auto mx-auto text-[#2E1A3B] lux-float-slow">
+  <svg viewBox="0 0 220 120" className="w-44 h-auto mx-auto text-[#0F3329] lux-float-slow">
     <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round" strokeLinejoin="round">
       <path
         d="M 102 18 L 105 10 L 110 16 L 115 10 L 118 18 Z"
-        stroke="#C5A059"
-        fill="#C5A059"
+        stroke="#C8A252"
+        fill="#C8A252"
         fillOpacity="0.2"
       />
-      <circle cx="105" cy="8" r="1" fill="#C5A059" stroke="none" />
-      <circle cx="110" cy="6" r="1.3" fill="#C5A059" stroke="none" />
-      <circle cx="115" cy="8" r="1" fill="#C5A059" stroke="none" />
+      <circle cx="105" cy="8" r="1" fill="#C8A252" stroke="none" />
+      <circle cx="110" cy="6" r="1.3" fill="#C8A252" stroke="none" />
+      <circle cx="115" cy="8" r="1" fill="#C8A252" stroke="none" />
 
       <path d="M 109 38 C 103 22, 82 22, 82 40 C 82 56, 98 68, 92 84" strokeWidth="1.35" />
       <path d="M 107 40 C 102 27, 87 28, 87 40 C 87 54, 103 66, 97 82" />
@@ -1017,8 +1017,8 @@ const SwansIllustration = () => (
       <path d="M 174 62 Q 156 68 136 74" />
       <path d="M 184 62 C 190 72, 174 88, 128 86" />
 
-      <circle cx="110" cy="84" r="5" fill="#F4EFF9" stroke="#C5A059" />
-      <circle cx="110" cy="84" r="2" fill="#C5A059" stroke="none" />
+      <circle cx="110" cy="84" r="5" fill="#F7F5EE" stroke="#C8A252" />
+      <circle cx="110" cy="84" r="2" fill="#C8A252" stroke="none" />
       <path d="M 96 86 Q 110 92 124 86" />
       <path d="M 55 94 Q 110 98 165 94" strokeWidth="0.8" strokeOpacity="0.7" />
       <path d="M 78 101 Q 110 104 142 101" strokeWidth="0.7" strokeOpacity="0.55" />
@@ -1029,7 +1029,7 @@ const SwansIllustration = () => (
 /** Section 4: Architectural Oval Etching */
 const VenueOvalIllustration = () => (
   <div className="relative w-72 sm:w-80 mx-auto my-6 lux-float-slow">
-    <svg viewBox="0 0 320 390" className="w-full h-auto text-[#2E1A3B] drop-shadow-sm">
+    <svg viewBox="0 0 320 390" className="w-full h-auto text-[#0F3329] drop-shadow-sm">
       <defs>
         <clipPath id="venueOvalClip">
           <ellipse cx="160" cy="195" rx="112" ry="145" />
@@ -1047,11 +1047,11 @@ const VenueOvalIllustration = () => (
                 cx={x}
                 cy={y}
                 r="10"
-                stroke="#C5A059"
+                stroke="#C8A252"
                 strokeWidth="0.75"
                 strokeOpacity="0.55"
-                fill="#FAF7FD"
-                fillOpacity="0.65"
+                fill="#FCFBF7"
+                fillOpacity="0.68"
               />
               <circle cx={x} cy={y} r="2.8" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.45" />
             </g>
@@ -1063,7 +1063,7 @@ const VenueOvalIllustration = () => (
           cy="195"
           rx="126"
           ry="160"
-          stroke="#C5A059"
+          stroke="#C8A252"
           strokeWidth="1.15"
           strokeDasharray="4 3"
           strokeOpacity="0.75"
@@ -1074,8 +1074,8 @@ const VenueOvalIllustration = () => (
           rx="118"
           ry="152"
           strokeWidth="1.4"
-          fill="#F9F6FC"
-          fillOpacity="0.72"
+          fill="#FAF8F2"
+          fillOpacity="0.75"
         />
         <ellipse cx="160" cy="195" rx="112" ry="145" strokeWidth="0.95" strokeOpacity="0.8" />
       </g>
@@ -1093,14 +1093,14 @@ const VenueOvalIllustration = () => (
           />
         ))}
 
-        <rect x="92" y="138" width="136" height="122" fill="#F7F3FB" strokeWidth="1.25" />
+        <rect x="92" y="138" width="136" height="122" fill="#F9F7F0" strokeWidth="1.25" />
         <line x1="88" y1="138" x2="232" y2="138" strokeWidth="1.7" />
-        <rect x="94" y="130" width="132" height="8" fill="#EFE8F6" />
+        <rect x="94" y="130" width="132" height="8" fill="#EFECE0" />
         {[96, 120, 144, 176, 200, 224].map((x, idx) => (
-          <path key={idx} d={`M ${x} 130 L ${x - 2} 123 L ${x + 2} 123 Z`} fill="#C5A059" stroke="none" />
+          <path key={idx} d={`M ${x} 130 L ${x - 2} 123 L ${x + 2} 123 Z`} fill="#C8A252" stroke="none" />
         ))}
-        <polygon points="145,130 160,116 175,130" fill="#EFE8F6" strokeWidth="1.2" />
-        <circle cx="160" cy="125" r="2.8" stroke="#C5A059" />
+        <polygon points="145,130 160,116 175,130" fill="#EFECE0" strokeWidth="1.2" />
+        <circle cx="160" cy="125" r="2.8" stroke="#C8A252" />
 
         <line x1="90" y1="172" x2="230" y2="172" strokeWidth="1.15" />
         <line x1="90" y1="210" x2="230" y2="210" strokeWidth="1.15" />
@@ -1132,9 +1132,9 @@ const VenueOvalIllustration = () => (
 
         <path d="M 135 260 C 120 295, 85 320, 65 345" strokeDasharray="3 2" strokeOpacity="0.75" />
         <path d="M 185 260 C 200 295, 235 320, 255 345" strokeDasharray="3 2" strokeOpacity="0.75" />
-        <ellipse cx="160" cy="296" rx="28" ry="9" fill="#EFE8F6" />
+        <ellipse cx="160" cy="296" rx="28" ry="9" fill="#EFECE0" />
         <ellipse cx="160" cy="294" rx="22" ry="6" />
-        <path d="M 160 294 L 160 278" stroke="#C5A059" />
+        <path d="M 160 294 L 160 278" stroke="#C8A252" />
       </g>
     </svg>
   </div>
@@ -1142,17 +1142,17 @@ const VenueOvalIllustration = () => (
 
 /** Section 5 Top: Hanging Crystal & Floral Garland */
 const HangingGarlandIllustration = () => (
-  <svg viewBox="0 0 400 110" className="w-full h-auto text-[#2E1A3B] mb-2">
+  <svg viewBox="0 0 400 110" className="w-full h-auto text-[#0F3329] mb-2">
     <g fill="none" stroke="currentColor" strokeWidth="0.95" strokeLinecap="round">
       <path d="M 0 18 Q 50 64 100 22" />
       <path d="M 100 22 Q 150 72 200 26" />
       <path d="M 200 26 Q 250 72 300 22" />
       <path d="M 300 22 Q 350 64 400 18" />
 
-      <path d="M 0 28 Q 50 78 100 32" stroke="#C5A059" strokeDasharray="2 3" />
-      <path d="M 100 32 Q 150 86 200 36" stroke="#C5A059" strokeDasharray="2 3" />
-      <path d="M 200 36 Q 250 86 300 32" stroke="#C5A059" strokeDasharray="2 3" />
-      <path d="M 300 32 Q 350 78 400 28" stroke="#C5A059" strokeDasharray="2 3" />
+      <path d="M 0 28 Q 50 78 100 32" stroke="#C8A252" strokeDasharray="2 3" />
+      <path d="M 100 32 Q 150 86 200 36" stroke="#C8A252" strokeDasharray="2 3" />
+      <path d="M 200 36 Q 250 86 300 32" stroke="#C8A252" strokeDasharray="2 3" />
+      <path d="M 300 32 Q 350 78 400 28" stroke="#C8A252" strokeDasharray="2 3" />
 
       {[50, 100, 150, 200, 250, 300, 350].map((x, idx) => {
         const isPeak = idx % 2 === 1;
@@ -1164,13 +1164,13 @@ const HangingGarlandIllustration = () => (
               <>
                 <path d={`M ${x} ${yStart} C ${x - 12} ${yStart - 10}, ${x - 14} ${yStart + 6}, ${x} ${yStart + 2}`} />
                 <path d={`M ${x} ${yStart} C ${x + 12} ${yStart - 10}, ${x + 14} ${yStart + 6}, ${x} ${yStart + 2}`} />
-                <circle cx={x} cy={yStart} r="3.4" fill="#F4EFF9" stroke="#C5A059" />
+                <circle cx={x} cy={yStart} r="3.4" fill="#F7F5EE" stroke="#C8A252" />
               </>
             )}
             <line x1={x} y1={yStart} x2={x} y2={yStart + dropLen} strokeDasharray="1 2" strokeOpacity="0.7" />
             <polygon
               points={`${x},${yStart + dropLen} ${x - 4},${yStart + dropLen + 8} ${x},${yStart + dropLen + 15} ${x + 4},${yStart + dropLen + 8}`}
-              fill="#C5A059"
+              fill="#C8A252"
               fillOpacity="0.22"
             />
           </g>
@@ -1180,44 +1180,44 @@ const HangingGarlandIllustration = () => (
   </svg>
 );
 
-/** Section 5 Timeline Icons (Using standard Tailwind w-14 h-12) */
+/** Section 5 Timeline Icons */
 const TimelineIcon = ({ type }) => {
   switch (type) {
     case 'welcome_flutes':
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#2E1A3B]">
+        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#0F3329]">
           <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
-            <path d="M 18 12 L 26 14 L 22 30 Q 20 33 18 29 Z" fill="#C5A059" fillOpacity="0.16" />
+            <path d="M 18 12 L 26 14 L 22 30 Q 20 33 18 29 Z" fill="#C8A252" fillOpacity="0.16" />
             <line x1="20" y1="31" x2="17" y2="46" />
             <line x1="12" y1="46" x2="22" y2="46" />
-            <path d="M 46 12 L 38 14 L 42 30 Q 44 33 46 29 Z" fill="#C5A059" fillOpacity="0.16" />
+            <path d="M 46 12 L 38 14 L 42 30 Q 44 33 46 29 Z" fill="#C8A252" fillOpacity="0.16" />
             <line x1="44" y1="31" x2="47" y2="46" />
             <line x1="42" y1="46" x2="52" y2="46" />
-            <line x1="32" y1="5" x2="32" y2="11" stroke="#C5A059" />
-            <line x1="28" y1="8" x2="36" y2="8" stroke="#C5A059" />
+            <line x1="32" y1="5" x2="32" y2="11" stroke="#C8A252" />
+            <line x1="28" y1="8" x2="36" y2="8" stroke="#C8A252" />
           </g>
         </svg>
       );
     case 'ceremony_rings':
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#2E1A3B]">
+        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#0F3329]">
           <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
             <circle cx="25" cy="32" r="11" />
             <circle cx="39" cy="32" r="11" />
-            <polygon points="39,16 35,21 43,21" fill="#C5A059" fillOpacity="0.32" stroke="#C5A059" />
-            <line x1="39" y1="10" x2="39" y2="13" stroke="#C5A059" />
-            <line x1="33" y1="12" x2="35" y2="14" stroke="#C5A059" />
-            <line x1="45" y1="12" x2="43" y2="14" stroke="#C5A059" />
+            <polygon points="39,16 35,21 43,21" fill="#C8A252" fillOpacity="0.32" stroke="#C8A252" />
+            <line x1="39" y1="10" x2="39" y2="13" stroke="#C8A252" />
+            <line x1="33" y1="12" x2="35" y2="14" stroke="#C8A252" />
+            <line x1="45" y1="12" x2="43" y2="14" stroke="#C8A252" />
           </g>
         </svg>
       );
     case 'dinner_cloche':
     default:
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#2E1A3B]">
+        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#0F3329]">
           <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
-            <path d="M 12 36 A 20 18 0 0 1 52 36 Z" fill="#C5A059" fillOpacity="0.14" />
-            <circle cx="32" cy="15" r="3" stroke="#C5A059" />
+            <path d="M 12 36 A 20 18 0 0 1 52 36 Z" fill="#C8A252" fillOpacity="0.14" />
+            <circle cx="32" cy="15" r="3" stroke="#C8A252" />
             <ellipse cx="32" cy="37" rx="24" ry="3.5" />
             <path d="M 20 44 Q 32 41 44 44" />
           </g>
@@ -1228,7 +1228,7 @@ const TimelineIcon = ({ type }) => {
 
 /** Section 5 Bottom: Banquet Table Setting */
 const BanquetTableIllustration = () => (
-  <svg viewBox="0 0 400 135" className="w-full h-auto text-[#2E1A3B] mt-6">
+  <svg viewBox="0 0 400 135" className="w-full h-auto text-[#0F3329] mt-6">
     <g fill="none" stroke="currentColor" strokeWidth="1.05" strokeLinecap="round" strokeLinejoin="round">
       <line x1="0" y1="78" x2="400" y2="78" strokeWidth="1.15" />
       <line x1="0" y1="112" x2="400" y2="112" strokeWidth="1.35" />
@@ -1239,27 +1239,27 @@ const BanquetTableIllustration = () => (
       <line x1="340" y1="112" x2="344" y2="132" strokeOpacity="0.45" />
 
       <g transform="translate(55, 22)">
-        <ellipse cx="0" cy="54" rx="26" ry="5" fill="#F4EFF9" />
+        <ellipse cx="0" cy="54" rx="26" ry="5" fill="#F7F5EE" />
         <path d="M -8 59 L -14 67 L 14 67 L 8 59" fill="currentColor" fillOpacity="0.08" />
-        <rect x="-22" y="36" width="44" height="16" rx="2" fill="#FAF7FD" />
-        <path d="M -22 42 Q -11 48 0 42 Q 11 48 22 42" stroke="#C5A059" />
-        <rect x="-15" y="22" width="30" height="14" rx="2" fill="#FAF7FD" />
-        <path d="M -15 27 Q -7 32 0 27 Q 7 32 15 27" stroke="#C5A059" />
-        <rect x="-9" y="10" width="18" height="12" rx="1.5" fill="#FAF7FD" />
-        <circle cx="-4" cy="8" r="3" fill="#C5A059" fillOpacity="0.28" />
-        <circle cx="0" cy="7" r="3.5" fill="#C5A059" fillOpacity="0.34" />
-        <circle cx="4" cy="8" r="3" fill="#C5A059" fillOpacity="0.28" />
+        <rect x="-22" y="36" width="44" height="16" rx="2" fill="#FCFBF7" />
+        <path d="M -22 42 Q -11 48 0 42 Q 11 48 22 42" stroke="#C8A252" />
+        <rect x="-15" y="22" width="30" height="14" rx="2" fill="#FCFBF7" />
+        <path d="M -15 27 Q -7 32 0 27 Q 7 32 15 27" stroke="#C8A252" />
+        <rect x="-9" y="10" width="18" height="12" rx="1.5" fill="#FCFBF7" />
+        <circle cx="-4" cy="8" r="3" fill="#C8A252" fillOpacity="0.28" />
+        <circle cx="0" cy="7" r="3.5" fill="#C8A252" fillOpacity="0.34" />
+        <circle cx="4" cy="8" r="3" fill="#C8A252" fillOpacity="0.28" />
       </g>
 
       {[128, 222, 315, 332].map((cx, i) => {
         const h = i % 2 === 0 ? 32 : 24;
         return (
           <g key={i} transform={`translate(${cx}, ${78 - h})`}>
-            <rect x="-2" y="0" width="4" height={h} fill="#FAF7FD" />
+            <rect x="-2" y="0" width="4" height={h} fill="#FCFBF7" />
             <path
               d="M 0 -8 Q -3 -3 0 0 Q 3 -3 0 -8 Z"
-              fill="#C5A059"
-              stroke="#9E7B3B"
+              fill="#C8A252"
+              stroke="#9A7832"
               strokeWidth="0.6"
               className="lux-twinkle"
             />
@@ -1288,8 +1288,8 @@ const BanquetTableIllustration = () => (
 
       {[55, 155, 255, 355].map((px, i) => (
         <g key={i} transform={`translate(${px}, 95)`}>
-          <ellipse cx="0" cy="0" rx="24" ry="8" fill="#FAF7FD" />
-          <ellipse cx="0" cy="0" rx="16" ry="5" stroke="#C5A059" />
+          <ellipse cx="0" cy="0" rx="24" ry="8" fill="#FCFBF7" />
+          <ellipse cx="0" cy="0" rx="16" ry="5" stroke="#C8A252" />
           <line x1="-29" y1="-5" x2="-29" y2="6" />
           <line x1="29" y1="-6" x2="29" y2="6" />
           <line x1="32" y1="-4" x2="32" y2="6" />
@@ -1301,43 +1301,43 @@ const BanquetTableIllustration = () => (
 
 /** Footer: Intertwined Diamond Rings */
 const WeddingRingsIllustration = () => (
-  <svg viewBox="0 0 160 95" className="w-32 h-auto mx-auto mb-4 text-[#2E1A3B] lux-float-slow">
+  <svg viewBox="0 0 160 95" className="w-32 h-auto mx-auto mb-4 text-[#0F3329] lux-float-slow">
     <g fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <ellipse cx="64" cy="56" rx="28" ry="20" transform="rotate(-12 64 56)" />
-      <ellipse cx="64" cy="56" rx="23" ry="15.5" transform="rotate(-12 64 56)" stroke="#C5A059" strokeWidth="0.9" />
+      <ellipse cx="64" cy="56" rx="23" ry="15.5" transform="rotate(-12 64 56)" stroke="#C8A252" strokeWidth="0.9" />
       <ellipse cx="96" cy="54" rx="28" ry="20" transform="rotate(14 96 54)" />
-      <ellipse cx="96" cy="54" rx="23" ry="15.5" transform="rotate(14 96 54)" stroke="#C5A059" strokeWidth="0.9" />
+      <ellipse cx="96" cy="54" rx="23" ry="15.5" transform="rotate(14 96 54)" stroke="#C8A252" strokeWidth="0.9" />
       <g transform="translate(104, 28) rotate(14)">
-        <polygon points="-9,0 -5,-7 5,-7 9,0 0,10" fill="#FAF7FD" stroke="#C5A059" strokeWidth="1.25" />
-        <polyline points="-9,0 9,0" stroke="#C5A059" strokeWidth="0.85" />
-        <polyline points="-5,-7 -2,0 0,10 2,0 5,-7" stroke="#C5A059" strokeWidth="0.85" />
-        <line x1="0" y1="-12" x2="0" y2="-16" stroke="#C5A059" />
-        <line x1="-10" y1="-9" x2="-13" y2="-12" stroke="#C5A059" />
-        <line x1="10" y1="-9" x2="13" y2="-12" stroke="#C5A059" />
+        <polygon points="-9,0 -5,-7 5,-7 9,0 0,10" fill="#FCFBF7" stroke="#C8A252" strokeWidth="1.25" />
+        <polyline points="-9,0 9,0" stroke="#C8A252" strokeWidth="0.85" />
+        <polyline points="-5,-7 -2,0 0,10 2,0 5,-7" stroke="#C8A252" strokeWidth="0.85" />
+        <line x1="0" y1="-12" x2="0" y2="-16" stroke="#C8A252" />
+        <line x1="-10" y1="-9" x2="-13" y2="-12" stroke="#C8A252" />
+        <line x1="10" y1="-9" x2="13" y2="-12" stroke="#C8A252" />
       </g>
     </g>
   </svg>
 );
 
 // ============================================================================
-// SEAMLESS 3D ROYAL GATEFOLD FOLIO & SCULPTED AMETHYST-GOLD WAX SEAL
+// SEAMLESS 3D ROYAL GATEFOLD FOLIO & SCULPTED EMERALD-GOLD WAX SEAL
 // ============================================================================
 const RoyalCrestFiligree = () => (
-  <svg viewBox="0 0 140 36" className="w-28 h-7 text-[#C5A059] mx-auto mb-2.5 select-none">
+  <svg viewBox="0 0 140 36" className="w-28 h-7 text-[#C8A252] mx-auto mb-2.5 select-none">
     <g fill="none" stroke="currentColor" strokeWidth="1.05" strokeLinecap="round" strokeLinejoin="round">
       <path d="M 10 20 C 26 20, 34 10, 48 14 C 58 17, 63 22, 70 22 C 77 22, 82 17, 92 14 C 106 10, 114 20, 130 20" />
       <path d="M 32 22 C 44 26, 56 26, 70 22 C 84 26, 96 26, 108 22" strokeOpacity="0.65" />
-      <path d="M 70 4 L 74 12 L 70 18 L 66 12 Z" fill="#C5A059" fillOpacity="0.28" />
-      <circle cx="70" cy="24" r="2" fill="#C5A059" stroke="none" />
-      <circle cx="48" cy="14" r="1.4" fill="#C5A059" stroke="none" />
-      <circle cx="92" cy="14" r="1.4" fill="#C5A059" stroke="none" />
-      <circle cx="16" cy="20" r="1.2" fill="#C5A059" stroke="none" />
-      <circle cx="124" cy="20" r="1.2" fill="#C5A059" stroke="none" />
+      <path d="M 70 4 L 74 12 L 70 18 L 66 12 Z" fill="#C8A252" fillOpacity="0.28" />
+      <circle cx="70" cy="24" r="2" fill="#C8A252" stroke="none" />
+      <circle cx="48" cy="14" r="1.4" fill="#C8A252" stroke="none" />
+      <circle cx="92" cy="14" r="1.4" fill="#C8A252" stroke="none" />
+      <circle cx="16" cy="20" r="1.2" fill="#C8A252" stroke="none" />
+      <circle cx="124" cy="20" r="1.2" fill="#C8A252" stroke="none" />
     </g>
   </svg>
 );
 
-/** Debossed Damask & Outer Antique-Gold Double-Hairline Frame (No center vertical line) */
+/** Debossed Damask & Outer Champagne-Gold Double-Hairline Frame */
 const DoorOrnamentSVG = ({ side = 'left' }) => {
   const isRight = side === 'right';
   const patternId = `baroqueDamask-${side}`;
@@ -1350,7 +1350,7 @@ const DoorOrnamentSVG = ({ side = 'left' }) => {
     >
       <defs>
         <pattern id={patternId} width="64" height="84" patternUnits="userSpaceOnUse">
-          <g fill="none" stroke="#8C6AA8" strokeOpacity="0.08" strokeWidth="0.9">
+          <g fill="none" stroke="#537A6B" strokeOpacity="0.08" strokeWidth="0.9">
             <path d="M 32 6 C 42 18, 48 28, 32 42 C 16 28, 22 18, 32 6 Z" />
             <path d="M 32 42 C 42 54, 48 64, 32 78 C 16 64, 22 54, 32 42 Z" />
             <path d="M 0 42 C 12 34, 20 34, 32 42 C 44 34, 52 34, 64 42" />
@@ -1362,7 +1362,7 @@ const DoorOrnamentSVG = ({ side = 'left' }) => {
 
       <rect x="0" y="0" width="215" height="844" fill={`url(#${patternId})`} />
 
-      <g fill="none" stroke="#C5A059" strokeLinecap="round">
+      <g fill="none" stroke="#C8A252" strokeLinecap="round">
         <path
           d="M 215 24 L 54 24 Q 18 24 18 62 L 18 782 Q 18 820 54 820 L 215 820"
           strokeWidth="1.25"
@@ -1377,32 +1377,32 @@ const DoorOrnamentSVG = ({ side = 'left' }) => {
         <g transform="translate(18, 24)" strokeOpacity="0.75">
           <path d="M 6 42 C 6 18, 18 6, 44 6" strokeWidth="1.2" />
           <path d="M 14 28 C 14 18, 20 14, 30 14" strokeWidth="0.9" />
-          <path d="M 10 10 C 20 10, 26 16, 26 26 C 16 26, 10 20, 10 10 Z" fill="#C5A059" fillOpacity="0.14" />
-          <circle cx="17" cy="17" r="1.8" fill="#C5A059" stroke="none" />
+          <path d="M 10 10 C 20 10, 26 16, 26 26 C 16 26, 10 20, 10 10 Z" fill="#C8A252" fillOpacity="0.14" />
+          <circle cx="17" cy="17" r="1.8" fill="#C8A252" stroke="none" />
         </g>
 
         <g transform="translate(18, 820) scale(1, -1)" strokeOpacity="0.75">
           <path d="M 6 42 C 6 18, 18 6, 44 6" strokeWidth="1.2" />
           <path d="M 14 28 C 14 18, 20 14, 30 14" strokeWidth="0.9" />
-          <path d="M 10 10 C 20 10, 26 16, 26 26 C 16 26, 10 20, 10 10 Z" fill="#C5A059" fillOpacity="0.14" />
-          <circle cx="17" cy="17" r="1.8" fill="#C5A059" stroke="none" />
+          <path d="M 10 10 C 20 10, 26 16, 26 26 C 16 26, 10 20, 10 10 Z" fill="#C8A252" fillOpacity="0.14" />
+          <circle cx="17" cy="17" r="1.8" fill="#C8A252" stroke="none" />
         </g>
       </g>
     </svg>
   );
 };
 
-/** Subtle Pressed Gold & Lavender Botanical Sprig Behind the Wax Seal */
+/** Pressed Gold & Jade Botanical Sprig Behind the Wax Seal */
 const PressedBotanicalSprigSVG = () => (
   <svg
     viewBox="0 0 220 180"
     className="w-[205px] h-[165px] pointer-events-none select-none overflow-visible"
-    style={{ filter: 'drop-shadow(0 6px 10px rgba(35, 15, 51, 0.22))' }}
+    style={{ filter: 'drop-shadow(0 6px 10px rgba(7, 26, 20, 0.22))' }}
   >
     <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M 38 156 C 72 126, 128 72, 184 22" stroke="#C5A059" strokeWidth="1.5" />
-      <path d="M 104 98 C 122 88, 144 82, 174 74" stroke="#C5A059" strokeWidth="1.05" strokeOpacity="0.85" />
-      <path d="M 96 106 C 84 82, 74 60, 62 34" stroke="#C5A059" strokeWidth="1.05" strokeOpacity="0.85" />
+      <path d="M 38 156 C 72 126, 128 72, 184 22" stroke="#C8A252" strokeWidth="1.5" />
+      <path d="M 104 98 C 122 88, 144 82, 174 74" stroke="#C8A252" strokeWidth="1.05" strokeOpacity="0.85" />
+      <path d="M 96 106 C 84 82, 74 60, 62 34" stroke="#C8A252" strokeWidth="1.05" strokeOpacity="0.85" />
       {[
         [152, 48, -28, 13, 6],
         [168, 34, -42, 11, 5],
@@ -1419,33 +1419,33 @@ const PressedBotanicalSprigSVG = () => (
           rx={rx}
           ry={ry}
           transform={`rotate(${rot} ${x} ${y})`}
-          fill="#DFC28B"
+          fill="#E5CA8C"
           fillOpacity="0.48"
-          stroke="#9E7B3B"
+          stroke="#9A7832"
           strokeWidth="0.9"
         />
       ))}
       {[
-        [178, 28, 4.2, '#A970D6'],
-        [185, 21, 3.6, '#C89CEB'],
-        [174, 74, 3.6, '#B984E3'],
-        [60, 32, 3.8, '#A970D6'],
-        [44, 152, 3.5, '#A970D6'],
+        [178, 28, 4.2, '#3A7D66'],
+        [185, 21, 3.6, '#5CA188'],
+        [174, 74, 3.6, '#4B8E76'],
+        [60, 32, 3.8, '#3A7D66'],
+        [44, 152, 3.5, '#3A7D66'],
       ].map(([bx, by, r, color], idx) => (
-        <circle key={idx} cx={bx} cy={by} r={r} fill={color} stroke="#F7F0FC" strokeWidth="0.6" />
+        <circle key={idx} cx={bx} cy={by} r={r} fill={color} stroke="#F7F5EE" strokeWidth="0.6" />
       ))}
     </g>
   </svg>
 );
 
-/** Sculpted 132px Royal Amethyst-Plum & Antique-Gold SVG Wax Seal */
+/** Sculpted 132px Royal Emerald & Champagne-Gold SVG Wax Seal */
 const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
   <svg
     viewBox="0 0 200 200"
     className="w-[132px] h-[132px] overflow-visible select-none"
     style={{
       filter:
-        'drop-shadow(0 16px 24px rgba(24, 7, 38, 0.48)) drop-shadow(0 5px 10px rgba(35, 15, 51, 0.34))',
+        'drop-shadow(0 16px 24px rgba(4, 18, 13, 0.5)) drop-shadow(0 5px 10px rgba(7, 28, 21, 0.36))',
     }}
   >
     <defs>
@@ -1453,41 +1453,41 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
         <path d="M 104 10 C 124 8, 141 15, 156 26 C 171 37, 185 52, 189 72 C 194 91, 193 112, 186 130 C 179 149, 169 167, 151 178 C 134 189, 114 194, 93 192 C 72 190, 52 184, 36 170 C 21 156, 12 138, 9 117 C 6 96, 8 74, 17 56 C 26 37, 40 23, 59 15 C 74 9, 89 11, 104 10 Z" />
       </clipPath>
 
-      <radialGradient id="plumWaxOuter" cx="32%" cy="26%" r="74%">
-        <stop offset="0%" stopColor="#773A94" />
-        <stop offset="28%" stopColor="#582370" />
-        <stop offset="62%" stopColor="#3E1552" />
-        <stop offset="90%" stopColor="#260A36" />
-        <stop offset="100%" stopColor="#190524" />
+      <radialGradient id="emeraldWaxOuter" cx="32%" cy="26%" r="74%">
+        <stop offset="0%" stopColor="#266E58" />
+        <stop offset="28%" stopColor="#195240" />
+        <stop offset="62%" stopColor="#0F392C" />
+        <stop offset="90%" stopColor="#08241B" />
+        <stop offset="100%" stopColor="#041610" />
       </radialGradient>
 
-      <linearGradient id="plumWaxRim" x1="14%" y1="12%" x2="86%" y2="88%">
-        <stop offset="0%" stopColor="#DFC28B" stopOpacity="0.92" />
-        <stop offset="22%" stopColor="#6D3189" />
-        <stop offset="56%" stopColor="#461A5B" />
-        <stop offset="86%" stopColor="#2A0C3A" />
-        <stop offset="100%" stopColor="#C5A059" stopOpacity="0.72" />
+      <linearGradient id="emeraldWaxRim" x1="14%" y1="12%" x2="86%" y2="88%">
+        <stop offset="0%" stopColor="#E5CA8C" stopOpacity="0.92" />
+        <stop offset="22%" stopColor="#21614D" />
+        <stop offset="56%" stopColor="#113F31" />
+        <stop offset="86%" stopColor="#09261D" />
+        <stop offset="100%" stopColor="#C8A252" stopOpacity="0.72" />
       </linearGradient>
 
-      <radialGradient id="plumStampBasin" cx="65%" cy="68%" r="68%">
-        <stop offset="0%" stopColor="#5A2573" />
-        <stop offset="52%" stopColor="#3B144E" />
-        <stop offset="88%" stopColor="#250934" />
-        <stop offset="100%" stopColor="#1A0526" />
+      <radialGradient id="emeraldStampBasin" cx="65%" cy="68%" r="68%">
+        <stop offset="0%" stopColor="#1B5543" />
+        <stop offset="52%" stopColor="#0F382B" />
+        <stop offset="88%" stopColor="#082219" />
+        <stop offset="100%" stopColor="#04150F" />
       </radialGradient>
 
-      <linearGradient id="antiqueGoldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#FBF0D1" />
-        <stop offset="32%" stopColor="#DFC28B" />
-        <stop offset="68%" stopColor="#C5A059" />
-        <stop offset="100%" stopColor="#9E7B3B" />
+      <linearGradient id="champagneGoldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFF6D8" />
+        <stop offset="32%" stopColor="#E5CA8C" />
+        <stop offset="68%" stopColor="#C8A252" />
+        <stop offset="100%" stopColor="#9A7832" />
       </linearGradient>
 
       <linearGradient id="sealGlintSweep" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
-        <stop offset="45%" stopColor="#FFF5D6" stopOpacity="0" />
-        <stop offset="50%" stopColor="#FFF5D6" stopOpacity="0.45" />
-        <stop offset="55%" stopColor="#FFF5D6" stopOpacity="0" />
+        <stop offset="45%" stopColor="#FFF7DE" stopOpacity="0" />
+        <stop offset="50%" stopColor="#FFF7DE" stopOpacity="0.45" />
+        <stop offset="55%" stopColor="#FFF7DE" stopOpacity="0" />
         <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
       </linearGradient>
     </defs>
@@ -1495,8 +1495,8 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
     {/* Organic Molten Wax Outer Silhouette */}
     <path
       d="M 104 10 C 124 8, 141 15, 156 26 C 171 37, 185 52, 189 72 C 194 91, 193 112, 186 130 C 179 149, 169 167, 151 178 C 134 189, 114 194, 93 192 C 72 190, 52 184, 36 170 C 21 156, 12 138, 9 117 C 6 96, 8 74, 17 56 C 26 37, 40 23, 59 15 C 74 9, 89 11, 104 10 Z"
-      fill="url(#plumWaxOuter)"
-      stroke="#1C0629"
+      fill="url(#emeraldWaxOuter)"
+      stroke="#051A13"
       strokeWidth="1.2"
     />
 
@@ -1504,19 +1504,19 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
     <path
       d="M 32 48 C 48 24, 80 14, 114 17 C 138 20, 160 32, 174 52"
       fill="none"
-      stroke="#DFC28B"
+      stroke="#E5CA8C"
       strokeWidth="2.8"
       strokeLinecap="round"
       strokeOpacity="0.48"
     />
 
     {/* Raised Rolled Wax Rim */}
-    <circle cx="100" cy="100" r="72" fill="url(#plumWaxRim)" stroke="#20082E" strokeWidth="1.2" />
-    <circle cx="100" cy="100" r="67" fill="none" stroke="#DFC28B" strokeWidth="0.9" strokeOpacity="0.42" />
+    <circle cx="100" cy="100" r="72" fill="url(#emeraldWaxRim)" stroke="#061E16" strokeWidth="1.2" />
+    <circle cx="100" cy="100" r="67" fill="none" stroke="#E5CA8C" strokeWidth="0.9" strokeOpacity="0.42" />
 
     {/* Recessed Inner Stamp Basin */}
-    <circle cx="100" cy="100" r="60" fill="url(#plumStampBasin)" stroke="#160421" strokeWidth="2.2" />
-    <circle cx="100" cy="100" r="58.5" fill="none" stroke="#DFC28B" strokeWidth="0.7" strokeOpacity="0.42" />
+    <circle cx="100" cy="100" r="60" fill="url(#emeraldStampBasin)" stroke="#04150F" strokeWidth="2.2" />
+    <circle cx="100" cy="100" r="58.5" fill="none" stroke="#E5CA8C" strokeWidth="0.7" strokeOpacity="0.42" />
 
     {/* Micro-Beaded Gold Pearl Ring */}
     <circle
@@ -1524,7 +1524,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
       cy="100"
       r="53"
       fill="none"
-      stroke="url(#antiqueGoldFoil)"
+      stroke="url(#champagneGoldFoil)"
       strokeWidth="1.6"
       strokeDasharray="1.2 4.3"
       strokeLinecap="round"
@@ -1532,7 +1532,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
     />
 
     {/* Symmetrical Botanical Laurel Wreath */}
-    <g fill="none" stroke="url(#antiqueGoldFoil)" strokeLinecap="round" strokeWidth="1.15">
+    <g fill="none" stroke="url(#champagneGoldFoil)" strokeLinecap="round" strokeWidth="1.15">
       <path d="M 92 145 C 62 141, 49 116, 53 86 C 55 70, 66 57, 80 52" />
       <path d="M 108 145 C 138 141, 151 116, 147 86 C 145 70, 134 57, 120 52" />
       {[
@@ -1550,7 +1550,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
           rx="2.6"
           ry="5.2"
           transform={`rotate(${rot} ${lx} ${ly})`}
-          fill="#DFC28B"
+          fill="#E5CA8C"
           fillOpacity="0.45"
           strokeWidth="0.8"
         />
@@ -1570,17 +1570,17 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
           rx="2.6"
           ry="5.2"
           transform={`rotate(${rot} ${lx} ${ly})`}
-          fill="#DFC28B"
+          fill="#E5CA8C"
           fillOpacity="0.45"
           strokeWidth="0.8"
         />
       ))}
       <path
         d="M 100 45 L 102.5 50.5 L 108 53 L 102.5 55.5 L 100 61 L 97.5 55.5 L 92 53 L 97.5 50.5 Z"
-        fill="#DFC28B"
+        fill="#E5CA8C"
         stroke="none"
       />
-      <circle cx="100" cy="146" r="2.2" fill="#DFC28B" stroke="none" />
+      <circle cx="100" cy="146" r="2.2" fill="#E5CA8C" stroke="none" />
     </g>
 
     {/* Cleanly Centered Monogram Strictly Inside the Inner Clear Circle */}
@@ -1593,7 +1593,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
         className="font-serif-editorial"
         fontSize="30"
         fontWeight="500"
-        fill="#14031F"
+        fill="#03120D"
         fillOpacity="0.72"
       >
         {brideInitial}
@@ -1606,7 +1606,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
         className="font-serif-editorial"
         fontStyle="italic"
         fontSize="19"
-        fill="#14031F"
+        fill="#03120D"
         fillOpacity="0.72"
       >
         &amp;
@@ -1619,7 +1619,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
         className="font-serif-editorial"
         fontSize="30"
         fontWeight="500"
-        fill="#14031F"
+        fill="#03120D"
         fillOpacity="0.72"
       >
         {groomInitial}
@@ -1633,7 +1633,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
         className="font-serif-editorial"
         fontSize="30"
         fontWeight="500"
-        fill="url(#antiqueGoldFoil)"
+        fill="url(#champagneGoldFoil)"
       >
         {brideInitial}
       </text>
@@ -1645,7 +1645,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
         className="font-serif-editorial"
         fontStyle="italic"
         fontSize="19"
-        fill="url(#antiqueGoldFoil)"
+        fill="url(#champagneGoldFoil)"
       >
         &amp;
       </text>
@@ -1657,7 +1657,7 @@ const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
         className="font-serif-editorial"
         fontSize="30"
         fontWeight="500"
-        fill="url(#antiqueGoldFoil)"
+        fill="url(#champagneGoldFoil)"
       >
         {groomInitial}
       </text>
@@ -1716,8 +1716,8 @@ const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
                 width: `${mote.size}px`,
                 height: `${mote.size}px`,
                 background: mote.gold
-                  ? 'radial-gradient(circle, #FFF7DE 0%, #DFC28B 55%, transparent 100%)'
-                  : 'radial-gradient(circle, #F9F2FF 0%, #D8B4FE 55%, transparent 100%)',
+                  ? 'radial-gradient(circle, #FFF8E1 0%, #E5CA8C 55%, transparent 100%)'
+                  : 'radial-gradient(circle, #ECFDF5 0%, #7CC7A8 55%, transparent 100%)',
                 '--dx': mote.dx,
                 '--dy': mote.dy,
                 animationDelay: mote.delay,
@@ -1727,7 +1727,7 @@ const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
         </div>
       )}
 
-      {/* Left & Right 3D Gatefold Doors (Seamless 50.6% width, zero center seam while closed) */}
+      {/* Left & Right 3D Gatefold Doors */}
       <div className="lux-gatefold-stage">
         <div className={`lux-door lux-door-left ${isDoorsOpening ? 'is-open' : ''}`}>
           <div className="lux-door-face lux-door-front lux-door-front-left">
@@ -1735,8 +1735,8 @@ const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
             <div className={`lux-door-shade ${isDoorsOpening ? 'is-shaded' : ''}`} />
           </div>
           <div className="lux-door-face lux-door-back">
-            <div className="absolute inset-4 border border-[#DFC28B]/30 pointer-events-none" />
-            <div className="absolute inset-6 border border-[#DFC28B]/18 pointer-events-none" />
+            <div className="absolute inset-4 border border-[#E5CA8C]/30 pointer-events-none" />
+            <div className="absolute inset-6 border border-[#E5CA8C]/18 pointer-events-none" />
           </div>
         </div>
 
@@ -1746,8 +1746,8 @@ const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
             <div className={`lux-door-shade ${isDoorsOpening ? 'is-shaded' : ''}`} />
           </div>
           <div className="lux-door-face lux-door-back">
-            <div className="absolute inset-4 border border-[#DFC28B]/30 pointer-events-none" />
-            <div className="absolute inset-6 border border-[#DFC28B]/18 pointer-events-none" />
+            <div className="absolute inset-4 border border-[#E5CA8C]/30 pointer-events-none" />
+            <div className="absolute inset-6 border border-[#E5CA8C]/18 pointer-events-none" />
           </div>
         </div>
       </div>
@@ -1762,13 +1762,13 @@ const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
         >
           <RoyalCrestFiligree />
 
-          <p className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.3em] uppercase text-[#5A3A73] mb-3 leading-relaxed">
+          <p className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.3em] uppercase text-[#355E52] mb-3 leading-relaxed">
             Together With Their Families
           </p>
 
-          <h1 className="font-serif-editorial text-[32px] sm:text-[36px] font-normal tracking-[0.04em] text-[#2E1A3B] leading-tight">
+          <h1 className="font-serif-editorial text-[32px] sm:text-[36px] font-normal tracking-[0.04em] text-[#0F3329] leading-tight">
             {couple.bride}{' '}
-            <span className="font-serif-editorial italic text-[24px] sm:text-[26px] text-[#C5A059] mx-1.5">
+            <span className="font-serif-editorial italic text-[24px] sm:text-[26px] text-[#C8A252] mx-1.5">
               &amp;
             </span>{' '}
             {couple.groom}
@@ -1803,7 +1803,7 @@ const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
             <button
               type="button"
               onClick={onTriggerOpen}
-              aria-label="Tap the Royal Amethyst and Gold Wax Seal to Open Invitation"
+              aria-label="Tap the Royal Emerald and Champagne Gold Wax Seal to Open Invitation"
               className={`lux-sculpted-seal-btn ${isUnsealing ? 'is-unsealing' : ''}`}
             >
               <SculptedWaxSealSVG
@@ -1820,20 +1820,20 @@ const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
             isUnsealing ? 'opacity-0 translate-y-4 blur-[3px]' : 'opacity-100 translate-y-0'
           }`}
         >
-          <p className="font-serif-editorial text-xl sm:text-[22px] tracking-[0.26em] text-[#2E1A3B] mb-1.5">
+          <p className="font-serif-editorial text-xl sm:text-[22px] tracking-[0.26em] text-[#0F3329] mb-1.5">
             {dateSpaced}
           </p>
 
-          <p className="font-sans-clean text-[9px] tracking-[0.34em] uppercase text-[#5A3A73]/90 mb-6">
+          <p className="font-sans-clean text-[9px] tracking-[0.34em] uppercase text-[#355E52]/90 mb-6">
             Madurai · India
           </p>
 
           <button
             type="button"
             onClick={onTriggerOpen}
-            className="lux-open-capsule pointer-events-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#C5A059]/60 bg-[#FAF6FE]/80 backdrop-blur-sm text-[#2E1A3B] font-sans-clean text-[9px] tracking-[0.26em] uppercase shadow-sm hover:bg-[#2E1A3B] hover:text-[#F5EEFB] hover:border-[#2E1A3B] transition-colors duration-300 cursor-pointer"
+            className="lux-open-capsule pointer-events-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#C8A252]/65 bg-[#FCFBF7]/85 backdrop-blur-sm text-[#0F3329] font-sans-clean text-[9px] tracking-[0.26em] uppercase shadow-sm hover:bg-[#0F3329] hover:text-[#F6F4EC] hover:border-[#0F3329] transition-colors duration-300 cursor-pointer"
           >
-            <Sparkles className="w-3 h-3 text-[#C5A059]" />
+            <Sparkles className="w-3 h-3 text-[#C8A252]" />
             <span>Tap the Seal to Open</span>
           </button>
         </div>
@@ -1940,7 +1940,7 @@ export default function App() {
   const isCoverLocked = introStage < 4;
 
   return (
-    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center relative overflow-x-hidden bg-[#14081D] text-[#2E1A3B] selection:bg-[#5A3A73] selection:text-[#F5EEFB]">
+    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center relative overflow-x-hidden bg-[#06140F] text-[#0F3329] selection:bg-[#195240] selection:text-[#F6F4EC]">
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap"
@@ -1974,15 +1974,15 @@ export default function App() {
         }
 
         .bg-alabaster-stationery {
-          background-color: #F4EFF9;
+          background-color: #F7F5EE;
           background-image:
-            radial-gradient(at 50% 0%, rgba(255, 253, 252, 0.94) 0px, transparent 68%),
-            radial-gradient(at 14% 38%, rgba(239, 232, 246, 0.78) 0px, transparent 58%),
-            radial-gradient(at 88% 76%, rgba(226, 212, 242, 0.65) 0px, transparent 62%);
+            radial-gradient(at 50% 0%, rgba(255, 253, 248, 0.94) 0px, transparent 68%),
+            radial-gradient(at 14% 38%, rgba(240, 237, 226, 0.78) 0px, transparent 58%),
+            radial-gradient(at 88% 76%, rgba(231, 227, 213, 0.65) 0px, transparent 62%);
         }
 
-        .bg-velvet-plum {
-          background: radial-gradient(circle at 50% 20%, #381852 0%, #230F33 60%, #160822 100%);
+        .bg-velvet-emerald {
+          background: radial-gradient(circle at 50% 20%, #164638 0%, #0D2C22 60%, #071A14 100%);
         }
 
         .lux-gatefold-overlay {
@@ -2006,7 +2006,7 @@ export default function App() {
         .lux-gatefold-backdrop {
           position: absolute;
           inset: 0;
-          background: radial-gradient(circle at 50% 50%, rgba(46, 26, 59, 0.08), rgba(20, 8, 29, 0.45));
+          background: radial-gradient(circle at 50% 50%, rgba(15, 51, 41, 0.08), rgba(6, 20, 15, 0.45));
           transition: opacity 1800ms cubic-bezier(0.22, 1, 0.36, 1);
           pointer-events: none;
         }
@@ -2064,12 +2064,12 @@ export default function App() {
           background-image:
             repeating-linear-gradient(
               0deg,
-              rgba(46, 26, 59, 0.015) 0px,
-              rgba(46, 26, 59, 0.015) 1px,
+              rgba(15, 51, 41, 0.015) 0px,
+              rgba(15, 51, 41, 0.015) 1px,
               transparent 1px,
               transparent 3px
             ),
-            linear-gradient(180deg, #F4EFF9 0%, #EFE8F6 52%, #E8DCF4 100%);
+            linear-gradient(180deg, #F7F5EE 0%, #F1EFE5 52%, #EAE6D8 100%);
         }
 
         .lux-door-front-left,
@@ -2079,32 +2079,32 @@ export default function App() {
         }
 
         .lux-door-left.is-open .lux-door-front-left {
-          box-shadow: 6px 0 24px rgba(20, 8, 29, 0.16);
+          box-shadow: 6px 0 24px rgba(6, 20, 15, 0.16);
         }
         .lux-door-right.is-open .lux-door-front-right {
-          box-shadow: -6px 0 24px rgba(20, 8, 29, 0.16);
+          box-shadow: -6px 0 24px rgba(6, 20, 15, 0.16);
         }
 
         .lux-door-back {
           transform: rotateY(180deg);
-          background-color: #230F33;
+          background-color: #0D2C22;
           background-image:
-            radial-gradient(at 25% 25%, rgba(197, 160, 89, 0.22) 0px, transparent 55%),
-            radial-gradient(at 78% 70%, rgba(124, 58, 168, 0.34) 0px, transparent 58%),
-            linear-gradient(145deg, #301447 0%, #230F33 60%, #150721 100%);
+            radial-gradient(at 25% 25%, rgba(200, 162, 82, 0.22) 0px, transparent 55%),
+            radial-gradient(at 78% 70%, rgba(34, 108, 84, 0.34) 0px, transparent 58%),
+            linear-gradient(145deg, #144032 0%, #0D2C22 60%, #061812 100%);
           box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.55);
         }
 
         .lux-door-shade {
           position: absolute;
           inset: 0;
-          background: linear-gradient(90deg, rgba(20, 8, 29, 0.22), rgba(20, 8, 29, 0.04));
+          background: linear-gradient(90deg, rgba(6, 20, 15, 0.22), rgba(6, 20, 15, 0.04));
           opacity: 0;
           transition: opacity 1500ms ease;
           pointer-events: none;
         }
         .lux-door-right .lux-door-shade {
-          background: linear-gradient(270deg, rgba(20, 8, 29, 0.22), rgba(20, 8, 29, 0.04));
+          background: linear-gradient(270deg, rgba(6, 20, 15, 0.22), rgba(6, 20, 15, 0.04));
         }
         .lux-door-shade.is-shaded {
           opacity: 1;
@@ -2125,8 +2125,8 @@ export default function App() {
               transparent 1px,
               transparent 3px
             ),
-            linear-gradient(180deg, #3D1652 0%, #5C2875 26%, #4B1D5E 52%, #321044 82%, #240A33 100%);
-          box-shadow: 0 8px 18px rgba(24, 7, 38, 0.26), inset 0 1px 1px rgba(255, 245, 220, 0.28);
+            linear-gradient(180deg, #0E382B 0%, #1E5D49 26%, #144636 52%, #0A2B20 82%, #061C15 100%);
+          box-shadow: 0 8px 18px rgba(4, 18, 13, 0.28), inset 0 1px 1px rgba(255, 245, 220, 0.28);
           transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1), opacity 650ms ease;
           pointer-events: none;
         }
@@ -2151,7 +2151,7 @@ export default function App() {
           right: 0;
           top: 2px;
           height: 1.5px;
-          background: linear-gradient(90deg, rgba(223, 194, 139, 0.65), #DFC28B, rgba(223, 194, 139, 0.65));
+          background: linear-gradient(90deg, rgba(229, 202, 140, 0.65), #E5CA8C, rgba(229, 202, 140, 0.65));
         }
         .lux-ribbon-piping-bottom {
           position: absolute;
@@ -2159,7 +2159,7 @@ export default function App() {
           right: 0;
           bottom: 2px;
           height: 1.5px;
-          background: linear-gradient(90deg, rgba(223, 194, 139, 0.65), #DFC28B, rgba(223, 194, 139, 0.65));
+          background: linear-gradient(90deg, rgba(229, 202, 140, 0.65), #E5CA8C, rgba(229, 202, 140, 0.65));
         }
 
         .lux-sculpted-seal-btn {
@@ -2206,8 +2206,8 @@ export default function App() {
           width: 144px;
           height: 144px;
           border-radius: 9999px;
-          border: 1px solid rgba(223, 194, 139, 0.52);
-          box-shadow: 0 0 24px rgba(223, 194, 139, 0.25);
+          border: 1px solid rgba(229, 202, 140, 0.52);
+          box-shadow: 0 0 24px rgba(229, 202, 140, 0.25);
           animation: sealAuraPulse 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
           pointer-events: none;
         }
@@ -2223,9 +2223,9 @@ export default function App() {
           border-radius: 9999px;
           background: radial-gradient(
             circle,
-            rgba(255, 246, 220, 0.9) 0%,
-            rgba(223, 194, 139, 0.58) 38%,
-            rgba(125, 58, 168, 0.32) 66%,
+            rgba(255, 248, 224, 0.9) 0%,
+            rgba(229, 202, 140, 0.58) 38%,
+            rgba(38, 110, 88, 0.34) 66%,
             transparent 82%
           );
           animation: sealClickGlow 850ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -2259,7 +2259,7 @@ export default function App() {
           left: -120%;
           width: 70%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(223, 194, 139, 0.45), transparent);
+          background: linear-gradient(90deg, transparent, rgba(229, 202, 140, 0.45), transparent);
           animation: capsuleShimmer 3.8s ease-in-out infinite;
           pointer-events: none;
         }
@@ -2283,12 +2283,12 @@ export default function App() {
           filter: blur(0px);
         }
 
-        .purple-flower-particle {
+        .emerald-flower-particle {
           position: absolute;
           opacity: 0;
-          animation: purpleFlowerBloom 2800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: emeraldFlowerBloom 2800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        @keyframes purpleFlowerBloom {
+        @keyframes emeraldFlowerBloom {
           0% { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.15) rotate(0deg); }
           28% { opacity: 1; transform: translate3d(var(--tx), var(--ty), 0) scale(var(--sc)) rotate(var(--rot)); }
           75% { opacity: 0.95; transform: translate3d(var(--tx), calc(var(--ty) - 10px), 0) scale(var(--sc)) rotate(calc(var(--rot) + 12deg)); }
@@ -2370,8 +2370,8 @@ export default function App() {
 
       {/* Toast Banner */}
       {toastMessage && (
-        <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 px-5 py-2 rounded-full bg-[#230F33]/95 text-[#F5EEFB] border border-[#DFC28B]/35 shadow-2xl text-[11px] font-sans-clean tracking-wide flex items-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-[#DFC28B]" />
+        <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 px-5 py-2 rounded-full bg-[#0D2C22]/95 text-[#F6F4EC] border border-[#E5CA8C]/35 shadow-2xl text-[11px] font-sans-clean tracking-wide flex items-center gap-2">
+          <Sparkles className="w-3.5 h-3.5 text-[#E5CA8C]" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -2382,7 +2382,7 @@ export default function App() {
           type="button"
           onClick={handleToggleAudio}
           aria-label={isAudioOn ? 'Mute invitation audio' : 'Unmute invitation audio'}
-          className="fixed bottom-5 right-5 z-50 w-10 h-10 rounded-full bg-[#230F33]/85 backdrop-blur-md border border-[#DFC28B]/45 text-[#DFC28B] flex items-center justify-center shadow-xl hover:bg-[#381852] transition cursor-pointer"
+          className="fixed bottom-5 right-5 z-50 w-10 h-10 rounded-full bg-[#0D2C22]/85 backdrop-blur-md border border-[#E5CA8C]/45 text-[#E5CA8C] flex items-center justify-center shadow-xl hover:bg-[#164638] transition cursor-pointer"
         >
           {isAudioOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 opacity-75" />}
         </button>
@@ -2391,7 +2391,7 @@ export default function App() {
       {/* Main Invitation Folio Viewport */}
       <div
         id="invitation-scroll-container"
-        className={`phone-frame-active relative w-full mx-auto bg-alabaster-stationery overflow-x-hidden sm:max-w-[430px] sm:my-10 sm:rounded-[40px] sm:shadow-[0_32px_90px_rgba(0,0,0,0.85)] sm:border sm:border-[#C5A059]/40 ${
+        className={`phone-frame-active relative w-full mx-auto bg-alabaster-stationery overflow-x-hidden sm:max-w-[430px] sm:my-10 sm:rounded-[40px] sm:shadow-[0_32px_90px_rgba(0,0,0,0.85)] sm:border sm:border-[#C8A252]/40 ${
           isCoverLocked ? 'h-[100dvh] sm:h-[844px] overflow-y-hidden' : 'min-h-[100dvh]'
         }`}
       >
@@ -2424,34 +2424,34 @@ export default function App() {
                 heroRevealed ? 'is-revealed' : ''
               } flex items-center justify-center gap-3 mb-7`}
             >
-              <span className="w-6 h-[1px] bg-[#C5A059]/75 shrink-0" />
-              <p className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.3em] uppercase text-[#5A3A73] whitespace-nowrap">
+              <span className="w-6 h-[1px] bg-[#C8A252]/75 shrink-0" />
+              <p className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.3em] uppercase text-[#355E52] whitespace-nowrap">
                 {WEDDING_CONFIG.couple.tagline}
               </p>
-              <span className="w-6 h-[1px] bg-[#C5A059]/75 shrink-0" />
+              <span className="w-6 h-[1px] bg-[#C8A252]/75 shrink-0" />
             </div>
 
-            {/* Cleanly Proportioned Couple Names Lockup (Zero Ampersand Overlap) */}
+            {/* Cleanly Proportioned Couple Names Lockup */}
             <div
               style={{ transitionDelay: '340ms' }}
               className={`lux-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
               } w-full flex flex-col items-center justify-center mb-6`}
             >
-              <h1 className="w-full flex flex-col items-center font-serif-editorial font-light text-[#2E1A3B]">
-                <span className="block text-5xl sm:text-6xl font-light leading-[1.08] tracking-[0.04em] text-[#2E1A3B]">
+              <h1 className="w-full flex flex-col items-center font-serif-editorial font-light text-[#0F3329]">
+                <span className="block text-5xl sm:text-6xl font-light leading-[1.08] tracking-[0.04em] text-[#0F3329]">
                   {WEDDING_CONFIG.couple.bride}
                 </span>
 
                 <span className="my-2.5 flex items-center justify-center gap-3">
-                  <span className="w-8 sm:w-10 h-[1px] bg-[#C5A059]/65" />
-                  <span className="font-serif-editorial italic text-2xl leading-none text-[#C5A059] select-none">
+                  <span className="w-8 sm:w-10 h-[1px] bg-[#C8A252]/65" />
+                  <span className="font-serif-editorial italic text-2xl leading-none text-[#C8A252] select-none">
                     &amp;
                   </span>
-                  <span className="w-8 sm:w-10 h-[1px] bg-[#C5A059]/65" />
+                  <span className="w-8 sm:w-10 h-[1px] bg-[#C8A252]/65" />
                 </span>
 
-                <span className="block text-5xl sm:text-6xl font-light leading-[1.08] tracking-[0.04em] text-[#2E1A3B]">
+                <span className="block text-5xl sm:text-6xl font-light leading-[1.08] tracking-[0.04em] text-[#0F3329]">
                   {WEDDING_CONFIG.couple.groom}
                 </span>
               </h1>
@@ -2462,7 +2462,7 @@ export default function App() {
               style={{ transitionDelay: '480ms' }}
               className={`lux-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } font-serif-editorial italic text-[15px] sm:text-[16px] leading-relaxed text-[#5A3A73]/90 max-w-[250px] mb-8`}
+              } font-serif-editorial italic text-[15px] sm:text-[16px] leading-relaxed text-[#355E52]/90 max-w-[250px] mb-8`}
             >
               Joyfully invite you to celebrate their engagement
             </p>
@@ -2472,29 +2472,29 @@ export default function App() {
               style={{ transitionDelay: '620ms' }}
               className={`lux-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } w-full max-w-[292px] border-y border-[#C5A059]/50 py-3.5 mb-7`}
+              } w-full max-w-[292px] border-y border-[#C8A252]/50 py-3.5 mb-7`}
             >
               <div className="grid grid-cols-[1fr_auto_1fr] items-center">
                 <div className="pr-3 text-center">
-                  <span className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.26em] uppercase text-[#5A3A73] whitespace-nowrap">
+                  <span className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.26em] uppercase text-[#355E52] whitespace-nowrap">
                     Thursday
                   </span>
                 </div>
 
-                <div className="px-4 sm:px-5 border-x border-[#C5A059]/40 flex flex-col items-center justify-center">
-                  <span className="font-sans-clean text-[8px] tracking-[0.3em] uppercase text-[#9E7B3B] whitespace-nowrap">
+                <div className="px-4 sm:px-5 border-x border-[#C8A252]/40 flex flex-col items-center justify-center">
+                  <span className="font-sans-clean text-[8px] tracking-[0.3em] uppercase text-[#9A7832] whitespace-nowrap">
                     December
                   </span>
-                  <span className="font-serif-editorial font-light text-[36px] sm:text-[40px] leading-none text-[#2E1A3B] my-0.5">
+                  <span className="font-serif-editorial font-light text-[36px] sm:text-[40px] leading-none text-[#0F3329] my-0.5">
                     10
                   </span>
-                  <span className="font-sans-clean text-[8.5px] tracking-[0.28em] text-[#5A3A73] whitespace-nowrap">
+                  <span className="font-sans-clean text-[8.5px] tracking-[0.28em] text-[#355E52] whitespace-nowrap">
                     2026
                   </span>
                 </div>
 
                 <div className="pl-3 text-center">
-                  <span className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.26em] uppercase text-[#5A3A73] whitespace-nowrap">
+                  <span className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.26em] uppercase text-[#355E52] whitespace-nowrap">
                     6:00 PM
                   </span>
                 </div>
@@ -2506,10 +2506,10 @@ export default function App() {
               style={{ transitionDelay: '760ms' }}
               className={`lux-hero-item ${heroRevealed ? 'is-revealed' : ''}`}
             >
-              <p className="font-serif-editorial text-[22px] sm:text-[24px] tracking-[0.06em] text-[#2E1A3B]">
+              <p className="font-serif-editorial text-[22px] sm:text-[24px] tracking-[0.06em] text-[#0F3329]">
                 {WEDDING_CONFIG.venue.name}
               </p>
-              <p className="font-sans-clean text-[9px] tracking-[0.34em] uppercase text-[#9E7B3B] mt-1">
+              <p className="font-sans-clean text-[9px] tracking-[0.34em] uppercase text-[#9A7832] mt-1">
                 Madurai · India
               </p>
             </div>
@@ -2522,10 +2522,10 @@ export default function App() {
               heroRevealed ? 'is-revealed' : ''
             } relative z-10 flex flex-col items-center gap-2 pt-2`}
           >
-            <span className="font-sans-clean text-[7.5px] tracking-[0.36em] uppercase text-[#9E7B3B]/85 pl-[0.36em]">
+            <span className="font-sans-clean text-[7.5px] tracking-[0.36em] uppercase text-[#9A7832]/85 pl-[0.36em]">
               Scroll
             </span>
-            <span className="w-[1px] h-7 bg-gradient-to-b from-[#C5A059] to-transparent lux-scroll-line" />
+            <span className="w-[1px] h-7 bg-gradient-to-b from-[#C8A252] to-transparent lux-scroll-line" />
           </div>
         </section>
 
@@ -2538,7 +2538,7 @@ export default function App() {
           </RevealOnScroll>
 
           <RevealOnScroll delay={140}>
-            <h2 className="font-serif-editorial text-2xl sm:text-3xl text-[#2E1A3B] mt-4 mb-4 leading-tight">
+            <h2 className="font-serif-editorial text-2xl sm:text-3xl text-[#0F3329] mt-4 mb-4 leading-tight">
               Together with their
               <br />
               families
@@ -2546,7 +2546,7 @@ export default function App() {
           </RevealOnScroll>
 
           <RevealOnScroll delay={260}>
-            <p className="font-sans-clean text-xs sm:text-[13px] leading-relaxed text-[#5A3A73] max-w-xs mx-auto font-light">
+            <p className="font-sans-clean text-xs sm:text-[13px] leading-relaxed text-[#355E52] max-w-xs mx-auto font-light">
               {WEDDING_CONFIG.couple.invitationText}
             </p>
           </RevealOnScroll>
@@ -2555,15 +2555,15 @@ export default function App() {
         {/* ==================================================================
             SECTION 3: SCRATCH-TO-REVEAL DATE & LIVE COUNTDOWN
         ================================================================== */}
-        <section className="relative bg-velvet-plum text-[#F5EEFB]">
+        <section className="relative bg-velvet-emerald text-[#F6F4EC]">
           <ScallopedLaceDivider position="top" />
 
           <div className="px-6 py-12 text-center overflow-hidden">
             <RevealOnScroll variant="scale">
-              <h2 className="font-serif-editorial text-3xl sm:text-4xl tracking-wide mb-2 text-[#F5EEFB]">
+              <h2 className="font-serif-editorial text-3xl sm:text-4xl tracking-wide mb-2 text-[#F6F4EC]">
                 Countdown
               </h2>
-              <p className="font-sans-clean text-[10px] tracking-[0.24em] uppercase text-[#DFC28B]/85 mb-6">
+              <p className="font-sans-clean text-[10px] tracking-[0.24em] uppercase text-[#E5CA8C]/85 mb-6">
                 Scratch the Foil Below to Reveal Our Date
               </p>
 
@@ -2583,20 +2583,20 @@ export default function App() {
         ================================================================== */}
         <section className="px-8 py-14 text-center">
           <RevealOnScroll>
-            <h2 className="font-serif-editorial text-4xl text-[#2E1A3B] mb-2">Location</h2>
-            <p className="font-script text-4xl text-[#2E1A3B] my-1">
+            <h2 className="font-serif-editorial text-4xl text-[#0F3329] mb-2">Location</h2>
+            <p className="font-script text-4xl text-[#0F3329] my-1">
               {WEDDING_CONFIG.venue.name}
             </p>
-            <p className="font-sans-clean text-[10px] tracking-[0.28em] uppercase text-[#5A3A73] mb-6">
+            <p className="font-sans-clean text-[10px] tracking-[0.28em] uppercase text-[#355E52] mb-6">
               {WEDDING_CONFIG.venue.cityCountry}
             </p>
           </RevealOnScroll>
 
           <RevealOnScroll delay={140}>
-            <p className="font-sans-clean text-xs leading-relaxed text-[#5A3A73] max-w-xs mx-auto mb-4 font-light">
+            <p className="font-sans-clean text-xs leading-relaxed text-[#355E52] max-w-xs mx-auto mb-4 font-light">
               {WEDDING_CONFIG.venue.description1}
             </p>
-            <p className="font-sans-clean text-xs leading-relaxed text-[#5A3A73] max-w-xs mx-auto font-light">
+            <p className="font-sans-clean text-xs leading-relaxed text-[#355E52] max-w-xs mx-auto font-light">
               {WEDDING_CONFIG.venue.description2}
             </p>
           </RevealOnScroll>
@@ -2611,9 +2611,9 @@ export default function App() {
                 href={WEDDING_CONFIG.venue.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-[#2E1A3B]/55 text-[#2E1A3B] font-sans-clean text-[10px] tracking-[0.25em] uppercase hover:bg-[#2E1A3B] hover:text-[#F5EEFB] hover:border-[#2E1A3B] transition cursor-pointer"
+                className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-[#0F3329]/55 text-[#0F3329] font-sans-clean text-[10px] tracking-[0.25em] uppercase hover:bg-[#0F3329] hover:text-[#F6F4EC] hover:border-[#0F3329] transition cursor-pointer"
               >
-                <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
+                <MapPin className="w-3.5 h-3.5 text-[#C8A252]" />
                 <span>Open Google Maps</span>
               </a>
             </div>
@@ -2628,11 +2628,11 @@ export default function App() {
             <HangingGarlandIllustration />
 
             <div className="px-6">
-              <h2 className="font-serif-editorial text-4xl text-[#2E1A3B] mb-1">The Day</h2>
-              <p className="font-sans-clean text-[10px] tracking-[0.26em] uppercase text-[#5A3A73] font-medium mb-2">
+              <h2 className="font-serif-editorial text-4xl text-[#0F3329] mb-1">The Day</h2>
+              <p className="font-sans-clean text-[10px] tracking-[0.26em] uppercase text-[#355E52] font-medium mb-2">
                 {WEDDING_CONFIG.date.displayFull}
               </p>
-              <p className="font-sans-clean text-xs text-[#5A3A73]/85 font-light mb-10">
+              <p className="font-sans-clean text-xs text-[#355E52]/85 font-light mb-10">
                 An evening of love, rings, and celebration.
               </p>
             </div>
@@ -2640,7 +2640,7 @@ export default function App() {
 
           <div className="px-6">
             <div className="relative max-w-xs mx-auto text-left">
-              <div className="absolute left-[46%] top-3 bottom-3 w-[1px] bg-gradient-to-b from-[#C5A059]/70 via-[#2E1A3B]/30 to-[#C5A059]/70" />
+              <div className="absolute left-[46%] top-3 bottom-3 w-[1px] bg-gradient-to-b from-[#C8A252]/70 via-[#0F3329]/30 to-[#C8A252]/70" />
 
               {WEDDING_CONFIG.timeline.map((item, idx) => (
                 <RevealOnScroll key={idx} delay={idx * 150}>
@@ -2649,23 +2649,23 @@ export default function App() {
                       <div className="shrink-0">
                         <TimelineIcon type={item.icon} />
                       </div>
-                      <span className="font-serif-editorial text-base sm:text-lg text-[#2E1A3B] whitespace-nowrap font-medium">
+                      <span className="font-serif-editorial text-base sm:text-lg text-[#0F3329] whitespace-nowrap font-medium">
                         {item.time}
                       </span>
                     </div>
 
                     <div className="col-span-1 flex justify-center pt-5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#2E1A3B] ring-[3px] ring-[#DFC28B]/70" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#0F3329] ring-[3px] ring-[#E5CA8C]/70" />
                     </div>
 
                     <div className="col-span-6 pl-2 pt-0.5">
-                      <span className="block font-sans-clean text-[8px] tracking-[0.2em] uppercase text-[#9E7B3B] font-medium mb-0.5">
+                      <span className="block font-sans-clean text-[8px] tracking-[0.2em] uppercase text-[#9A7832] font-medium mb-0.5">
                         {item.dateLabel}
                       </span>
-                      <h3 className="font-sans-clean text-[11px] font-medium tracking-[0.18em] uppercase text-[#2E1A3B] mb-1">
+                      <h3 className="font-sans-clean text-[11px] font-medium tracking-[0.18em] uppercase text-[#0F3329] mb-1">
                         {item.title}
                       </h3>
-                      <p className="font-sans-clean text-[11px] leading-relaxed text-[#5A3A73] font-light">
+                      <p className="font-sans-clean text-[11px] leading-relaxed text-[#355E52] font-light">
                         {item.description}
                       </p>
                     </div>
@@ -2689,23 +2689,23 @@ export default function App() {
           </RevealOnScroll>
 
           <RevealOnScroll delay={140}>
-            <p className="font-serif-editorial text-2xl sm:text-3xl text-[#2E1A3B] mb-6 leading-snug">
+            <p className="font-serif-editorial text-2xl sm:text-3xl text-[#0F3329] mb-6 leading-snug">
               We can&apos;t wait to celebrate with you.
             </p>
 
-            <p className="font-sans-clean text-xs text-[#5A3A73] font-light mb-2">
+            <p className="font-sans-clean text-xs text-[#355E52] font-light mb-2">
               With love,
             </p>
 
-            <h2 className="font-serif-editorial text-3xl sm:text-4xl text-[#2E1A3B] tracking-wide mb-3">
+            <h2 className="font-serif-editorial text-3xl sm:text-4xl text-[#0F3329] tracking-wide mb-3">
               {WEDDING_CONFIG.couple.bride}{' '}
-              <span className="font-serif-editorial italic text-2xl sm:text-3xl mx-1.5 text-[#C5A059]">
+              <span className="font-serif-editorial italic text-2xl sm:text-3xl mx-1.5 text-[#C8A252]">
                 &amp;
               </span>{' '}
               {WEDDING_CONFIG.couple.groom}
             </h2>
 
-            <p className="font-sans-clean text-xs tracking-[0.22em] uppercase text-[#5A3A73] mb-8">
+            <p className="font-sans-clean text-xs tracking-[0.22em] uppercase text-[#355E52] mb-8">
               {WEDDING_CONFIG.date.displayFull}
             </p>
 
@@ -2713,9 +2713,9 @@ export default function App() {
               <button
                 type="button"
                 onClick={handleReplayOpening}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#2E1A3B]/45 text-[#2E1A3B] font-sans-clean text-[10px] tracking-[0.22em] uppercase hover:bg-[#2E1A3B] hover:text-[#F5EEFB] transition cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#0F3329]/45 text-[#0F3329] font-sans-clean text-[10px] tracking-[0.22em] uppercase hover:bg-[#0F3329] hover:text-[#F6F4EC] transition cursor-pointer"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-[#C5A059]" />
+                <RotateCcw className="w-3.5 h-3.5 text-[#C8A252]" />
                 <span>Replay Seal &amp; Opening</span>
               </button>
             </div>
