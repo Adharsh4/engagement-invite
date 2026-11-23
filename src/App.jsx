@@ -2675,9 +2675,9 @@ export default function App() {
             </div>
           </div>
 
-          <RevealOnScroll delay={200}>
+          {/* <RevealOnScroll delay={200}>
             <BanquetTableIllustration />
-          </RevealOnScroll>
+          </RevealOnScroll> */}
         </section>
 
         {/* ==================================================================
