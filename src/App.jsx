@@ -5,11 +5,12 @@ import {
   RotateCcw,
   Sparkles,
   Volume2,
-  VolumeX
+  VolumeX,
+  Heart
 } from 'lucide-react';
 
 // ============================================================================
-// CONFIGURATION OBJECT (Edit couple, date, venue, and timeline details here)
+// CONFIGURATION OBJECT (Preserved exactly for Harini & Adharsh)
 // ============================================================================
 const WEDDING_CONFIG = {
   couple: {
@@ -70,20 +71,21 @@ const WEDDING_CONFIG = {
 };
 
 // ============================================================================
-// SAFE WEB AUDIO ENGINE (Wax-Pop, Paper Rustle, Harp Glissando & Ambient Loop)
+// SAFE WEB AUDIO ENGINE (Sweet Music-Box, Celesta Chimes & Dreamy Ambient Loop)
 // ============================================================================
-class RomanticAudioEngine {
+class CuteMusicBoxAudioEngine {
   constructor() {
     this.ctx = null;
     this.isMuted = false;
     this.isAmbientPlaying = false;
     this.intervalId = null;
     this.step = 0;
+    // Soft dreamy major-7th music-box chord progression (Fmaj7 - Dm7 - Bbmaj7 - C9)
     this.progression = [
-      { bass: 146.83, notes: [293.66, 349.23, 440.0, 587.33] },
-      { bass: 116.54, notes: [233.08, 349.23, 440.0, 523.25] },
-      { bass: 174.61, notes: [261.63, 349.23, 440.0, 523.25] },
-      { bass: 130.81, notes: [261.63, 329.63, 392.0, 523.25] },
+      { bass: 174.61, notes: [523.25, 659.25, 698.46, 880.0] },
+      { bass: 146.83, notes: [440.0, 523.25, 659.25, 783.99] },
+      { bass: 116.54, notes: [466.16, 587.33, 698.46, 880.0] },
+      { bass: 130.81, notes: [523.25, 587.33, 659.25, 783.99] },
     ];
   }
 
@@ -104,6 +106,7 @@ class RomanticAudioEngine {
     }
   }
 
+  // Cute heart-seal pop + sparkling celesta glissando
   playSealChime() {
     if (this.isMuted) return;
     try {
@@ -112,21 +115,22 @@ class RomanticAudioEngine {
 
       const now = this.ctx.currentTime;
 
-      // 1. Tactile wax-seal pop
+      // 1. Cute bubbly heart-seal pop
       const popOsc = this.ctx.createOscillator();
       const popGain = this.ctx.createGain();
-      popOsc.type = 'triangle';
-      popOsc.frequency.setValueAtTime(175, now);
-      popOsc.frequency.exponentialRampToValueAtTime(48, now + 0.16);
-      popGain.gain.setValueAtTime(0.11, now);
+      popOsc.type = 'sine';
+      popOsc.frequency.setValueAtTime(340, now);
+      popOsc.frequency.exponentialRampToValueAtTime(680, now + 0.08);
+      popOsc.frequency.exponentialRampToValueAtTime(220, now + 0.16);
+      popGain.gain.setValueAtTime(0.08, now);
       popGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
       popOsc.connect(popGain);
       popGain.connect(this.ctx.destination);
       popOsc.start(now);
       popOsc.stop(now + 0.2);
 
-      // 2. Soft silk ribbon & cotton cardstock swing rustle
-      const duration = 2.0;
+      // 2. Soft paper-envelope unfold whisper
+      const duration = 1.4;
       const bufferSize = Math.max(1, Math.floor(this.ctx.sampleRate * duration));
       const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
@@ -138,67 +142,67 @@ class RomanticAudioEngine {
 
       const bandpass = this.ctx.createBiquadFilter();
       bandpass.type = 'bandpass';
-      bandpass.frequency.setValueAtTime(560, now + 0.45);
-      bandpass.frequency.exponentialRampToValueAtTime(1500, now + 1.35);
-      bandpass.frequency.exponentialRampToValueAtTime(480, now + 2.35);
-      bandpass.Q.setValueAtTime(2.0, now + 0.45);
+      bandpass.frequency.setValueAtTime(750, now + 0.25);
+      bandpass.frequency.exponentialRampToValueAtTime(1600, now + 0.9);
+      bandpass.frequency.exponentialRampToValueAtTime(600, now + 1.55);
+      bandpass.Q.setValueAtTime(1.8, now + 0.25);
 
       const rustleGain = this.ctx.createGain();
-      rustleGain.gain.setValueAtTime(0.0001, now + 0.45);
-      rustleGain.gain.linearRampToValueAtTime(0.016, now + 1.1);
-      rustleGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.4);
+      rustleGain.gain.setValueAtTime(0.0001, now + 0.25);
+      rustleGain.gain.linearRampToValueAtTime(0.012, now + 0.65);
+      rustleGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
 
       whiteNoise.connect(bandpass);
       bandpass.connect(rustleGain);
       rustleGain.connect(this.ctx.destination);
-      whiteNoise.start(now + 0.45);
-      whiteNoise.stop(now + 2.45);
+      whiteNoise.start(now + 0.25);
+      whiteNoise.stop(now + 1.65);
 
-      // 3. Ascending 8-note harp glissando
-      const chimeNotes = [293.66, 349.23, 440.0, 523.25, 587.33, 698.46, 880.0, 1046.5];
+      // 3. Twinkling music-box / celesta ascending cascade
+      const chimeNotes = [523.25, 659.25, 783.99, 880.0, 1046.5, 1318.5, 1567.98];
       chimeNotes.forEach((freq, idx) => {
-        const startTime = now + 0.35 + idx * 0.16;
+        const startTime = now + 0.18 + idx * 0.11;
         const osc = this.ctx.createOscillator();
-        const overtone = this.ctx.createOscillator();
+        const bellOver = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        const filter = this.ctx.createBiquadFilter();
 
         osc.type = 'sine';
         osc.frequency.setValueAtTime(freq, startTime);
 
-        overtone.type = 'triangle';
-        overtone.frequency.setValueAtTime(freq * 2, startTime);
-
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(2100, startTime);
-        filter.frequency.exponentialRampToValueAtTime(460, startTime + 1.5);
+        bellOver.type = 'triangle';
+        bellOver.frequency.setValueAtTime(freq * 2, startTime);
 
         gain.gain.setValueAtTime(0.0001, startTime);
-        gain.gain.linearRampToValueAtTime(0.03, startTime + 0.035);
-        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 1.55);
+        gain.gain.linearRampToValueAtTime(0.026, startTime + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 1.4);
 
-        osc.connect(filter);
-        overtone.connect(filter);
-        filter.connect(gain);
+        const overGain = this.ctx.createGain();
+        overGain.gain.setValueAtTime(0.006, startTime);
+        overGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.45);
+
+        osc.connect(gain);
+        bellOver.connect(overGain);
+        overGain.connect(gain);
         gain.connect(this.ctx.destination);
 
         osc.start(startTime);
-        overtone.start(startTime);
-        osc.stop(startTime + 1.6);
-        overtone.stop(startTime + 1.6);
+        bellOver.start(startTime);
+        osc.stop(startTime + 1.45);
+        bellOver.stop(startTime + 0.5);
       });
     } catch {
       // Ignore Web Audio errors
     }
   }
 
+  // Sparkling arpeggio when scratch card blooms with pastel flowers
   playBloomArpeggio() {
     if (this.isMuted) return;
     try {
       this.init();
       if (!this.ctx) return;
 
-      const notes = [293.66, 349.23, 440.0, 587.33, 698.46, 880.0, 1174.66];
+      const notes = [523.25, 659.25, 783.99, 1046.5, 1174.66, 1318.5, 1567.98];
       notes.forEach((freq, idx) => {
         setTimeout(() => {
           try {
@@ -206,26 +210,26 @@ class RomanticAudioEngine {
             const now = this.ctx.currentTime;
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
-            osc.type = 'triangle';
+            osc.type = 'sine';
             osc.frequency.setValueAtTime(freq, now);
             gain.gain.setValueAtTime(0.0001, now);
-            gain.gain.linearRampToValueAtTime(0.038, now + 0.045);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.0);
+            gain.gain.linearRampToValueAtTime(0.032, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
             osc.connect(gain);
             gain.connect(this.ctx.destination);
             osc.start(now);
-            osc.stop(now + 2.1);
+            osc.stop(now + 1.65);
           } catch {
             // Ignore transient audio errors
           }
-        }, idx * 75);
+        }, idx * 70);
       });
     } catch {
       // Ignore Web Audio errors
     }
   }
 
-  playAmbientNote(freq, duration = 2.6, volume = 0.015, type = 'sine', attack = 0.2) {
+  playAmbientNote(freq, duration = 2.2, volume = 0.013, type = 'sine', attack = 0.04) {
     try {
       if (!this.ctx || this.isMuted) return;
       const now = this.ctx.currentTime;
@@ -237,7 +241,7 @@ class RomanticAudioEngine {
       osc.frequency.setValueAtTime(freq, now);
 
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(1000, now);
+      filter.frequency.setValueAtTime(1600, now);
 
       gain.gain.setValueAtTime(0.0001, now);
       gain.gain.linearRampToValueAtTime(volume, now + attack);
@@ -268,14 +272,14 @@ class RomanticAudioEngine {
         const chord = this.progression[chordIdx];
 
         if (noteIdx === 0) {
-          this.playAmbientNote(chord.bass, 3.4, 0.014, 'triangle', 0.38);
+          this.playAmbientNote(chord.bass, 3.0, 0.012, 'triangle', 0.25);
         }
-        this.playAmbientNote(chord.notes[noteIdx], 2.3, 0.012, 'sine', 0.14);
+        this.playAmbientNote(chord.notes[noteIdx], 2.0, 0.011, 'sine', 0.025);
         this.step += 1;
       };
 
       triggerStep();
-      this.intervalId = setInterval(triggerStep, 960);
+      this.intervalId = setInterval(triggerStep, 860);
     } catch {
       // Ignore Web Audio errors
     }
@@ -301,10 +305,10 @@ class RomanticAudioEngine {
   }
 }
 
-const audioEngine = new RomanticAudioEngine();
+const audioEngine = new CuteMusicBoxAudioEngine();
 
 // ============================================================================
-// SCROLL REVEAL & CHANTILLY LACE DIVIDERS
+// SCROLL REVEAL & CUTE SCALLOPED CLOUD/LACE DIVIDERS
 // ============================================================================
 const RevealOnScroll = ({ children, className = '', delay = 0, variant = 'fade-up' }) => {
   const ref = useRef(null);
@@ -335,211 +339,142 @@ const RevealOnScroll = ({ children, className = '', delay = 0, variant = 'fade-u
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`lux-reveal lux-reveal-${variant} ${isVisible ? 'is-visible' : ''} ${className}`}
+      className={`cute-reveal cute-reveal-${variant} ${isVisible ? 'is-visible' : ''} ${className}`}
     >
       {children}
     </div>
   );
 };
 
-/** Scalloped Chantilly Lace Divider framing the Velvet Emerald Countdown Section */
-const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
+/** Cute Scalloped Cloud & Eyelet Lace Divider framing the Dreamy Countdown Section */
+const CuteScallopCloudDivider = ({ position = 'top', flip = false }) => {
   const isTop = position === 'top';
   const uid = isTop ? 'top' : 'bottom';
   return (
     <div
       className="relative w-full overflow-hidden select-none pointer-events-none leading-none z-10"
       style={{
-        height: '82px',
+        height: '62px',
         marginTop: isTop ? '-1px' : '0',
         marginBottom: !isTop ? '-1px' : '0',
         transform: flip ? 'rotate(180deg)' : 'none',
       }}
     >
       <svg
-        viewBox="0 0 800 130"
+        viewBox="0 0 440 80"
         preserveAspectRatio="none"
         className="w-full h-full"
-        style={{ filter: 'drop-shadow(0 5px 12px rgba(4, 18, 13, 0.48))' }}
+        style={{ filter: 'drop-shadow(0 4px 10px rgba(133, 94, 166, 0.18))' }}
       >
         <defs>
-          <pattern id={`chantillyMesh-${uid}`} width="10" height="10" patternUnits="userSpaceOnUse">
+          <pattern id={`cuteCloudScallop-${uid}`} width="88" height="80" patternUnits="userSpaceOnUse">
+            {/* Soft blush lace halo */}
             <path
-              d="M 5 0 L 10 5 L 5 10 L 0 5 Z"
+              d="M 0 0 L 88 0 L 88 38 Q 66 72 44 46 Q 22 72 0 38 Z"
+              fill="#F8BBD0"
+              fillOpacity="0.38"
+            />
+            {/* Main marshmallow cloud scallop */}
+            <path
+              d="M 0 0 L 88 0 L 88 30 Q 66 64 44 38 Q 22 64 0 30 Z"
+              fill="#FFFDFC"
+            />
+            {/* Delicate stitched eyelet dots */}
+            <path
+              d="M 4 26 Q 22 54 44 33 Q 66 54 84 26"
               fill="none"
-              stroke="#FFFFFF"
-              strokeWidth="0.45"
-              strokeOpacity="0.58"
+              stroke="#E887AB"
+              strokeWidth="1.2"
+              strokeDasharray="2 4"
+              strokeLinecap="round"
+              strokeOpacity="0.7"
             />
-            <circle cx="5" cy="5" r="0.7" fill="#E5CA8C" fillOpacity="0.5" />
-          </pattern>
-
-          <pattern id={`royalScallop-${uid}`} width="160" height="130" patternUnits="userSpaceOnUse">
-            <path
-              d="M 0 0 L 160 0 L 160 28 Q 140 54 120 38 Q 80 94 40 38 Q 20 54 0 28 Z"
-              fill="#F7F5EE"
-            />
-            <path
-              d="M 0 0 L 160 0 L 160 74 Q 140 96 120 74 Q 80 124 40 74 Q 20 96 0 74 Z"
-              fill={`url(#chantillyMesh-${uid})`}
-            />
-            <path
-              d="M 0 0 L 160 0 L 160 60 Q 140 82 120 62 Q 80 112 40 62 Q 20 82 0 60 Z"
-              fill="#FCFBF7"
-              fillOpacity="0.74"
-            />
-            <path
-              d="M 0 74 Q 20 96 40 74 Q 80 124 120 74 Q 140 96 160 74"
-              fill="none"
-              stroke="#E5CA8C"
-              strokeWidth="1.35"
-              strokeDasharray="1.5 2.5"
-              strokeOpacity="0.88"
-            />
-            <path
-              d="M 0 60 Q 20 82 40 62 Q 80 112 120 62 Q 140 82 160 60"
-              fill="none"
-              stroke="#FFFFFF"
-              strokeWidth="2"
-              strokeOpacity="0.92"
-            />
-            <g transform="translate(80, 58)" stroke="#FFFFFF" fill="#FDFCF9" fillOpacity="0.88">
-              <circle cx="0" cy="0" r="15" strokeWidth="1.4" />
-              <circle cx="0" cy="0" r="9" strokeWidth="1.1" fill="#F0EDE2" />
-              <circle cx="0" cy="0" r="3.6" fill="#C8A252" stroke="none" />
-              {[0, 60, 120, 180, 240, 300].map((deg) => (
-                <ellipse
-                  key={deg}
-                  cx="0"
-                  cy="-11"
-                  rx="4.2"
-                  ry="6"
-                  transform={`rotate(${deg})`}
-                  fill="none"
-                  strokeWidth="1"
-                />
-              ))}
-              <path d="M -32 -14 C -24 -2, -16 8, -14 0" fill="none" strokeWidth="1.1" />
-              <path d="M 32 -14 C 24 -2, 16 8, 14 0" fill="none" strokeWidth="1.1" />
-            </g>
-            {[20, 140].map((bx) => (
-              <g key={bx} transform={`translate(${bx}, 44)`} stroke="#FFFFFF" fill="#FFFFFF" fillOpacity="0.78">
-                <circle cx="0" cy="0" r="7.5" strokeWidth="1.1" />
-                <circle cx="0" cy="0" r="2.6" fill="#C8A252" stroke="none" />
-              </g>
-            ))}
+            {/* Cute tiny eyelet hearts/dots */}
+            <circle cx="22" cy="36" r="2.2" fill="#E6D4FF" />
+            <circle cx="66" cy="36" r="2.2" fill="#FFEAF2" />
+            <circle cx="44" cy="24" r="1.8" fill="#E887AB" fillOpacity="0.6" />
           </pattern>
         </defs>
-        <rect x="0" y="0" width="800" height="130" fill={`url(#royalScallop-${uid})`} />
+        <rect x="0" y="0" width="440" height="80" fill={`url(#cuteCloudScallop-${uid})`} />
       </svg>
     </div>
   );
 };
 
 // ============================================================================
-// BLOOMING CHAMPAGNE-GOLD & JADE BOTANICAL FLOWERS & SCRATCH COUNTDOWN CARD
+// BLOOMING PASTEL SAKURA, DAISY, LAVENDER & HEART PARTICLES + SCRATCH CARD
 // ============================================================================
-const EmeraldGoldFlowerSVG = ({ variant = 0, size = 36 }) => {
-  if (variant % 3 === 0) {
+const PastelFlowerSVG = ({ variant = 0, size = 36 }) => {
+  if (variant % 4 === 0) {
+    // Cute Sakura Blossom
     return (
-      <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-md">
-        <defs>
-          <radialGradient id="champagneRoseGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#FFFDF7" />
-            <stop offset="38%" stopColor="#F5E2B8" />
-            <stop offset="74%" stopColor="#D4AF6A" />
-            <stop offset="100%" stopColor="#8C6828" />
-          </radialGradient>
-        </defs>
+      <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-sm">
+        <g transform="translate(32,32)">
+          {[0, 72, 144, 216, 288].map((deg) => (
+            <path
+              key={deg}
+              d="M 0 -2 C -9 -10, -11 -22, -2 -25 L 0 -21 L 2 -25 C 11 -22, 9 -10, 0 -2 Z"
+              transform={`rotate(${deg})`}
+              fill="#F8BBD0"
+              stroke="#FFFDFC"
+              strokeWidth="1.2"
+            />
+          ))}
+          <circle cx="0" cy="0" r="6" fill="#FFF2B2" />
+          <circle cx="-2" cy="-1.5" r="1.2" fill="#E887AB" />
+          <circle cx="2" cy="-1" r="1.2" fill="#E887AB" />
+          <circle cx="0" cy="2" r="1.2" fill="#E887AB" />
+        </g>
+      </svg>
+    );
+  }
+  if (variant % 4 === 1) {
+    // Cute Lavender Daisy
+    return (
+      <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-sm">
         <g transform="translate(32,32)">
           {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
             <ellipse
               key={deg}
               cx="0"
               cy="-14"
-              rx="9"
-              ry="14"
+              rx="6.2"
+              ry="11"
               transform={`rotate(${deg})`}
-              fill="url(#champagneRoseGrad)"
-              stroke="#FFFBF0"
-              strokeWidth="0.6"
-              opacity="0.94"
+              fill="#E6D4FF"
+              stroke="#FFFDFC"
+              strokeWidth="1"
             />
           ))}
-          {[22, 82, 142, 202, 262, 322].map((deg) => (
-            <ellipse
-              key={deg}
-              cx="0"
-              cy="-8"
-              rx="6.5"
-              ry="10"
-              transform={`rotate(${deg})`}
-              fill="#F7ECCE"
-              stroke="#9A7832"
-              strokeWidth="0.6"
-            />
-          ))}
-          <circle cx="0" cy="0" r="5.2" fill="#FFFDF7" />
-          <circle cx="0" cy="0" r="2.4" fill="#C8A252" />
+          <circle cx="0" cy="0" r="7" fill="#FFE082" stroke="#FFFDFC" strokeWidth="1.2" />
         </g>
       </svg>
     );
   }
-  if (variant % 3 === 1) {
+  if (variant % 4 === 2) {
+    // Cute Pastel Blush Heart
     return (
-      <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-md">
-        <g transform="translate(32,32)">
-          {[0, 72, 144, 216, 288].map((deg) => (
-            <path
-              key={deg}
-              d="M 0 0 C -10 -12, -12 -25, 0 -27 C 12 -25, 10 -12, 0 0 Z"
-              transform={`rotate(${deg})`}
-              fill="#6AB396"
-              stroke="#EBF9F3"
-              strokeWidth="0.9"
-            />
-          ))}
-          {[36, 108, 180, 252, 324].map((deg) => (
-            <path
-              key={deg}
-              d="M 0 0 C -6 -8, -7 -17, 0 -19 C 7 -17, 6 -8, 0 0 Z"
-              transform={`rotate(${deg})`}
-              fill="#CBEAD9"
-              opacity="0.92"
-            />
-          ))}
-          <circle cx="0" cy="0" r="4.5" fill="#E5CA8C" stroke="#9A7832" strokeWidth="0.8" />
-        </g>
+      <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-sm">
+        <path
+          d="M 32 52 C 29 49, 10 36, 10 22 C 10 13, 17 8, 24 8 C 28 8, 31 10.5, 32 13 C 33 10.5, 36 8, 40 8 C 47 8, 54 13, 54 22 C 54 36, 35 49, 32 52 Z"
+          fill="#F48FB1"
+          stroke="#FFFDFC"
+          strokeWidth="2"
+        />
+        <ellipse cx="22" cy="18" rx="4.5" ry="2.5" transform="rotate(-30 22 18)" fill="#FFFDFC" fillOpacity="0.65" />
       </svg>
     );
   }
+  // Cute Mini Lavender Sprig
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-md">
-      <g transform="translate(32,32) rotate(-20)">
-        <path d="M 0 24 Q 2 0 0 -24" stroke="#E5CA8C" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-        {[-18, -11, -4, 3, 10].map((y, idx) => (
+    <svg width={size} height={size} viewBox="0 0 64 64" className="overflow-visible drop-shadow-sm">
+      <g transform="translate(32,32) rotate(-18)">
+        <path d="M 0 22 Q 2 0 0 -22" stroke="#A6C8B0" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+        {[-16, -9, -2, 5].map((y, idx) => (
           <g key={idx} transform={`translate(0, ${y})`}>
-            <ellipse
-              cx="-6"
-              cy="-2"
-              rx="5.5"
-              ry="3.2"
-              transform="rotate(-32 -6 -2)"
-              fill="#3E8A6E"
-              stroke="#EBF9F3"
-              strokeWidth="0.6"
-            />
-            <ellipse
-              cx="6"
-              cy="-2"
-              rx="5.5"
-              ry="3.2"
-              transform="rotate(32 6 -2)"
-              fill="#6AB396"
-              stroke="#EBF9F3"
-              strokeWidth="0.6"
-            />
-            <circle cx="0" cy="-4" r="2.6" fill="#F7ECCE" />
+            <ellipse cx="-5.5" cy="-1.5" rx="4.8" ry="3" transform="rotate(-28 -5.5 -1.5)" fill="#C9A6F2" stroke="#FFFDFC" strokeWidth="0.7" />
+            <ellipse cx="5.5" cy="-1.5" rx="4.8" ry="3" transform="rotate(28 5.5 -1.5)" fill="#E6D4FF" stroke="#FFFDFC" strokeWidth="0.7" />
+            <circle cx="0" cy="-3.5" r="2.8" fill="#F8BBD0" />
           </g>
         ))}
       </g>
@@ -558,27 +493,27 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
   const [bloomCycle, setBloomCycle] = useState(0);
 
   const flowerParticles = [
-    { id: 1, tx: '-135px', ty: '-105px', rot: '-28deg', scale: 1.15, delay: 0, variant: 0, size: 42 },
-    { id: 2, tx: '135px', ty: '-100px', rot: '32deg', scale: 1.1, delay: 60, variant: 1, size: 40 },
-    { id: 3, tx: '-148px', ty: '-15px', rot: '-45deg', scale: 0.95, delay: 110, variant: 2, size: 38 },
-    { id: 4, tx: '148px', ty: '-10px', rot: '40deg', scale: 1.0, delay: 150, variant: 0, size: 38 },
-    { id: 5, tx: '-128px', ty: '88px', rot: '-20deg', scale: 1.12, delay: 90, variant: 1, size: 42 },
-    { id: 6, tx: '128px', ty: '92px', rot: '25deg', scale: 1.08, delay: 130, variant: 2, size: 40 },
-    { id: 7, tx: '-65px', ty: '-122px', rot: '-14deg', scale: 0.9, delay: 50, variant: 2, size: 34 },
-    { id: 8, tx: '68px', ty: '-120px', rot: '18deg', scale: 0.92, delay: 80, variant: 0, size: 36 },
-    { id: 9, tx: '0px', ty: '-132px', rot: '8deg', scale: 1.22, delay: 30, variant: 0, size: 46 },
-    { id: 10, tx: '-72px', ty: '116px', rot: '-18deg', scale: 0.95, delay: 140, variant: 0, size: 36 },
-    { id: 11, tx: '74px', ty: '115px', rot: '22deg', scale: 0.92, delay: 170, variant: 1, size: 36 },
-    { id: 12, tx: '0px', ty: '125px', rot: '-6deg', scale: 1.16, delay: 100, variant: 1, size: 44 },
+    { id: 1, tx: '-132px', ty: '-102px', rot: '-24deg', scale: 1.12, delay: 0, variant: 0, size: 42 },
+    { id: 2, tx: '132px', ty: '-98px', rot: '28deg', scale: 1.08, delay: 50, variant: 1, size: 40 },
+    { id: 3, tx: '-145px', ty: '-12px', rot: '-35deg', scale: 0.96, delay: 90, variant: 2, size: 34 },
+    { id: 4, tx: '145px', ty: '-8px', rot: '32deg', scale: 1.0, delay: 130, variant: 3, size: 38 },
+    { id: 5, tx: '-122px', ty: '86px', rot: '-18deg', scale: 1.1, delay: 80, variant: 1, size: 40 },
+    { id: 6, tx: '124px', ty: '90px', rot: '22deg', scale: 1.06, delay: 110, variant: 0, size: 40 },
+    { id: 7, tx: '-64px', ty: '-122px', rot: '-14deg', scale: 0.92, delay: 40, variant: 2, size: 32 },
+    { id: 8, tx: '66px', ty: '-118px', rot: '16deg', scale: 0.94, delay: 70, variant: 0, size: 36 },
+    { id: 9, tx: '0px', ty: '-132px', rot: '6deg', scale: 1.2, delay: 20, variant: 2, size: 38 },
+    { id: 10, tx: '-70px', ty: '116px', rot: '-16deg', scale: 0.95, delay: 120, variant: 3, size: 36 },
+    { id: 11, tx: '72px', ty: '115px', rot: '20deg', scale: 0.94, delay: 150, variant: 2, size: 32 },
+    { id: 12, tx: '0px', ty: '124px', rot: '-6deg', scale: 1.15, delay: 90, variant: 0, size: 42 },
   ];
 
   const cornerBlossoms = [
-    { pos: 'top-2 left-2', variant: 0, size: 34, delay: '120ms' },
-    { pos: 'top-6 left-9', variant: 2, size: 26, delay: '260ms' },
-    { pos: 'top-2 right-2', variant: 1, size: 34, delay: '180ms' },
-    { pos: 'top-6 right-9', variant: 0, size: 26, delay: '320ms' },
-    { pos: 'bottom-2 left-2', variant: 1, size: 32, delay: '220ms' },
-    { pos: 'bottom-2 right-2', variant: 0, size: 32, delay: '280ms' },
+    { pos: 'top-2 left-2', variant: 0, size: 30, delay: '100ms' },
+    { pos: 'top-7 left-8', variant: 2, size: 20, delay: '220ms' },
+    { pos: 'top-2 right-2', variant: 1, size: 30, delay: '150ms' },
+    { pos: 'top-7 right-8', variant: 2, size: 20, delay: '280ms' },
+    { pos: 'bottom-2 left-2', variant: 1, size: 28, delay: '200ms' },
+    { pos: 'bottom-2 right-2', variant: 0, size: 28, delay: '260ms' },
   ];
 
   const initFoilCanvas = () => {
@@ -599,54 +534,55 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.globalCompositeOperation = 'source-over';
 
+      // Shimmering Iridescent Pastel Lavender-Pink Foil
       const grad = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-      grad.addColorStop(0, '#D8BE86');
-      grad.addColorStop(0.28, '#F6F3E8');
-      grad.addColorStop(0.5, '#E5CA8C');
-      grad.addColorStop(0.75, '#FAF8F0');
-      grad.addColorStop(1, '#C8A252');
+      grad.addColorStop(0, '#F5D0E6');
+      grad.addColorStop(0.26, '#FFF0F6');
+      grad.addColorStop(0.52, '#DFC4FA');
+      grad.addColorStop(0.76, '#FCE4EC');
+      grad.addColorStop(1, '#E6B4D5');
 
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, rect.width, rect.height);
 
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.36)';
-      ctx.lineWidth = 1;
-      for (let x = -rect.height; x < rect.width + rect.height; x += 14) {
+      // Soft diagonal pearlescent sheen stripes
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.lineWidth = 1.2;
+      for (let x = -rect.height; x < rect.width + rect.height; x += 15) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x - rect.height, rect.height);
         ctx.stroke();
       }
 
-      ctx.strokeStyle = 'rgba(15, 51, 41, 0.34)';
-      ctx.lineWidth = 1.2;
-      ctx.strokeRect(12, 12, Math.max(1, rect.width - 24), Math.max(1, rect.height - 24));
-
-      ctx.setLineDash([4, 3]);
-      ctx.strokeStyle = 'rgba(154, 120, 50, 0.65)';
-      ctx.strokeRect(18, 18, Math.max(1, rect.width - 36), Math.max(1, rect.height - 36));
+      // Cute inner dashed border
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = 'rgba(124, 96, 140, 0.35)';
+      ctx.lineWidth = 1.4;
+      ctx.strokeRect(14, 14, Math.max(1, rect.width - 28), Math.max(1, rect.height - 28));
       ctx.setLineDash([]);
 
       const cx = rect.width / 2;
       const cy = rect.height / 2;
 
-      ctx.fillStyle = 'rgba(15, 51, 41, 0.06)';
+      // Soft glowing heart circle backdrop
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
       ctx.beginPath();
-      ctx.arc(cx, cy - 16, 34, 0, Math.PI * 2);
+      ctx.arc(cx, cy - 12, 36, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#0F3329';
-      ctx.font = 'italic 22px "Cormorant Garamond", Georgia, serif';
+      ctx.fillStyle = '#4A3259';
+      ctx.font = 'italic 600 22px "Playfair Display", Georgia, serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Scratch to Reveal', cx, cy - 8);
+      ctx.fillText('Scratch to Reveal ♡', cx, cy - 5);
 
-      ctx.font = '500 9.5px "Montserrat", sans-serif';
-      ctx.fillStyle = 'rgba(15, 51, 41, 0.85)';
-      ctx.fillText('OUR SPECIAL DATE & COUNTDOWN', cx, cy + 16);
+      ctx.font = '600 9.5px "Quicksand", sans-serif';
+      ctx.fillStyle = '#6E4C82';
+      ctx.fillText('OUR SPECIAL DATE & COUNTDOWN', cx, cy + 20);
 
-      ctx.font = '300 9px "Montserrat", sans-serif';
-      ctx.fillStyle = 'rgba(53, 94, 82, 0.88)';
-      ctx.fillText('Rub gently with your finger or cursor', cx, cy + 37);
+      ctx.font = '500 9.5px "Quicksand", sans-serif';
+      ctx.fillStyle = '#8E6DA0';
+      ctx.fillText('Rub gently with your finger or cursor ✨', cx, cy + 40);
     } catch {
       // Ignore canvas initialization issues
     }
@@ -714,14 +650,14 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
       ctx.globalCompositeOperation = 'destination-out';
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      ctx.lineWidth = 38;
+      ctx.lineWidth = 40;
 
       ctx.beginPath();
       if (lastPointRef.current) {
         ctx.moveTo(lastPointRef.current.x, lastPointRef.current.y);
         ctx.lineTo(x, y);
       } else {
-        ctx.arc(x, y, 20, 0, Math.PI * 2);
+        ctx.arc(x, y, 22, 0, Math.PI * 2);
       }
       ctx.stroke();
 
@@ -768,7 +704,8 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
   };
 
   return (
-    <div className="relative max-w-xs mx-auto my-2 select-none">
+    <div className="relative max-w-[330px] mx-auto my-2 select-none">
+      {/* Burst of Pastel Flowers & Hearts on Reveal */}
       {isRevealed && (
         <div
           key={bloomCycle}
@@ -777,7 +714,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
           {flowerParticles.map((p) => (
             <div
               key={p.id}
-              className="emerald-flower-particle"
+              className="pastel-flower-particle"
               style={{
                 '--tx': p.tx,
                 '--ty': p.ty,
@@ -786,13 +723,14 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
                 animationDelay: `${p.delay}ms`,
               }}
             >
-              <EmeraldGoldFlowerSVG variant={p.variant} size={p.size} />
+              <PastelFlowerSVG variant={p.variant} size={p.size} />
             </div>
           ))}
         </div>
       )}
 
-      <div className="relative rounded-3xl bg-[#081E17] border border-[#E5CA8C]/35 px-5 py-9 shadow-2xl overflow-hidden">
+      {/* Frosted Cute Scratch Card Container */}
+      <div className="relative rounded-[28px] bg-white/80 backdrop-blur-md border-2 border-white/90 px-4 py-8 shadow-[0_14px_35px_rgba(112,72,144,0.18)] overflow-hidden">
         {isRevealed &&
           cornerBlossoms.map((cb, idx) => (
             <div
@@ -800,23 +738,23 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
               className={`absolute ${cb.pos} pointer-events-none z-20 corner-flower-pop`}
               style={{ animationDelay: cb.delay }}
             >
-              <EmeraldGoldFlowerSVG variant={cb.variant} size={cb.size} />
+              <PastelFlowerSVG variant={cb.variant} size={cb.size} />
             </div>
           ))}
 
         <div
-          className={`relative z-10 transition-all duration-1000 ${
+          className={`relative z-10 transition-all duration-700 ${
             isRevealed
               ? 'opacity-100 scale-100 translate-y-0'
               : 'opacity-45 scale-95 translate-y-2'
           }`}
         >
-          <p className="font-sans-clean text-[9px] tracking-[0.28em] uppercase text-[#E5CA8C] mb-1">
-            Save Our Date
+          <p className="font-cute-sans text-[10px] font-semibold tracking-[0.26em] uppercase text-[#D66E98] mb-1">
+            ♡ Save Our Date ♡
           </p>
 
           <h3
-            className={`font-serif-editorial text-2xl sm:text-3xl text-[#F6F4EC] tracking-wide mb-1 ${
+            className={`font-cute-serif text-2xl sm:text-[26px] font-semibold text-[#4A3259] tracking-wide mb-1 ${
               isRevealed ? 'date-number-rise' : ''
             }`}
           >
@@ -824,30 +762,33 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
           </h3>
 
           <p
-            className={`font-sans-clean text-[10px] tracking-[0.18em] uppercase text-[#E5CA8C]/90 mb-6 ${
+            className={`font-cute-sans text-[11px] font-medium tracking-[0.14em] uppercase text-[#7C608C] mb-5 ${
               isRevealed ? 'date-number-rise' : ''
             }`}
-            style={{ animationDelay: '140ms' }}
+            style={{ animationDelay: '120ms' }}
           >
             {dateConfig.displayTime}
           </p>
 
-          <div className="grid grid-cols-4 gap-2 max-w-[260px] mx-auto pt-3 border-t border-[#E5CA8C]/25">
+          {/* Cute Rounded Frosted Countdown Tiles */}
+          <div className="grid grid-cols-4 gap-2 max-w-[280px] mx-auto pt-3 border-t border-[#E6D4FF]">
             {[
-              { value: timeLeft.days, label: 'DAYS', delay: '220ms' },
-              { value: timeLeft.hours, label: 'HOURS', delay: '340ms' },
-              { value: timeLeft.minutes, label: 'MINUTES', delay: '460ms' },
-              { value: timeLeft.seconds, label: 'SECONDS', delay: '580ms' },
+              { value: timeLeft.days, label: 'DAYS', delay: '180ms' },
+              { value: timeLeft.hours, label: 'HOURS', delay: '280ms' },
+              { value: timeLeft.minutes, label: 'MINS', delay: '380ms' },
+              { value: timeLeft.seconds, label: 'SECS', delay: '480ms' },
             ].map((item, idx) => (
               <div
                 key={idx}
-                className={`flex flex-col items-center ${isRevealed ? 'countdown-digit-pop' : ''}`}
+                className={`flex flex-col items-center justify-center rounded-2xl bg-gradient-to-b from-[#FFF5F9] to-[#F6EEFF] border border-[#F8BBD0]/70 py-2.5 px-1 shadow-sm ${
+                  isRevealed ? 'countdown-digit-pop' : ''
+                }`}
                 style={{ animationDelay: item.delay }}
               >
-                <span className="font-serif-editorial text-3xl sm:text-4xl font-light tracking-wider text-[#F6F4EC] drop-shadow">
+                <span className="font-cute-serif text-2xl sm:text-[28px] font-bold leading-none text-[#4A3259]">
                   {String(item.value).padStart(2, '0')}
                 </span>
-                <span className="font-sans-clean text-[8px] tracking-[0.22em] text-[#E5CA8C]/85 mt-1">
+                <span className="font-cute-sans text-[8px] font-bold tracking-[0.16em] text-[#B5759B] mt-1.5">
                   {item.label}
                 </span>
               </div>
@@ -855,6 +796,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
           </div>
         </div>
 
+        {/* Interactive Scratch Foil Canvas */}
         <canvas
           ref={canvasRef}
           onMouseDown={handlePointerDown}
@@ -865,20 +807,21 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
           onTouchMove={handlePointerMove}
           onTouchEnd={handlePointerUp}
           style={{ touchAction: 'none' }}
-          className={`absolute inset-0 w-full h-full z-20 cursor-grab active:cursor-grabbing transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full z-20 cursor-grab active:cursor-grabbing transition-opacity duration-700 rounded-[26px] ${
             isRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100'
           }`}
         />
       </div>
 
+      {/* Cute Pill Action Buttons */}
       <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
         {!isRevealed ? (
           <button
             type="button"
             onClick={triggerFullReveal}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F6F4EC]/10 border border-[#E5CA8C]/45 text-[10px] font-sans-clean tracking-[0.2em] uppercase text-[#F6F4EC] hover:bg-[#E5CA8C]/20 transition cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/90 border border-[#F8BBD0] text-[11px] font-cute-sans font-semibold tracking-[0.14em] uppercase text-[#5E3D72] shadow-md hover:bg-[#FFEAF2] hover:scale-[1.02] transition cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#E5CA8C]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#E887AB]" />
             <span>
               {scratchPercent > 0
                 ? `Scratched ${scratchPercent}% · Tap to Bloom`
@@ -890,18 +833,18 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
             <button
               type="button"
               onClick={handleReplayBloom}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#C8A252]/20 border border-[#E5CA8C]/55 text-[10px] font-sans-clean tracking-[0.18em] uppercase text-[#F6F4EC] hover:bg-[#C8A252]/35 transition cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/90 border border-[#F8BBD0] text-[10px] font-cute-sans font-semibold tracking-[0.14em] uppercase text-[#5E3D72] shadow-sm hover:bg-[#FFEAF2] transition cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#E5CA8C]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#E887AB]" />
               <span>Bloom Flowers</span>
             </button>
 
             <button
               type="button"
               onClick={handleResetScratchCard}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[#F6F4EC]/30 text-[10px] font-sans-clean tracking-[0.16em] uppercase text-[#F6F4EC]/85 hover:bg-[#F6F4EC]/10 transition cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/65 border border-white/80 text-[10px] font-cute-sans font-semibold tracking-[0.12em] uppercase text-[#5E3D72] hover:bg-white/90 transition cursor-pointer"
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-3 h-3 text-[#B58CE0]" />
               <span>Reset Foil</span>
             </button>
 
@@ -913,7 +856,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
               }&details=${encodeURIComponent(coupleConfig.invitationText)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#E5CA8C]/45 text-[10px] font-sans-clean tracking-[0.2em] uppercase text-[#E5CA8C] hover:bg-[#E5CA8C]/15 transition"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#E887AB] text-white text-[10px] font-cute-sans font-semibold tracking-[0.16em] uppercase shadow-md hover:bg-[#D9749B] transition"
             >
               <Calendar className="w-3.5 h-3.5" />
               <span>Save the Date</span>
@@ -926,887 +869,899 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
 };
 
 // ============================================================================
-// FINE-LINE ETCHED ILLUSTRATIONS (Deep Royal Emerald #0F3329 & Gold #C8A252)
+// CUTE PASTEL ILLUSTRATIONS (Hero Arch, Fairy Lights, Lovebirds, Venue, Timeline)
 // ============================================================================
 
-/** Architectural Stationery Frame for Section 1 Letterpress Hero */
-const HeroStationeryFrameSVG = () => (
+/** Section 1: Soft Pastel Scalloped Arch Card Frame + Hanging Twinkling Fairy Lights */
+const CuteHeroArchFrameSVG = () => (
   <svg
-    viewBox="0 0 380 780"
+    viewBox="0 0 390 790"
     preserveAspectRatio="none"
-    className="absolute inset-4 sm:inset-5 w-[calc(100%-2rem)] sm:w-[calc(100%-2.5rem)] h-[calc(100%-2rem)] sm:h-[calc(100%-2.5rem)] pointer-events-none select-none"
+    className="absolute inset-3.5 sm:inset-4 w-[calc(100%-1.75rem)] sm:w-[calc(100%-2rem)] h-[calc(100%-1.75rem)] sm:h-[calc(100%-2rem)] pointer-events-none select-none"
   >
-    <g fill="none" stroke="#C8A252" strokeLinecap="round" strokeLinejoin="round">
-      <path
-        d="M 22 4 L 358 4 A 18 18 0 0 0 376 22 L 376 758 A 18 18 0 0 0 358 776 L 22 776 A 18 18 0 0 0 4 758 L 4 22 A 18 18 0 0 0 22 4 Z"
-        strokeWidth="1"
-        strokeOpacity="0.72"
-      />
-      <path
-        d="M 27 11 L 353 11 A 14 14 0 0 0 369 27 L 369 753 A 14 14 0 0 0 353 769 L 27 769 A 14 14 0 0 0 11 753 L 11 27 A 14 14 0 0 0 27 11 Z"
-        strokeWidth="0.55"
-        strokeOpacity="0.48"
-      />
+    <defs>
+      <linearGradient id="cuteArchStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#F8BBD0" />
+        <stop offset="50%" stopColor="#D6B4F8" />
+        <stop offset="100%" stopColor="#F4A7C1" />
+      </linearGradient>
+    </defs>
+
+    {/* Outer rounded arch frame */}
+    <path
+      d="M 18 190 A 177 177 0 0 1 372 190 L 372 752 Q 372 778 346 778 L 44 778 Q 18 778 18 752 Z"
+      fill="#FFFDFC"
+      fillOpacity="0.6"
+      stroke="url(#cuteArchStroke)"
+      strokeWidth="2"
+    />
+
+    {/* Inner dainty dotted arch */}
+    <path
+      d="M 27 192 A 168 168 0 0 1 363 192 L 363 746 Q 363 769 340 769 L 50 769 Q 27 769 27 746 Z"
+      fill="none"
+      stroke="#E4A9B8"
+      strokeWidth="1.15"
+      strokeDasharray="3 5"
+      strokeLinecap="round"
+      strokeOpacity="0.75"
+    />
+  </svg>
+);
+
+/** Dainty Hanging Fairy Lights & Pastel Blossoms at Top of Section 1 */
+const CuteFairyLightsHeaderSVG = () => (
+  <svg viewBox="0 0 360 88" className="w-full max-w-[330px] h-auto mx-auto select-none overflow-visible">
+    <g fill="none" strokeLinecap="round">
+      {/* Gentle fairy-light wire swags */}
+      <path d="M 12 10 Q 95 52 180 18 Q 265 52 348 10" stroke="#D9A0B6" strokeWidth="1.2" strokeOpacity="0.8" />
+      <path d="M 30 6 Q 105 38 180 14 Q 255 38 330 6" stroke="#C5A3E8" strokeWidth="0.9" strokeDasharray="2 3" strokeOpacity="0.65" />
+
+      {/* Hanging glowing fairy bulbs & tiny stars */}
       {[
-        [17, 17],
-        [363, 17],
-        [17, 763],
-        [363, 763],
-      ].map(([cx, cy], idx) => (
-        <polygon
+        { x: 52, y: 26, len: 16, color: '#FFE082', star: false },
+        { x: 96, y: 36, len: 22, color: '#F8BBD0', star: true },
+        { x: 140, y: 30, len: 15, color: '#E6D4FF', star: false },
+        { x: 180, y: 18, len: 26, color: '#FFE082', star: true },
+        { x: 220, y: 30, len: 15, color: '#F8BBD0', star: false },
+        { x: 264, y: 36, len: 22, color: '#E6D4FF', star: true },
+        { x: 308, y: 26, len: 16, color: '#FFE082', star: false },
+      ].map((b, idx) => (
+        <g key={idx}>
+          <line x1={b.x} y1={b.y} x2={b.x} y2={b.y + b.len} stroke="#D9A0B6" strokeWidth="0.9" strokeOpacity="0.75" />
+          <circle cx={b.x} cy={b.y + b.len + 3} r="8" fill={b.color} fillOpacity="0.28" className="cute-twinkle" style={{ animationDelay: `${idx * 240}ms` }} />
+          {b.star ? (
+            <path
+              d={`M ${b.x} ${b.y + b.len - 2} L ${b.x + 2} ${b.y + b.len + 2} L ${b.x + 6} ${b.y + b.len + 3.5} L ${b.x + 2} ${b.y + b.len + 5} L ${b.x} ${b.y + b.len + 9} L ${b.x - 2} ${b.y + b.len + 5} L ${b.x - 6} ${b.y + b.len + 3.5} L ${b.x - 2} ${b.y + b.len + 2} Z`}
+              fill={b.color}
+              stroke="#FFFDFC"
+              strokeWidth="0.7"
+              className="cute-twinkle"
+              style={{ animationDelay: `${idx * 240}ms` }}
+            />
+          ) : (
+            <circle cx={b.x} cy={b.y + b.len + 3} r="3.4" fill={b.color} stroke="#FFFDFC" strokeWidth="0.8" />
+          )}
+        </g>
+      ))}
+
+      {/* Cute top floral wreath cluster */}
+      <g transform="translate(180, 15)">
+        <ellipse cx="-16" cy="-2" rx="8" ry="4" transform="rotate(-18 -16 -2)" fill="#C6E2CE" />
+        <ellipse cx="16" cy="-2" rx="8" ry="4" transform="rotate(18 16 -2)" fill="#C6E2CE" />
+        <circle cx="-8" cy="0" r="5" fill="#E6D4FF" stroke="#FFFDFC" strokeWidth="0.8" />
+        <circle cx="8" cy="0" r="5" fill="#F8BBD0" stroke="#FFFDFC" strokeWidth="0.8" />
+        <circle cx="0" cy="-2" r="6" fill="#FFEAF2" stroke="#E887AB" strokeWidth="1" />
+        <circle cx="0" cy="-2" r="2.2" fill="#FFE082" />
+      </g>
+    </g>
+  </svg>
+);
+
+/** Section 2: Adorable Kissing Pastel Lovebirds with Blush Cheeks & Floating Heart */
+const CuteLovebirdsIllustration = () => (
+  <svg viewBox="0 0 240 140" className="w-52 h-auto mx-auto cute-float-slow select-none">
+    <defs>
+      <linearGradient id="birdLeftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFE0EC" />
+        <stop offset="100%" stopColor="#F5A9C4" />
+      </linearGradient>
+      <linearGradient id="birdRightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#EFE3FF" />
+        <stop offset="100%" stopColor="#C9A8F2" />
+      </linearGradient>
+    </defs>
+
+    {/* Cute pastel floral branch */}
+    <path
+      d="M 28 106 Q 120 96 212 106"
+      fill="none"
+      stroke="#C9A38D"
+      strokeWidth="3.5"
+      strokeLinecap="round"
+    />
+    {/* Little sage pastel leaves on the branch */}
+    <ellipse cx="48" cy="98" rx="10" ry="4.5" transform="rotate(-24 48 98)" fill="#C5E0CD" />
+    <ellipse cx="64" cy="108" rx="9" ry="4" transform="rotate(20 64 108)" fill="#D7EBD9" />
+    <ellipse cx="192" cy="98" rx="10" ry="4.5" transform="rotate(24 192 98)" fill="#C5E0CD" />
+    <ellipse cx="176" cy="108" rx="9" ry="4" transform="rotate(-20 176 108)" fill="#D7EBD9" />
+
+    {/* Tiny flowers on branch ends */}
+    <g transform="translate(36, 102)">
+      <circle cx="0" cy="0" r="6" fill="#F8BBD0" />
+      <circle cx="0" cy="0" r="2.2" fill="#FFE082" />
+    </g>
+    <g transform="translate(204, 102)">
+      <circle cx="0" cy="0" r="6" fill="#E6D4FF" />
+      <circle cx="0" cy="0" r="2.2" fill="#FFE082" />
+    </g>
+
+    {/* Floating Blush Heart between the two lovebirds */}
+    <g className="cute-heartbeat" style={{ transformOrigin: '120px 34px' }}>
+      <path
+        d="M 120 44 C 118 42, 107 34, 107 26 C 107 20.5, 111.5 17.5, 115.5 17.5 C 117.8 17.5, 119.3 19, 120 20.8 C 120.7 19, 122.2 17.5, 124.5 17.5 C 128.5 17.5, 133 20.5, 133 26 C 133 34, 122 42, 120 44 Z"
+        fill="#F06292"
+        stroke="#FFFDFC"
+        strokeWidth="1.4"
+      />
+      <ellipse cx="114.5" cy="23.5" rx="2.5" ry="1.3" transform="rotate(-30 114.5 23.5)" fill="#FFFDFC" fillOpacity="0.7" />
+    </g>
+
+    {/* Little sparkles around heart */}
+    <circle cx="98" cy="22" r="1.8" fill="#E887AB" className="cute-twinkle" />
+    <circle cx="142" cy="22" r="1.8" fill="#B58CE0" className="cute-twinkle" style={{ animationDelay: '400ms' }} />
+
+    {/* LEFT CUTE LOVEBIRD (Blush Rose) */}
+    <g>
+      {/* Tail feathers */}
+      <path d="M 65 92 L 42 104 L 48 90 L 38 92 L 58 80 Z" fill="#E887AB" />
+      {/* Plump cute body */}
+      <path
+        d="M 62 84 C 60 64, 76 46, 94 48 C 107 49, 112 60, 112 72 C 112 90, 96 101, 78 100 C 68 99, 63 92, 62 84 Z"
+        fill="url(#birdLeftGrad)"
+        stroke="#FFFDFC"
+        strokeWidth="1.6"
+      />
+      {/* Cute wing */}
+      <path
+        d="M 74 72 C 84 68, 96 74, 96 84 C 96 91, 84 94, 72 88 C 68 85, 69 75, 74 72 Z"
+        fill="#FCE4EC"
+        stroke="#E887AB"
+        strokeWidth="1"
+      />
+      {/* Cute happy closed eye */}
+      <path d="M 94 61 Q 98 57 102 61" fill="none" stroke="#4A3259" strokeWidth="1.6" strokeLinecap="round" />
+      {/* Rosy blush cheek */}
+      <ellipse cx="95" cy="67" rx="4.5" ry="2.6" fill="#F06292" fillOpacity="0.45" />
+      {/* Cute little beak */}
+      <path d="M 111 63 L 119 66 L 111 69 Z" fill="#FFB74D" stroke="#F57C00" strokeWidth="0.6" strokeLinejoin="round" />
+      {/* Little feet perched */}
+      <path d="M 84 100 L 84 104 M 90 100 L 90 104" stroke="#E887AB" strokeWidth="1.8" strokeLinecap="round" />
+    </g>
+
+    {/* RIGHT CUTE LOVEBIRD (Dreamy Lavender) */}
+    <g>
+      {/* Tail feathers */}
+      <path d="M 175 92 L 198 104 L 192 90 L 202 92 L 182 80 Z" fill="#B58CE0" />
+      {/* Plump cute body */}
+      <path
+        d="M 178 84 C 180 64, 164 46, 146 48 C 133 49, 128 60, 128 72 C 128 90, 144 101, 162 100 C 172 99, 177 92, 178 84 Z"
+        fill="url(#birdRightGrad)"
+        stroke="#FFFDFC"
+        strokeWidth="1.6"
+      />
+      {/* Cute wing */}
+      <path
+        d="M 166 72 C 156 68, 144 74, 144 84 C 144 91, 156 94, 168 88 C 172 85, 171 75, 166 72 Z"
+        fill="#F6EEFF"
+        stroke="#B58CE0"
+        strokeWidth="1"
+      />
+      {/* Cute happy closed eye */}
+      <path d="M 146 61 Q 142 57 138 61" fill="none" stroke="#4A3259" strokeWidth="1.6" strokeLinecap="round" />
+      {/* Rosy blush cheek */}
+      <ellipse cx="145" cy="67" rx="4.5" ry="2.6" fill="#F06292" fillOpacity="0.4" />
+      {/* Cute little beak */}
+      <path d="M 129 63 L 121 66 L 129 69 Z" fill="#FFB74D" stroke="#F57C00" strokeWidth="0.6" strokeLinejoin="round" />
+      {/* Little feet perched */}
+      <path d="M 156 100 L 156 104 M 150 100 L 150 104" stroke="#B58CE0" strokeWidth="1.8" strokeLinecap="round" />
+    </g>
+  </svg>
+);
+
+/** Section 4: Cute Pastel Floral Arch Venue Illustration with Fairy Lights */
+const CuteVenueArchIllustration = () => (
+  <div className="relative w-72 sm:w-80 mx-auto my-6 cute-float-slow select-none">
+    <svg viewBox="0 0 320 350" className="w-full h-auto drop-shadow-sm">
+      <defs>
+        <linearGradient id="pastelSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#F4E8FF" />
+          <stop offset="55%" stopColor="#FFEAF2" />
+          <stop offset="100%" stopColor="#FFFDFC" />
+        </linearGradient>
+        <clipPath id="cuteVenueArchClip">
+          <path d="M 54 150 A 106 106 0 0 1 266 150 L 266 296 Q 266 312 250 312 L 70 312 Q 54 312 54 296 Z" />
+        </clipPath>
+      </defs>
+
+      {/* Outer decorative pastel border */}
+      <path
+        d="M 46 150 A 114 114 0 0 1 274 150 L 274 300 Q 274 320 254 320 L 66 320 Q 46 320 46 300 Z"
+        fill="#FFFDFC"
+        stroke="#F8BBD0"
+        strokeWidth="2"
+      />
+      <path
+        d="M 54 150 A 106 106 0 0 1 266 150 L 266 296 Q 266 312 250 312 L 70 312 Q 54 312 54 296 Z"
+        fill="url(#pastelSkyGrad)"
+        stroke="#E6D4FF"
+        strokeWidth="1.5"
+      />
+
+      {/* Inside Arch Scene */}
+      <g clipPath="url(#cuteVenueArchClip)">
+        {/* Fluffy pastel clouds */}
+        <g fill="#FFFDFC" fillOpacity="0.88">
+          <circle cx="92" cy="95" r="16" />
+          <circle cx="108" cy="92" r="19" />
+          <circle cx="124" cy="97" r="14" />
+          <circle cx="208" cy="112" r="13" />
+          <circle cx="222" cy="109" r="16" />
+          <circle cx="236" cy="113" r="12" />
+        </g>
+
+        {/* Hanging fairy light swags inside arch */}
+        <path d="M 54 110 Q 108 140 160 118 Q 212 140 266 110" fill="none" stroke="#D9A0B6" strokeWidth="1" />
+        {[82, 110, 136, 160, 184, 210, 238].map((bx, i) => (
+          <circle
+            key={i}
+            cx={bx}
+            cy={i === 3 ? 119 : i === 1 || i === 5 ? 129 : 124}
+            r="3"
+            fill="#FFE082"
+            stroke="#FFFDFC"
+            strokeWidth="0.7"
+            className="cute-twinkle"
+            style={{ animationDelay: `${i * 220}ms` }}
+          />
+        ))}
+
+        {/* Cute Pastel Mahal Pavilion */}
+        <rect x="92" y="168" width="136" height="106" rx="6" fill="#FFFDFC" stroke="#D9A0B6" strokeWidth="1.5" />
+        {/* Roof dome & cute finial */}
+        <path d="M 118 168 Q 160 124 202 168 Z" fill="#F8BBD0" stroke="#D9A0B6" strokeWidth="1.4" />
+        <path d="M 136 168 Q 160 140 184 168 Z" fill="#FFEAF2" />
+        <circle cx="160" cy="136" r="4" fill="#FFE082" stroke="#D9A0B6" strokeWidth="1" />
+        {/* Side mini domes */}
+        <path d="M 92 168 Q 106 146 120 168 Z" fill="#E6D4FF" stroke="#C5A3E8" strokeWidth="1.2" />
+        <path d="M 200 168 Q 214 146 228 168 Z" fill="#E6D4FF" stroke="#C5A3E8" strokeWidth="1.2" />
+
+        {/* Decorative roof scallops */}
+        <path
+          d="M 92 174 Q 103 182 114 174 Q 125 182 136 174 Q 148 182 160 174 Q 172 182 184 174 Q 195 182 206 174 Q 217 182 228 174"
+          fill="none"
+          stroke="#E887AB"
+          strokeWidth="1.2"
+        />
+
+        {/* Cute Arched Doorway & Windows */}
+        <path
+          d="M 140 274 L 140 226 A 20 20 0 0 1 180 226 L 180 274 Z"
+          fill="#FFEAF2"
+          stroke="#D9A0B6"
+          strokeWidth="1.4"
+        />
+        {/* Little heart above the entrance door */}
+        <path
+          d="M 160 218 C 159 217, 155 214, 155 211 C 155 209, 157 208, 158.5 208 C 159.4 208, 160 208.8, 160 209.5 C 160 208.8, 160.6 208, 161.5 208 C 163 208, 165 209, 165 211 C 165 214, 161 217, 160 218 Z"
+          fill="#E887AB"
+        />
+        {/* Side arched windows */}
+        {[114, 206].map((wx, idx) => (
+          <path
+            key={idx}
+            d={`M ${wx - 10} 248 L ${wx - 10} 214 A 10 10 0 0 1 ${wx + 10} 214 L ${wx + 10} 248 Z`}
+            fill="#F6EEFF"
+            stroke="#C5A3E8"
+            strokeWidth="1.2"
+          />
+        ))}
+
+        {/* Garden pathway & pastel bushes */}
+        <ellipse cx="160" cy="296" rx="125" ry="30" fill="#DDF0E3" />
+        <path d="M 142 274 L 122 316 L 198 316 L 178 274 Z" fill="#FFF7FA" />
+        <circle cx="82" cy="272" r="18" fill="#C7E4D0" />
+        <circle cx="238" cy="272" r="18" fill="#C7E4D0" />
+        <circle cx="78" cy="268" r="4" fill="#F8BBD0" />
+        <circle cx="90" cy="274" r="3.5" fill="#E6D4FF" />
+        <circle cx="234" cy="267" r="4" fill="#F8BBD0" />
+        <circle cx="244" cy="275" r="3.5" fill="#FFE082" />
+      </g>
+
+      {/* Cute Floral Bouquet Accents on the Outer Arch */}
+      <g transform="translate(66, 76)">
+        <ellipse cx="-10" cy="12" rx="11" ry="5" transform="rotate(-45 -10 12)" fill="#C5E0CD" />
+        <ellipse cx="12" cy="-10" rx="11" ry="5" transform="rotate(20 12 -10)" fill="#C5E0CD" />
+        <circle cx="0" cy="0" r="11" fill="#F8BBD0" stroke="#FFFDFC" strokeWidth="1.4" />
+        <circle cx="0" cy="0" r="4" fill="#FFE082" />
+        <circle cx="14" cy="8" r="7.5" fill="#E6D4FF" stroke="#FFFDFC" strokeWidth="1.2" />
+        <circle cx="14" cy="8" r="2.6" fill="#FFF2B2" />
+      </g>
+
+      <g transform="translate(254, 76)">
+        <ellipse cx="10" cy="12" rx="11" ry="5" transform="rotate(45 10 12)" fill="#C5E0CD" />
+        <ellipse cx="-12" cy="-10" rx="11" ry="5" transform="rotate(-20 -12 -10)" fill="#C5E0CD" />
+        <circle cx="0" cy="0" r="11" fill="#E6D4FF" stroke="#FFFDFC" strokeWidth="1.4" />
+        <circle cx="0" cy="0" r="4" fill="#FFE082" />
+        <circle cx="-14" cy="8" r="7.5" fill="#F8BBD0" stroke="#FFFDFC" strokeWidth="1.2" />
+        <circle cx="-14" cy="8" r="2.6" fill="#FFF2B2" />
+      </g>
+    </svg>
+  </div>
+);
+
+/** Section 5 Top: Cute Pastel Bunting & Fairy-Light Floral Garland */
+const CuteBuntingGarlandSVG = () => (
+  <svg viewBox="0 0 400 92" className="w-full h-auto mb-2 select-none">
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+      {/* Main curved string */}
+      <path d="M 0 18 Q 100 66 200 26 Q 300 66 400 18" stroke="#D9A0B6" strokeWidth="1.4" />
+
+      {/* Cute pastel bunting pennants */}
+      {[
+        { x: 46, y: 34, rot: 18, fill: '#FFEAF2', stroke: '#F8BBD0' },
+        { x: 86, y: 44, rot: 4, fill: '#F0E4FF', stroke: '#D6B4F8' },
+        { x: 126, y: 42, rot: -10, fill: '#FFF3D6', stroke: '#F7D99C' },
+        { x: 164, y: 34, rot: -18, fill: '#FFEAF2', stroke: '#F8BBD0' },
+        { x: 236, y: 34, rot: 18, fill: '#F0E4FF', stroke: '#D6B4F8' },
+        { x: 274, y: 42, rot: 10, fill: '#FFF3D6', stroke: '#F7D99C' },
+        { x: 314, y: 44, rot: -4, fill: '#FFEAF2', stroke: '#F8BBD0' },
+        { x: 354, y: 34, rot: -18, fill: '#F0E4FF', stroke: '#D6B4F8' },
+      ].map((p, idx) => (
+        <g key={idx} transform={`translate(${p.x}, ${p.y}) rotate(${p.rot})`}>
+          <path d="M -12 0 L 12 0 L 0 22 Z" fill={p.fill} stroke={p.stroke} strokeWidth="1.2" />
+          <circle cx="0" cy="8" r="2" fill="#E887AB" fillOpacity="0.55" />
+        </g>
+      ))}
+
+      {/* Center little blossom bow */}
+      <g transform="translate(200, 26)">
+        <ellipse cx="-11" cy="0" rx="7" ry="4" fill="#F8BBD0" stroke="#FFFDFC" strokeWidth="0.9" />
+        <ellipse cx="11" cy="0" rx="7" ry="4" fill="#F8BBD0" stroke="#FFFDFC" strokeWidth="0.9" />
+        <circle cx="0" cy="0" r="5" fill="#E887AB" stroke="#FFFDFC" strokeWidth="1" />
+      </g>
+
+      {/* Tiny twinkling fairy dots */}
+      {[66, 106, 146, 254, 294, 334].map((x, idx) => (
+        <circle
           key={idx}
-          points={`${cx},${cy - 3.5} ${cx + 3.5},${cy} ${cx},${cy + 3.5} ${cx - 3.5},${cy}`}
-          fill="#C8A252"
-          fillOpacity="0.65"
-          stroke="none"
+          cx={x}
+          cy={idx % 2 === 0 ? 48 : 54}
+          r="2.4"
+          fill="#FFE082"
+          className="cute-twinkle"
+          style={{ animationDelay: `${idx * 260}ms` }}
         />
       ))}
     </g>
   </svg>
 );
 
-/** Minimal Top Gold Diamond Ornament for Section 1 */
-const HeroTopOrnamentSVG = () => (
-  <svg viewBox="0 0 120 24" className="w-24 h-5 mx-auto text-[#C8A252] select-none">
-    <g fill="none" stroke="currentColor" strokeWidth="0.85" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="8" y1="12" x2="46" y2="12" strokeOpacity="0.65" />
-      <line x1="74" y1="12" x2="112" y2="12" strokeOpacity="0.65" />
-      <polygon points="60,3 67,12 60,21 53,12" strokeOpacity="0.9" />
-      <polygon points="60,7.5 63.5,12 60,16.5 56.5,12" fill="currentColor" fillOpacity="0.35" stroke="none" />
-      <circle cx="48" cy="12" r="1.2" fill="currentColor" stroke="none" />
-      <circle cx="72" cy="12" r="1.2" fill="currentColor" stroke="none" />
-    </g>
-  </svg>
-);
-
-/** Section 2: Kissing Swans Illustration */
-const SwansIllustration = () => (
-  <svg viewBox="0 0 220 120" className="w-44 h-auto mx-auto text-[#0F3329] lux-float-slow">
-    <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round" strokeLinejoin="round">
-      <path
-        d="M 102 18 L 105 10 L 110 16 L 115 10 L 118 18 Z"
-        stroke="#C8A252"
-        fill="#C8A252"
-        fillOpacity="0.2"
-      />
-      <circle cx="105" cy="8" r="1" fill="#C8A252" stroke="none" />
-      <circle cx="110" cy="6" r="1.3" fill="#C8A252" stroke="none" />
-      <circle cx="115" cy="8" r="1" fill="#C8A252" stroke="none" />
-
-      <path d="M 109 38 C 103 22, 82 22, 82 40 C 82 56, 98 68, 92 84" strokeWidth="1.35" />
-      <path d="M 107 40 C 102 27, 87 28, 87 40 C 87 54, 103 66, 97 82" />
-      <path d="M 109 38 L 110 42 L 106 41 Z" fill="currentColor" />
-      <path
-        d="M 92 82 C 74 84, 42 78, 36 62 C 46 56, 62 52, 82 64 C 66 54, 48 46, 44 36 C 58 34, 78 44, 88 60"
-        fill="currentColor"
-        fillOpacity="0.06"
-      />
-      <path d="M 52 50 Q 68 56 84 68" />
-      <path d="M 46 62 Q 64 68 84 74" />
-      <path d="M 36 62 C 30 72, 46 88, 92 86" />
-
-      <path d="M 111 38 C 117 22, 138 22, 138 40 C 138 56, 122 68, 128 84" strokeWidth="1.35" />
-      <path d="M 113 40 C 118 27, 133 28, 133 40 C 133 54, 117 66, 123 82" />
-      <path d="M 111 38 L 110 42 L 114 41 Z" fill="currentColor" />
-      <path
-        d="M 128 82 C 146 84, 178 78, 184 62 C 174 56, 158 52, 138 64 C 154 54, 172 46, 176 36 C 162 34, 142 44, 132 60"
-        fill="currentColor"
-        fillOpacity="0.06"
-      />
-      <path d="M 168 50 Q 152 56 136 68" />
-      <path d="M 174 62 Q 156 68 136 74" />
-      <path d="M 184 62 C 190 72, 174 88, 128 86" />
-
-      <circle cx="110" cy="84" r="5" fill="#F7F5EE" stroke="#C8A252" />
-      <circle cx="110" cy="84" r="2" fill="#C8A252" stroke="none" />
-      <path d="M 96 86 Q 110 92 124 86" />
-      <path d="M 55 94 Q 110 98 165 94" strokeWidth="0.8" strokeOpacity="0.7" />
-      <path d="M 78 101 Q 110 104 142 101" strokeWidth="0.7" strokeOpacity="0.55" />
-    </g>
-  </svg>
-);
-
-/** Section 4: Architectural Oval Etching */
-const VenueOvalIllustration = () => (
-  <div className="relative w-72 sm:w-80 mx-auto my-6 lux-float-slow">
-    <svg viewBox="0 0 320 390" className="w-full h-auto text-[#0F3329] drop-shadow-sm">
-      <defs>
-        <clipPath id="venueOvalClip">
-          <ellipse cx="160" cy="195" rx="112" ry="145" />
-        </clipPath>
-      </defs>
-
-      <g fill="none" stroke="currentColor">
-        {Array.from({ length: 36 }).map((_, i) => {
-          const angle = (i * 10 * Math.PI) / 180;
-          const x = 160 + 132 * Math.cos(angle);
-          const y = 195 + 166 * Math.sin(angle);
-          return (
-            <g key={i}>
-              <circle
-                cx={x}
-                cy={y}
-                r="10"
-                stroke="#C8A252"
-                strokeWidth="0.75"
-                strokeOpacity="0.55"
-                fill="#FCFBF7"
-                fillOpacity="0.68"
-              />
-              <circle cx={x} cy={y} r="2.8" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.45" />
-            </g>
-          );
-        })}
-
-        <ellipse
-          cx="160"
-          cy="195"
-          rx="126"
-          ry="160"
-          stroke="#C8A252"
-          strokeWidth="1.15"
-          strokeDasharray="4 3"
-          strokeOpacity="0.75"
-        />
-        <ellipse
-          cx="160"
-          cy="195"
-          rx="118"
-          ry="152"
-          strokeWidth="1.4"
-          fill="#FAF8F2"
-          fillOpacity="0.75"
-        />
-        <ellipse cx="160" cy="195" rx="112" ry="145" strokeWidth="0.95" strokeOpacity="0.8" />
-      </g>
-
-      <g clipPath="url(#venueOvalClip)" stroke="currentColor" fill="none" strokeWidth="1">
-        <path d="M 60 110 Q 110 95 160 108 T 260 105" strokeOpacity="0.22" />
-        <path d="M 75 85 Q 140 72 210 88" strokeOpacity="0.18" />
-
-        {[68, 82, 245, 258].map((cx, i) => (
-          <path
-            key={i}
-            d={`M ${cx} 255 L ${cx - 6} 255 Q ${cx - 8} 190 ${cx} 145 Q ${cx + 8} 190 ${cx + 6} 255 Z`}
-            fill="currentColor"
-            fillOpacity="0.1"
-          />
-        ))}
-
-        <rect x="92" y="138" width="136" height="122" fill="#F9F7F0" strokeWidth="1.25" />
-        <line x1="88" y1="138" x2="232" y2="138" strokeWidth="1.7" />
-        <rect x="94" y="130" width="132" height="8" fill="#EFECE0" />
-        {[96, 120, 144, 176, 200, 224].map((x, idx) => (
-          <path key={idx} d={`M ${x} 130 L ${x - 2} 123 L ${x + 2} 123 Z`} fill="#C8A252" stroke="none" />
-        ))}
-        <polygon points="145,130 160,116 175,130" fill="#EFECE0" strokeWidth="1.2" />
-        <circle cx="160" cy="125" r="2.8" stroke="#C8A252" />
-
-        <line x1="90" y1="172" x2="230" y2="172" strokeWidth="1.15" />
-        <line x1="90" y1="210" x2="230" y2="210" strokeWidth="1.15" />
-
-        {[106, 133, 160, 187, 214].map((wx, i) => (
-          <g key={i}>
-            <rect x={wx - 6} y="146" width="12" height="18" fill="currentColor" fillOpacity="0.09" />
-            <line x1={wx} y1="146" x2={wx} y2="164" strokeWidth="0.7" />
-            <polygon points={`${wx - 8},180 ${wx},175 ${wx + 8},180`} />
-            <rect x={wx - 6} y="180" width="12" height="22" fill="currentColor" fillOpacity="0.11" />
-            <line x1={wx} y1="180" x2={wx} y2="202" strokeWidth="0.7" />
-          </g>
-        ))}
-
-        {[133, 160, 187].map((ax, i) => (
-          <path
-            key={i}
-            d={`M ${ax - 9} 260 L ${ax - 9} 230 A 9 9 0 0 1 ${ax + 9} 230 L ${ax + 9} 260 Z`}
-            fill="currentColor"
-            fillOpacity="0.16"
-          />
-        ))}
-        <rect x="100" y="224" width="12" height="22" />
-        <rect x="208" y="224" width="12" height="22" />
-
-        <path d="M 45 260 L 275 260" strokeWidth="1.35" />
-        <path d="M 55 260 Q 75 248 95 260" fill="currentColor" fillOpacity="0.12" />
-        <path d="M 225 260 Q 245 248 265 260" fill="currentColor" fillOpacity="0.12" />
-
-        <path d="M 135 260 C 120 295, 85 320, 65 345" strokeDasharray="3 2" strokeOpacity="0.75" />
-        <path d="M 185 260 C 200 295, 235 320, 255 345" strokeDasharray="3 2" strokeOpacity="0.75" />
-        <ellipse cx="160" cy="296" rx="28" ry="9" fill="#EFECE0" />
-        <ellipse cx="160" cy="294" rx="22" ry="6" />
-        <path d="M 160 294 L 160 278" stroke="#C8A252" />
-      </g>
-    </svg>
-  </div>
-);
-
-/** Section 5 Top: Hanging Crystal & Floral Garland */
-const HangingGarlandIllustration = () => (
-  <svg viewBox="0 0 400 110" className="w-full h-auto text-[#0F3329] mb-2">
-    <g fill="none" stroke="currentColor" strokeWidth="0.95" strokeLinecap="round">
-      <path d="M 0 18 Q 50 64 100 22" />
-      <path d="M 100 22 Q 150 72 200 26" />
-      <path d="M 200 26 Q 250 72 300 22" />
-      <path d="M 300 22 Q 350 64 400 18" />
-
-      <path d="M 0 28 Q 50 78 100 32" stroke="#C8A252" strokeDasharray="2 3" />
-      <path d="M 100 32 Q 150 86 200 36" stroke="#C8A252" strokeDasharray="2 3" />
-      <path d="M 200 36 Q 250 86 300 32" stroke="#C8A252" strokeDasharray="2 3" />
-      <path d="M 300 32 Q 350 78 400 28" stroke="#C8A252" strokeDasharray="2 3" />
-
-      {[50, 100, 150, 200, 250, 300, 350].map((x, idx) => {
-        const isPeak = idx % 2 === 1;
-        const yStart = isPeak ? 24 : 52;
-        const dropLen = isPeak ? 48 : 34;
-        return (
-          <g key={idx}>
-            {isPeak && (
-              <>
-                <path d={`M ${x} ${yStart} C ${x - 12} ${yStart - 10}, ${x - 14} ${yStart + 6}, ${x} ${yStart + 2}`} />
-                <path d={`M ${x} ${yStart} C ${x + 12} ${yStart - 10}, ${x + 14} ${yStart + 6}, ${x} ${yStart + 2}`} />
-                <circle cx={x} cy={yStart} r="3.4" fill="#F7F5EE" stroke="#C8A252" />
-              </>
-            )}
-            <line x1={x} y1={yStart} x2={x} y2={yStart + dropLen} strokeDasharray="1 2" strokeOpacity="0.7" />
-            <polygon
-              points={`${x},${yStart + dropLen} ${x - 4},${yStart + dropLen + 8} ${x},${yStart + dropLen + 15} ${x + 4},${yStart + dropLen + 8}`}
-              fill="#C8A252"
-              fillOpacity="0.22"
-            />
-          </g>
-        );
-      })}
-    </g>
-  </svg>
-);
-
-/** Section 5 Timeline Icons */
-const TimelineIcon = ({ type }) => {
+/** Section 5 Timeline Icons — Adorable Custom Pastel SVGs */
+const CuteTimelineIcon = ({ type }) => {
   switch (type) {
     case 'welcome_flutes':
+      // Clinking pastel glasses with a little floating heart
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#0F3329]">
-          <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
-            <path d="M 18 12 L 26 14 L 22 30 Q 20 33 18 29 Z" fill="#C8A252" fillOpacity="0.16" />
-            <line x1="20" y1="31" x2="17" y2="46" />
-            <line x1="12" y1="46" x2="22" y2="46" />
-            <path d="M 46 12 L 38 14 L 42 30 Q 44 33 46 29 Z" fill="#C8A252" fillOpacity="0.16" />
-            <line x1="44" y1="31" x2="47" y2="46" />
-            <line x1="42" y1="46" x2="52" y2="46" />
-            <line x1="32" y1="5" x2="32" y2="11" stroke="#C8A252" />
-            <line x1="28" y1="8" x2="36" y2="8" stroke="#C8A252" />
+        <svg viewBox="0 0 64 58" className="w-14 h-12 select-none">
+          <g fill="none" stroke="#6E4C82" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+            {/* Left glass */}
+            <path d="M 14 14 L 26 17 L 22 33 Q 19 36 16 32 Z" fill="#FFEAF2" />
+            <line x1="19" y1="34" x2="16" y2="48" />
+            <line x1="11" y1="48" x2="21" y2="48" />
+            {/* Right glass */}
+            <path d="M 50 14 L 38 17 L 42 33 Q 45 36 48 32 Z" fill="#F0E4FF" />
+            <line x1="45" y1="34" x2="48" y2="48" />
+            <line x1="43" y1="48" x2="53" y2="48" />
+            {/* Floating tiny heart */}
+            <path
+              d="M 32 16 C 31 15, 27 12, 27 9.5 C 27 7.8, 28.5 6.8, 29.8 6.8 C 30.8 6.8, 31.6 7.5, 32 8.2 C 32.4 7.5, 33.2 6.8, 34.2 6.8 C 35.5 6.8, 37 7.8, 37 9.5 C 37 12, 33 15, 32 16 Z"
+              fill="#F06292"
+              stroke="none"
+            />
           </g>
         </svg>
       );
     case 'ceremony_rings':
+      // Sparkling engagement ring nestled in a cute velvet box
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#0F3329]">
-          <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
-            <circle cx="25" cy="32" r="11" />
-            <circle cx="39" cy="32" r="11" />
-            <polygon points="39,16 35,21 43,21" fill="#C8A252" fillOpacity="0.32" stroke="#C8A252" />
-            <line x1="39" y1="10" x2="39" y2="13" stroke="#C8A252" />
-            <line x1="33" y1="12" x2="35" y2="14" stroke="#C8A252" />
-            <line x1="45" y1="12" x2="43" y2="14" stroke="#C8A252" />
+        <svg viewBox="0 0 64 58" className="w-14 h-12 select-none">
+          <g fill="none" stroke="#6E4C82" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+            {/* Open velvet box lid */}
+            <path d="M 14 26 L 17 12 Q 32 6 47 12 L 50 26 Z" fill="#F6EEFF" />
+            {/* Box base */}
+            <rect x="12" y="26" width="40" height="20" rx="5" fill="#F8BBD0" />
+            <line x1="12" y1="32" x2="52" y2="32" stroke="#FFFDFC" strokeWidth="1.2" />
+            {/* Cute engagement ring peeking out */}
+            <circle cx="32" cy="27" r="7" fill="none" stroke="#E4A9B8" strokeWidth="2.2" />
+            {/* Sparkly diamond */}
+            <polygon points="32,14 27,19 32,23 37,19" fill="#FFFDFC" stroke="#B58CE0" strokeWidth="1.2" />
+            {/* Twinkle lines */}
+            <line x1="32" y1="7" x2="32" y2="10" stroke="#E887AB" />
+            <line x1="23" y1="12" x2="25" y2="14" stroke="#E887AB" />
+            <line x1="41" y1="12" x2="39" y2="14" stroke="#E887AB" />
           </g>
         </svg>
       );
     case 'dinner_cloche':
     default:
+      // Cute pastel dinner cloche with heart-shaped steam
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#0F3329]">
-          <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
-            <path d="M 12 36 A 20 18 0 0 1 52 36 Z" fill="#C8A252" fillOpacity="0.14" />
-            <circle cx="32" cy="15" r="3" stroke="#C8A252" />
-            <ellipse cx="32" cy="37" rx="24" ry="3.5" />
-            <path d="M 20 44 Q 32 41 44 44" />
+        <svg viewBox="0 0 64 58" className="w-14 h-12 select-none">
+          <g fill="none" stroke="#6E4C82" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+            {/* Cloche dome */}
+            <path d="M 12 40 A 20 18 0 0 1 52 40 Z" fill="#FFEAF2" />
+            <circle cx="32" cy="19" r="3" fill="#E6D4FF" />
+            {/* Platter */}
+            <ellipse cx="32" cy="41" rx="24" ry="3.8" fill="#FFFDFC" />
+            {/* Cute heart-shaped steam rising */}
+            <path
+              d="M 32 13 C 31 12, 28 9.5, 28 7.5 C 28 6.2, 29.2 5.4, 30.3 5.4 C 31 5.4, 31.7 6, 32 6.6 C 32.3 6, 33 5.4, 33.7 5.4 C 34.8 5.4, 36 6.2, 36 7.5 C 36 9.5, 33 12, 32 13 Z"
+              fill="#E887AB"
+              stroke="none"
+            />
+            <path d="M 22 14 Q 20 10 23 7" stroke="#C5A3E8" strokeWidth="1.1" />
+            <path d="M 42 14 Q 44 10 41 7" stroke="#C5A3E8" strokeWidth="1.1" />
           </g>
         </svg>
       );
   }
 };
 
-/** Section 5 Bottom: Banquet Table Setting */
-const BanquetTableIllustration = () => (
-  <svg viewBox="0 0 400 135" className="w-full h-auto text-[#0F3329] mt-6">
-    <g fill="none" stroke="currentColor" strokeWidth="1.05" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="0" y1="78" x2="400" y2="78" strokeWidth="1.15" />
-      <line x1="0" y1="112" x2="400" y2="112" strokeWidth="1.35" />
-      <path d="M 0 112 Q 35 125 70 112 Q 115 126 160 112 Q 205 126 250 112 Q 295 126 340 112 Q 370 124 400 112" />
-      <line x1="70" y1="112" x2="66" y2="132" strokeOpacity="0.45" />
-      <line x1="160" y1="112" x2="158" y2="132" strokeOpacity="0.45" />
-      <line x1="250" y1="112" x2="252" y2="132" strokeOpacity="0.45" />
-      <line x1="340" y1="112" x2="344" y2="132" strokeOpacity="0.45" />
-
-      <g transform="translate(55, 22)">
-        <ellipse cx="0" cy="54" rx="26" ry="5" fill="#F7F5EE" />
-        <path d="M -8 59 L -14 67 L 14 67 L 8 59" fill="currentColor" fillOpacity="0.08" />
-        <rect x="-22" y="36" width="44" height="16" rx="2" fill="#FCFBF7" />
-        <path d="M -22 42 Q -11 48 0 42 Q 11 48 22 42" stroke="#C8A252" />
-        <rect x="-15" y="22" width="30" height="14" rx="2" fill="#FCFBF7" />
-        <path d="M -15 27 Q -7 32 0 27 Q 7 32 15 27" stroke="#C8A252" />
-        <rect x="-9" y="10" width="18" height="12" rx="1.5" fill="#FCFBF7" />
-        <circle cx="-4" cy="8" r="3" fill="#C8A252" fillOpacity="0.28" />
-        <circle cx="0" cy="7" r="3.5" fill="#C8A252" fillOpacity="0.34" />
-        <circle cx="4" cy="8" r="3" fill="#C8A252" fillOpacity="0.28" />
-      </g>
-
-      {[128, 222, 315, 332].map((cx, i) => {
-        const h = i % 2 === 0 ? 32 : 24;
-        return (
-          <g key={i} transform={`translate(${cx}, ${78 - h})`}>
-            <rect x="-2" y="0" width="4" height={h} fill="#FCFBF7" />
-            <path
-              d="M 0 -8 Q -3 -3 0 0 Q 3 -3 0 -8 Z"
-              fill="#C8A252"
-              stroke="#9A7832"
-              strokeWidth="0.6"
-              className="lux-twinkle"
-            />
-            <path d={`M -6 ${h} L 6 ${h} L 3 ${h + 6} L -3 ${h + 6} Z`} fill="currentColor" fillOpacity="0.14" />
-          </g>
-        );
-      })}
-
-      {[155, 195, 255, 285].map((gx, i) => (
-        <g key={i} transform={`translate(${gx}, 58)`}>
-          {i % 2 === 0 ? (
-            <>
-              <path d="M -8 0 Q 0 10 8 0 Z" fill="currentColor" fillOpacity="0.08" />
-              <line x1="0" y1="5" x2="0" y2="18" />
-              <ellipse cx="0" cy="18" rx="6" ry="1.8" />
-            </>
-          ) : (
-            <>
-              <path d="M -5 -4 C -6 6, 6 6, 5 -4 Z" fill="currentColor" fillOpacity="0.08" />
-              <line x1="0" y1="4" x2="0" y2="18" />
-              <ellipse cx="0" cy="18" rx="5" ry="1.5" />
-            </>
-          )}
-        </g>
-      ))}
-
-      {[55, 155, 255, 355].map((px, i) => (
-        <g key={i} transform={`translate(${px}, 95)`}>
-          <ellipse cx="0" cy="0" rx="24" ry="8" fill="#FCFBF7" />
-          <ellipse cx="0" cy="0" rx="16" ry="5" stroke="#C8A252" />
-          <line x1="-29" y1="-5" x2="-29" y2="6" />
-          <line x1="29" y1="-6" x2="29" y2="6" />
-          <line x1="32" y1="-4" x2="32" y2="6" />
-        </g>
-      ))}
-    </g>
-  </svg>
-);
-
-/** Footer: Intertwined Diamond Rings */
-const WeddingRingsIllustration = () => (
-  <svg viewBox="0 0 160 95" className="w-32 h-auto mx-auto mb-4 text-[#0F3329] lux-float-slow">
-    <g fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
-      <ellipse cx="64" cy="56" rx="28" ry="20" transform="rotate(-12 64 56)" />
-      <ellipse cx="64" cy="56" rx="23" ry="15.5" transform="rotate(-12 64 56)" stroke="#C8A252" strokeWidth="0.9" />
-      <ellipse cx="96" cy="54" rx="28" ry="20" transform="rotate(14 96 54)" />
-      <ellipse cx="96" cy="54" rx="23" ry="15.5" transform="rotate(14 96 54)" stroke="#C8A252" strokeWidth="0.9" />
-      <g transform="translate(104, 28) rotate(14)">
-        <polygon points="-9,0 -5,-7 5,-7 9,0 0,10" fill="#FCFBF7" stroke="#C8A252" strokeWidth="1.25" />
-        <polyline points="-9,0 9,0" stroke="#C8A252" strokeWidth="0.85" />
-        <polyline points="-5,-7 -2,0 0,10 2,0 5,-7" stroke="#C8A252" strokeWidth="0.85" />
-        <line x1="0" y1="-12" x2="0" y2="-16" stroke="#C8A252" />
-        <line x1="-10" y1="-9" x2="-13" y2="-12" stroke="#C8A252" />
-        <line x1="10" y1="-9" x2="13" y2="-12" stroke="#C8A252" />
-      </g>
-    </g>
-  </svg>
-);
-
-// ============================================================================
-// SEAMLESS 3D ROYAL GATEFOLD FOLIO & SCULPTED EMERALD-GOLD WAX SEAL
-// ============================================================================
-const RoyalCrestFiligree = () => (
-  <svg viewBox="0 0 140 36" className="w-28 h-7 text-[#C8A252] mx-auto mb-2.5 select-none">
-    <g fill="none" stroke="currentColor" strokeWidth="1.05" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M 10 20 C 26 20, 34 10, 48 14 C 58 17, 63 22, 70 22 C 77 22, 82 17, 92 14 C 106 10, 114 20, 130 20" />
-      <path d="M 32 22 C 44 26, 56 26, 70 22 C 84 26, 96 26, 108 22" strokeOpacity="0.65" />
-      <path d="M 70 4 L 74 12 L 70 18 L 66 12 Z" fill="#C8A252" fillOpacity="0.28" />
-      <circle cx="70" cy="24" r="2" fill="#C8A252" stroke="none" />
-      <circle cx="48" cy="14" r="1.4" fill="#C8A252" stroke="none" />
-      <circle cx="92" cy="14" r="1.4" fill="#C8A252" stroke="none" />
-      <circle cx="16" cy="20" r="1.2" fill="#C8A252" stroke="none" />
-      <circle cx="124" cy="20" r="1.2" fill="#C8A252" stroke="none" />
-    </g>
-  </svg>
-);
-
-/** Debossed Damask & Outer Champagne-Gold Double-Hairline Frame */
-const DoorOrnamentSVG = ({ side = 'left' }) => {
-  const isRight = side === 'right';
-  const patternId = `baroqueDamask-${side}`;
-  return (
-    <svg
-      viewBox="0 0 215 844"
-      preserveAspectRatio="none"
-      className="absolute inset-0 w-full h-full pointer-events-none select-none"
-      style={{ transform: isRight ? 'scaleX(-1)' : 'none' }}
-    >
-      <defs>
-        <pattern id={patternId} width="64" height="84" patternUnits="userSpaceOnUse">
-          <g fill="none" stroke="#537A6B" strokeOpacity="0.08" strokeWidth="0.9">
-            <path d="M 32 6 C 42 18, 48 28, 32 42 C 16 28, 22 18, 32 6 Z" />
-            <path d="M 32 42 C 42 54, 48 64, 32 78 C 16 64, 22 54, 32 42 Z" />
-            <path d="M 0 42 C 12 34, 20 34, 32 42 C 44 34, 52 34, 64 42" />
-            <circle cx="32" cy="24" r="3" />
-            <circle cx="32" cy="60" r="3" />
-          </g>
-        </pattern>
-      </defs>
-
-      <rect x="0" y="0" width="215" height="844" fill={`url(#${patternId})`} />
-
-      <g fill="none" stroke="#C8A252" strokeLinecap="round">
-        <path
-          d="M 215 24 L 54 24 Q 18 24 18 62 L 18 782 Q 18 820 54 820 L 215 820"
-          strokeWidth="1.25"
-          strokeOpacity="0.68"
-        />
-        <path
-          d="M 215 34 L 60 34 Q 28 34 28 68 L 28 776 Q 28 810 60 810 L 215 810"
-          strokeWidth="0.7"
-          strokeOpacity="0.45"
-        />
-
-        <g transform="translate(18, 24)" strokeOpacity="0.75">
-          <path d="M 6 42 C 6 18, 18 6, 44 6" strokeWidth="1.2" />
-          <path d="M 14 28 C 14 18, 20 14, 30 14" strokeWidth="0.9" />
-          <path d="M 10 10 C 20 10, 26 16, 26 26 C 16 26, 10 20, 10 10 Z" fill="#C8A252" fillOpacity="0.14" />
-          <circle cx="17" cy="17" r="1.8" fill="#C8A252" stroke="none" />
-        </g>
-
-        <g transform="translate(18, 820) scale(1, -1)" strokeOpacity="0.75">
-          <path d="M 6 42 C 6 18, 18 6, 44 6" strokeWidth="1.2" />
-          <path d="M 14 28 C 14 18, 20 14, 30 14" strokeWidth="0.9" />
-          <path d="M 10 10 C 20 10, 26 16, 26 26 C 16 26, 10 20, 10 10 Z" fill="#C8A252" fillOpacity="0.14" />
-          <circle cx="17" cy="17" r="1.8" fill="#C8A252" stroke="none" />
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-/** Pressed Gold & Jade Botanical Sprig Behind the Wax Seal */
-const PressedBotanicalSprigSVG = () => (
-  <svg
-    viewBox="0 0 220 180"
-    className="w-[205px] h-[165px] pointer-events-none select-none overflow-visible"
-    style={{ filter: 'drop-shadow(0 6px 10px rgba(7, 26, 20, 0.22))' }}
-  >
+/** Footer: Cute Intertwined Pastel Rose-Gold Engagement Rings with Sparkles */
+const CuteWeddingRingsSVG = () => (
+  <svg viewBox="0 0 170 100" className="w-36 h-auto mx-auto mb-3 cute-float-slow select-none">
+    <defs>
+      <linearGradient id="roseGoldRing" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FAD2DF" />
+        <stop offset="50%" stopColor="#E4A9B8" />
+        <stop offset="100%" stopColor="#C98AA6" />
+      </linearGradient>
+    </defs>
     <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M 38 156 C 72 126, 128 72, 184 22" stroke="#C8A252" strokeWidth="1.5" />
-      <path d="M 104 98 C 122 88, 144 82, 174 74" stroke="#C8A252" strokeWidth="1.05" strokeOpacity="0.85" />
-      <path d="M 96 106 C 84 82, 74 60, 62 34" stroke="#C8A252" strokeWidth="1.05" strokeOpacity="0.85" />
-      {[
-        [152, 48, -28, 13, 6],
-        [168, 34, -42, 11, 5],
-        [136, 58, 18, 12, 5.5],
-        [162, 76, 12, 11, 5],
-        [68, 132, -52, 12, 5.5],
-        [54, 144, 14, 11, 5],
-        [72, 54, -75, 11, 4.8],
-      ].map(([x, y, rot, rx, ry], idx) => (
-        <ellipse
-          key={idx}
-          cx={x}
-          cy={y}
-          rx={rx}
-          ry={ry}
-          transform={`rotate(${rot} ${x} ${y})`}
-          fill="#E5CA8C"
-          fillOpacity="0.48"
-          stroke="#9A7832"
-          strokeWidth="0.9"
-        />
-      ))}
-      {[
-        [178, 28, 4.2, '#3A7D66'],
-        [185, 21, 3.6, '#5CA188'],
-        [174, 74, 3.6, '#4B8E76'],
-        [60, 32, 3.8, '#3A7D66'],
-        [44, 152, 3.5, '#3A7D66'],
-      ].map(([bx, by, r, color], idx) => (
-        <circle key={idx} cx={bx} cy={by} r={r} fill={color} stroke="#F7F5EE" strokeWidth="0.6" />
-      ))}
+      {/* Left ring */}
+      <ellipse cx="66" cy="58" rx="27" ry="19" transform="rotate(-14 66 58)" stroke="url(#roseGoldRing)" strokeWidth="4" />
+      <ellipse cx="66" cy="58" rx="22" ry="14.5" transform="rotate(-14 66 58)" stroke="#FFFDFC" strokeWidth="1" strokeOpacity="0.7" />
+      {/* Right ring */}
+      <ellipse cx="104" cy="56" rx="27" ry="19" transform="rotate(14 104 56)" stroke="url(#roseGoldRing)" strokeWidth="4" />
+      <ellipse cx="104" cy="56" rx="22" ry="14.5" transform="rotate(14 104 56)" stroke="#FFFDFC" strokeWidth="1" strokeOpacity="0.7" />
+      {/* Sparkling diamond */}
+      <g transform="translate(112, 29) rotate(14)">
+        <polygon points="-10,0 -5,-8 5,-8 10,0 0,11" fill="#FFFDFC" stroke="#B58CE0" strokeWidth="1.5" />
+        <polyline points="-10,0 10,0" stroke="#E6D4FF" strokeWidth="1.1" />
+        <polyline points="-5,-8 -2,0 0,11 2,0 5,-8" stroke="#E6D4FF" strokeWidth="1" />
+      </g>
+      {/* Cute sparkles & tiny heart */}
+      <path d="M 114 9 L 116 14 L 121 16 L 116 18 L 114 23 L 112 18 L 107 16 L 112 14 Z" fill="#FFE082" className="cute-twinkle" />
+      <path d="M 46 28 L 47.5 31.5 L 51 33 L 47.5 34.5 L 46 38 L 44.5 34.5 L 41 33 L 44.5 31.5 Z" fill="#F8BBD0" className="cute-twinkle" style={{ animationDelay: '500ms' }} />
+      <path
+        d="M 85 41 C 84 40, 79 36.5, 79 33.5 C 79 31.5, 80.8 30.2, 82.4 30.2 C 83.5 30.2, 84.5 31, 85 31.8 C 85.5 31, 86.5 30.2, 87.6 30.2 C 89.2 30.2, 91 31.5, 91 33.5 C 91 36.5, 86 40, 85 41 Z"
+        fill="#F06292"
+      />
     </g>
   </svg>
 );
 
-/** Sculpted 132px Royal Emerald & Champagne-Gold SVG Wax Seal */
-const SculptedWaxSealSVG = ({ brideInitial, groomInitial }) => (
+// ============================================================================
+// CUTE PASTEL LOVE-LETTER ENVELOPE & SCULPTED HEART WAX SEAL COVER
+// ============================================================================
+
+/** Cute Sculpted Heart-Shaped Pastel Wax Seal with Molten Edges, Pearl Rim & "H ♡ A" */
+const CuteHeartWaxSealSVG = ({ brideInitial, groomInitial }) => (
   <svg
     viewBox="0 0 200 200"
-    className="w-[132px] h-[132px] overflow-visible select-none"
+    className="w-[138px] h-[138px] overflow-visible select-none"
     style={{
       filter:
-        'drop-shadow(0 16px 24px rgba(4, 18, 13, 0.5)) drop-shadow(0 5px 10px rgba(7, 28, 21, 0.36))',
+        'drop-shadow(0 14px 22px rgba(176, 98, 146, 0.38)) drop-shadow(0 4px 8px rgba(132, 74, 128, 0.22))',
     }}
   >
     <defs>
-      <clipPath id="moltenWaxClip">
-        <path d="M 104 10 C 124 8, 141 15, 156 26 C 171 37, 185 52, 189 72 C 194 91, 193 112, 186 130 C 179 149, 169 167, 151 178 C 134 189, 114 194, 93 192 C 72 190, 52 184, 36 170 C 21 156, 12 138, 9 117 C 6 96, 8 74, 17 56 C 26 37, 40 23, 59 15 C 74 9, 89 11, 104 10 Z" />
+      {/* Organic molten heart wax clip path */}
+      <clipPath id="cuteHeartWaxClip">
+        <path d="M 100 180 C 86 168, 22 126, 16 74 C 12 40, 36 16, 65 18 C 82 19, 93 29, 100 41 C 107 29, 118 19, 135 18 C 164 16, 188 40, 184 74 C 178 126, 114 168, 100 180 Z" />
       </clipPath>
 
-      <radialGradient id="emeraldWaxOuter" cx="32%" cy="26%" r="74%">
-        <stop offset="0%" stopColor="#266E58" />
-        <stop offset="28%" stopColor="#195240" />
-        <stop offset="62%" stopColor="#0F392C" />
-        <stop offset="90%" stopColor="#08241B" />
-        <stop offset="100%" stopColor="#041610" />
+      {/* Glossy rose-pink & lilac outer wax gradient */}
+      <radialGradient id="cuteHeartOuterGrad" cx="32%" cy="24%" r="76%">
+        <stop offset="0%" stopColor="#FFD6E7" />
+        <stop offset="28%" stopColor="#F6A2C4" />
+        <stop offset="68%" stopColor="#DE7EA9" />
+        <stop offset="100%" stopColor="#B869A4" />
       </radialGradient>
 
-      <linearGradient id="emeraldWaxRim" x1="14%" y1="12%" x2="86%" y2="88%">
-        <stop offset="0%" stopColor="#E5CA8C" stopOpacity="0.92" />
-        <stop offset="22%" stopColor="#21614D" />
-        <stop offset="56%" stopColor="#113F31" />
-        <stop offset="86%" stopColor="#09261D" />
-        <stop offset="100%" stopColor="#C8A252" stopOpacity="0.72" />
-      </linearGradient>
-
-      <radialGradient id="emeraldStampBasin" cx="65%" cy="68%" r="68%">
-        <stop offset="0%" stopColor="#1B5543" />
-        <stop offset="52%" stopColor="#0F382B" />
-        <stop offset="88%" stopColor="#082219" />
-        <stop offset="100%" stopColor="#04150F" />
+      {/* Soft recessed inner heart basin */}
+      <radialGradient id="cuteHeartBasinGrad" cx="62%" cy="65%" r="72%">
+        <stop offset="0%" stopColor="#F59CC0" />
+        <stop offset="56%" stopColor="#E17BA6" />
+        <stop offset="100%" stopColor="#B766A0" />
       </radialGradient>
 
-      <linearGradient id="champagneGoldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#FFF6D8" />
-        <stop offset="32%" stopColor="#E5CA8C" />
-        <stop offset="68%" stopColor="#C8A252" />
-        <stop offset="100%" stopColor="#9A7832" />
+      {/* Creamy rose-gold embossed text gradient */}
+      <linearGradient id="creamyRoseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFFDFC" />
+        <stop offset="48%" stopColor="#FFF0F5" />
+        <stop offset="100%" stopColor="#FBDCE8" />
       </linearGradient>
 
-      <linearGradient id="sealGlintSweep" x1="0%" y1="0%" x2="100%" y2="100%">
+      {/* Diagonal shimmer glint */}
+      <linearGradient id="cuteSealGlint" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
-        <stop offset="45%" stopColor="#FFF7DE" stopOpacity="0" />
-        <stop offset="50%" stopColor="#FFF7DE" stopOpacity="0.45" />
-        <stop offset="55%" stopColor="#FFF7DE" stopOpacity="0" />
+        <stop offset="44%" stopColor="#FFFFFF" stopOpacity="0" />
+        <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.58" />
+        <stop offset="56%" stopColor="#FFFFFF" stopOpacity="0" />
         <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
       </linearGradient>
     </defs>
 
-    {/* Organic Molten Wax Outer Silhouette */}
+    {/* Organic Wavy Molten Heart Outer Silhouette */}
     <path
-      d="M 104 10 C 124 8, 141 15, 156 26 C 171 37, 185 52, 189 72 C 194 91, 193 112, 186 130 C 179 149, 169 167, 151 178 C 134 189, 114 194, 93 192 C 72 190, 52 184, 36 170 C 21 156, 12 138, 9 117 C 6 96, 8 74, 17 56 C 26 37, 40 23, 59 15 C 74 9, 89 11, 104 10 Z"
-      fill="url(#emeraldWaxOuter)"
-      stroke="#051A13"
+      d="M 100 183 C 88 174, 70 160, 52 143 C 32 124, 15 101, 13 73 C 11 42, 32 16, 62 15 C 79 14, 92 25, 100 37 C 108 25, 121 14, 138 15 C 168 16, 189 42, 187 73 C 185 101, 168 124, 148 143 C 130 160, 112 174, 100 183 Z"
+      fill="url(#cuteHeartOuterGrad)"
+      stroke="#C46B9A"
       strokeWidth="1.2"
     />
 
-    {/* Specular Gold Ridge Highlight */}
+    {/* Specular Glossy Highlight Arcs on top lobes */}
     <path
-      d="M 32 48 C 48 24, 80 14, 114 17 C 138 20, 160 32, 174 52"
+      d="M 32 62 C 33 40, 48 27, 67 27"
       fill="none"
-      stroke="#E5CA8C"
+      stroke="#FFFDFC"
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeOpacity="0.6"
+    />
+    <path
+      d="M 132 27 C 148 27, 160 36, 165 49"
+      fill="none"
+      stroke="#FFFDFC"
       strokeWidth="2.8"
       strokeLinecap="round"
-      strokeOpacity="0.48"
+      strokeOpacity="0.42"
     />
 
-    {/* Raised Rolled Wax Rim */}
-    <circle cx="100" cy="100" r="72" fill="url(#emeraldWaxRim)" stroke="#061E16" strokeWidth="1.2" />
-    <circle cx="100" cy="100" r="67" fill="none" stroke="#E5CA8C" strokeWidth="0.9" strokeOpacity="0.42" />
+    {/* Raised Heart Rim */}
+    <path
+      d="M 100 166 C 86 155, 32 117, 28 73 C 25 46, 44 28, 66 29 C 80 30, 92 39, 100 51 C 108 39, 120 30, 134 29 C 156 28, 175 46, 172 73 C 168 117, 114 155, 100 166 Z"
+      fill="url(#cuteHeartBasinGrad)"
+      stroke="#FFDCEB"
+      strokeWidth="2.2"
+      strokeOpacity="0.82"
+    />
 
-    {/* Recessed Inner Stamp Basin */}
-    <circle cx="100" cy="100" r="60" fill="url(#emeraldStampBasin)" stroke="#04150F" strokeWidth="2.2" />
-    <circle cx="100" cy="100" r="58.5" fill="none" stroke="#E5CA8C" strokeWidth="0.7" strokeOpacity="0.42" />
-
-    {/* Micro-Beaded Gold Pearl Ring */}
-    <circle
-      cx="100"
-      cy="100"
-      r="53"
+    {/* Tiny Pearl Dots Around the Heart Rim */}
+    <path
+      d="M 100 158 C 87 147, 38 113, 35 74 C 33 50, 49 35, 67 36 C 80 37, 92 45, 100 57 C 108 45, 120 37, 133 36 C 151 35, 167 50, 165 74 C 162 113, 113 147, 100 158 Z"
       fill="none"
-      stroke="url(#champagneGoldFoil)"
-      strokeWidth="1.6"
-      strokeDasharray="1.2 4.3"
+      stroke="#FFFDFC"
+      strokeWidth="2.1"
+      strokeDasharray="1.5 6.8"
       strokeLinecap="round"
-      strokeOpacity="0.9"
+      strokeOpacity="0.92"
     />
 
-    {/* Symmetrical Botanical Laurel Wreath */}
-    <g fill="none" stroke="url(#champagneGoldFoil)" strokeLinecap="round" strokeWidth="1.15">
-      <path d="M 92 145 C 62 141, 49 116, 53 86 C 55 70, 66 57, 80 52" />
-      <path d="M 108 145 C 138 141, 151 116, 147 86 C 145 70, 134 57, 120 52" />
-      {[
-        [54, 108, -26],
-        [53, 93, -10],
-        [56, 78, 8],
-        [64, 65, 26],
-        [63, 124, -44],
-        [75, 136, -62],
-      ].map(([lx, ly, rot], i) => (
-        <ellipse
-          key={`l-${i}`}
-          cx={lx}
-          cy={ly}
-          rx="2.6"
-          ry="5.2"
-          transform={`rotate(${rot} ${lx} ${ly})`}
-          fill="#E5CA8C"
-          fillOpacity="0.45"
-          strokeWidth="0.8"
-        />
-      ))}
-      {[
-        [146, 108, 26],
-        [147, 93, 10],
-        [144, 78, -8],
-        [136, 65, -26],
-        [137, 124, 44],
-        [125, 136, 62],
-      ].map(([lx, ly, rot], i) => (
-        <ellipse
-          key={`r-${i}`}
-          cx={lx}
-          cy={ly}
-          rx="2.6"
-          ry="5.2"
-          transform={`rotate(${rot} ${lx} ${ly})`}
-          fill="#E5CA8C"
-          fillOpacity="0.45"
-          strokeWidth="0.8"
-        />
-      ))}
-      <path
-        d="M 100 45 L 102.5 50.5 L 108 53 L 102.5 55.5 L 100 61 L 97.5 55.5 L 92 53 L 97.5 50.5 Z"
-        fill="#E5CA8C"
-        stroke="none"
-      />
-      <circle cx="100" cy="146" r="2.2" fill="#E5CA8C" stroke="none" />
-    </g>
-
-    {/* Cleanly Centered Monogram Strictly Inside the Inner Clear Circle */}
+    {/* Embossed "H ♡ A" Monogram in Creamy Rose-Gold */}
     <g>
+      {/* Soft debossed shadow */}
       <text
-        x="79.5"
-        y="102.5"
+        x="73"
+        y="99"
         textAnchor="middle"
         dominantBaseline="central"
-        className="font-serif-editorial"
+        className="font-cute-serif"
         fontSize="30"
-        fontWeight="500"
-        fill="#03120D"
-        fillOpacity="0.72"
+        fontWeight="600"
+        fill="#9E4A7C"
+        fillOpacity="0.45"
       >
         {brideInitial}
       </text>
       <text
-        x="100.5"
-        y="103.5"
+        x="127"
+        y="99"
         textAnchor="middle"
         dominantBaseline="central"
-        className="font-serif-editorial"
-        fontStyle="italic"
-        fontSize="19"
-        fill="#03120D"
-        fillOpacity="0.72"
-      >
-        &amp;
-      </text>
-      <text
-        x="121.5"
-        y="102.5"
-        textAnchor="middle"
-        dominantBaseline="central"
-        className="font-serif-editorial"
+        className="font-cute-serif"
         fontSize="30"
-        fontWeight="500"
-        fill="#03120D"
-        fillOpacity="0.72"
+        fontWeight="600"
+        fill="#9E4A7C"
+        fillOpacity="0.45"
       >
         {groomInitial}
       </text>
 
+      {/* Main creamy embossed letters */}
       <text
-        x="79"
-        y="101"
+        x="72"
+        y="97.5"
         textAnchor="middle"
         dominantBaseline="central"
-        className="font-serif-editorial"
+        className="font-cute-serif"
         fontSize="30"
-        fontWeight="500"
-        fill="url(#champagneGoldFoil)"
+        fontWeight="600"
+        fill="url(#creamyRoseGold)"
       >
         {brideInitial}
       </text>
       <text
-        x="100"
-        y="102"
+        x="126"
+        y="97.5"
         textAnchor="middle"
         dominantBaseline="central"
-        className="font-serif-editorial"
-        fontStyle="italic"
-        fontSize="19"
-        fill="url(#champagneGoldFoil)"
-      >
-        &amp;
-      </text>
-      <text
-        x="121"
-        y="101"
-        textAnchor="middle"
-        dominantBaseline="central"
-        className="font-serif-editorial"
+        className="font-cute-serif"
         fontSize="30"
-        fontWeight="500"
-        fill="url(#champagneGoldFoil)"
+        fontWeight="600"
+        fill="url(#creamyRoseGold)"
       >
         {groomInitial}
       </text>
+
+      {/* Cute embossed mini heart in center */}
+      <path
+        d="M 100 107 C 98.5 105.5, 90 99, 90 93.5 C 90 90, 92.8 87.8, 95.5 87.8 C 97.4 87.8, 99 89, 100 90.6 C 101 89, 102.6 87.8, 104.5 87.8 C 107.2 87.8, 110 90, 110 93.5 C 110 99, 101.5 105.5, 100 107 Z"
+        fill="url(#creamyRoseGold)"
+      />
     </g>
 
-    {/* Idle Diagonal Gold Glint Sweep */}
-    <g clipPath="url(#moltenWaxClip)" className="pointer-events-none">
+    {/* Idle Diagonal Shimmer Glint */}
+    <g clipPath="url(#cuteHeartWaxClip)" className="pointer-events-none">
       <rect
         x="-140"
         y="-40"
-        width="160"
+        width="150"
         height="280"
-        fill="url(#sealGlintSweep)"
-        className="lux-seal-glint-sweep"
+        fill="url(#cuteSealGlint)"
+        className="cute-seal-glint-sweep"
       />
     </g>
   </svg>
 );
 
-/** Seamless 3D Double-Door Gatefold Cover Overlay with Strict 3-Zone Non-Overlapping Layout */
-const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
+/** Cute Pastel Satin Ribbon Bow Behind the Heart Seal */
+const CuteSatinBowSVG = () => (
+  <svg viewBox="0 0 220 120" className="w-[210px] h-[112px] pointer-events-none select-none overflow-visible">
+    <defs>
+      <linearGradient id="satinBowLoop" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFE0EC" />
+        <stop offset="50%" stopColor="#F8BBD0" />
+        <stop offset="100%" stopColor="#E496B8" />
+      </linearGradient>
+    </defs>
+    {/* Left & right flowing ribbon tails */}
+    <path d="M 96 66 C 84 86, 72 102, 54 114 L 68 112 L 72 120 C 86 106, 98 88, 106 70 Z" fill="url(#satinBowLoop)" stroke="#FFFDFC" strokeWidth="1.2" />
+    <path d="M 124 66 C 136 86, 148 102, 166 114 L 152 112 L 148 120 C 134 106, 122 88, 114 70 Z" fill="url(#satinBowLoop)" stroke="#FFFDFC" strokeWidth="1.2" />
+
+    {/* Left puffy satin bow loop */}
+    <path
+      d="M 104 60 C 76 34, 34 32, 32 58 C 30 82, 74 84, 104 64 Z"
+      fill="url(#satinBowLoop)"
+      stroke="#FFFDFC"
+      strokeWidth="1.5"
+    />
+    <path d="M 94 61 C 74 48, 52 50, 48 60" fill="none" stroke="#FFFDFC" strokeWidth="1.4" strokeOpacity="0.65" strokeLinecap="round" />
+
+    {/* Right puffy satin bow loop */}
+    <path
+      d="M 116 60 C 144 34, 186 32, 188 58 C 190 82, 146 84, 116 64 Z"
+      fill="url(#satinBowLoop)"
+      stroke="#FFFDFC"
+      strokeWidth="1.5"
+    />
+    <path d="M 126 61 C 146 48, 168 50, 172 60" fill="none" stroke="#FFFDFC" strokeWidth="1.4" strokeOpacity="0.65" strokeLinecap="round" />
+  </svg>
+);
+
+/** Interactive Cute Pastel Love-Letter Envelope Cover Overlay */
+const CuteEnvelopeCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
   const isUnsealing = stage >= 1;
-  const isDoorsOpening = stage >= 2;
+  const isFlapOpening = stage >= 2;
+  const isSlidingAway = stage >= 3;
   const isHidden = stage >= 4;
 
-  const dustMotes = [
-    { id: 1, left: '22%', top: '48%', dx: '-42px', dy: '-120px', size: 5, delay: '120ms', gold: true },
-    { id: 2, left: '76%', top: '46%', dx: '46px', dy: '-115px', size: 4, delay: '220ms', gold: true },
-    { id: 3, left: '42%', top: '54%', dx: '-25px', dy: '-145px', size: 6, delay: '80ms', gold: false },
-    { id: 4, left: '58%', top: '52%', dx: '28px', dy: '-135px', size: 5, delay: '180ms', gold: true },
-    { id: 5, left: '34%', top: '62%', dx: '-50px', dy: '-90px', size: 4, delay: '320ms', gold: false },
-    { id: 6, left: '66%', top: '60%', dx: '52px', dy: '-95px', size: 5, delay: '280ms', gold: true },
-    { id: 7, left: '50%', top: '42%', dx: '4px', dy: '-160px', size: 6, delay: '150ms', gold: true },
-    { id: 8, left: '28%', top: '38%', dx: '-35px', dy: '-110px', size: 3.5, delay: '360ms', gold: true },
+  // Burst of floating hearts, flowers & sparkles on tap
+  const celebrationBurst = [
+    { id: 1, dx: '-125px', dy: '-145px', rot: '-25deg', delay: '0ms', variant: 2, size: 28 },
+    { id: 2, dx: '120px', dy: '-140px', rot: '28deg', delay: '40ms', variant: 0, size: 32 },
+    { id: 3, dx: '-150px', dy: '-45px', rot: '-35deg', delay: '80ms', variant: 1, size: 30 },
+    { id: 4, dx: '148px', dy: '-40px', rot: '32deg', delay: '60ms', variant: 2, size: 26 },
+    { id: 5, dx: '-90px', dy: '-185px', rot: '-14deg', delay: '100ms', variant: 0, size: 28 },
+    { id: 6, dx: '95px', dy: '-180px', rot: '18deg', delay: '90ms', variant: 1, size: 28 },
+    { id: 7, dx: '0px', dy: '-205px', rot: '6deg', delay: '30ms', variant: 2, size: 34 },
+    { id: 8, dx: '-115px', dy: '70px', rot: '-20deg', delay: '110ms', variant: 3, size: 30 },
+    { id: 9, dx: '118px', dy: '75px', rot: '22deg', delay: '120ms', variant: 2, size: 26 },
+    { id: 10, dx: '-45px', dy: '-135px', rot: '-10deg', delay: '70ms', variant: 2, size: 22 },
+    { id: 11, dx: '48px', dy: '-130px', rot: '14deg', delay: '130ms', variant: 0, size: 24 },
   ];
 
   return (
     <div
-      className="lux-gatefold-overlay"
+      className={`cute-envelope-overlay ${isSlidingAway ? 'is-sliding-away' : ''}`}
       style={{
         pointerEvents: stage === 0 ? 'auto' : 'none',
         visibility: isHidden ? 'hidden' : 'visible',
       }}
     >
-      <div className={`lux-gatefold-backdrop ${isDoorsOpening ? 'is-clearing' : ''}`} />
+      {/* Soft pastel paper backdrop with delicate scalloped lace border */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FAF3FF] via-[#FFF6FA] to-[#F5ECFF]">
+        {/* Subtle polka-heart paper texture */}
+        <svg className="absolute inset-0 w-full h-full opacity-55 pointer-events-none" viewBox="0 0 430 844" preserveAspectRatio="none">
+          <defs>
+            <pattern id="cuteEnvelopeDots" width="36" height="36" patternUnits="userSpaceOnUse">
+              <circle cx="8" cy="8" r="1.4" fill="#E887AB" fillOpacity="0.24" />
+              <circle cx="26" cy="24" r="1.4" fill="#B58CE0" fillOpacity="0.24" />
+            </pattern>
+          </defs>
+          <rect x="0" y="0" width="430" height="844" fill="url(#cuteEnvelopeDots)" />
+        </svg>
 
-      {isDoorsOpening && !isHidden && (
-        <div className="absolute inset-0 z-40 pointer-events-none overflow-hidden">
-          {dustMotes.map((mote) => (
-            <span
-              key={mote.id}
-              className="lux-dust-mote"
-              style={{
-                left: mote.left,
-                top: mote.top,
-                width: `${mote.size}px`,
-                height: `${mote.size}px`,
-                background: mote.gold
-                  ? 'radial-gradient(circle, #FFF8E1 0%, #E5CA8C 55%, transparent 100%)'
-                  : 'radial-gradient(circle, #ECFDF5 0%, #7CC7A8 55%, transparent 100%)',
-                '--dx': mote.dx,
-                '--dy': mote.dy,
-                animationDelay: mote.delay,
-              }}
-            />
-          ))}
-        </div>
-      )}
+        {/* Delicate Scalloped Lace Inner Border */}
+        <div className="absolute inset-3.5 sm:inset-4 rounded-[28px] border-2 border-dashed border-[#E8B4CC]/75 pointer-events-none" />
+        <div className="absolute inset-5 sm:inset-5.5 rounded-[22px] border border-[#E6D4FF]/80 pointer-events-none" />
 
-      {/* Left & Right 3D Gatefold Doors */}
-      <div className="lux-gatefold-stage">
-        <div className={`lux-door lux-door-left ${isDoorsOpening ? 'is-open' : ''}`}>
-          <div className="lux-door-face lux-door-front lux-door-front-left">
-            <DoorOrnamentSVG side="left" />
-            <div className={`lux-door-shade ${isDoorsOpening ? 'is-shaded' : ''}`} />
-          </div>
-          <div className="lux-door-face lux-door-back">
-            <div className="absolute inset-4 border border-[#E5CA8C]/30 pointer-events-none" />
-            <div className="absolute inset-6 border border-[#E5CA8C]/18 pointer-events-none" />
-          </div>
-        </div>
+        {/* Cute Corner Hearts & Stars */}
+        <div className="absolute top-6 left-6 text-[#E887AB]/70 cute-twinkle pointer-events-none text-sm">✦</div>
+        <div className="absolute top-6 right-6 text-[#B58CE0]/70 cute-twinkle pointer-events-none text-sm" style={{ animationDelay: '500ms' }}>♡</div>
+        <div className="absolute bottom-6 left-6 text-[#B58CE0]/70 cute-twinkle pointer-events-none text-sm" style={{ animationDelay: '300ms' }}>♡</div>
+        <div className="absolute bottom-6 right-6 text-[#E887AB]/70 cute-twinkle pointer-events-none text-sm" style={{ animationDelay: '700ms' }}>✦</div>
+      </div>
 
-        <div className={`lux-door lux-door-right ${isDoorsOpening ? 'is-open' : ''}`}>
-          <div className="lux-door-face lux-door-front lux-door-front-right">
-            <DoorOrnamentSVG side="right" />
-            <div className={`lux-door-shade ${isDoorsOpening ? 'is-shaded' : ''}`} />
+      {/* 3D Top Triangular Envelope V-Flap */}
+      <div className="cute-flap-perspective">
+        <div className={`cute-envelope-flap ${isFlapOpening ? 'is-open' : ''}`}>
+          {/* Front of V-Flap */}
+          <div className="cute-flap-face cute-flap-front">
+            <svg viewBox="0 0 430 430" preserveAspectRatio="none" className="w-full h-full">
+              <defs>
+                <linearGradient id="flapFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#FFF9FC" />
+                  <stop offset="55%" stopColor="#FCEEF7" />
+                  <stop offset="100%" stopColor="#F5E1F2" />
+                </linearGradient>
+              </defs>
+              {/* Triangular V-Flap with soft rounded tip */}
+              <path
+                d="M 0 0 L 430 0 L 430 160 Q 430 175 415 188 L 236 392 Q 215 414 194 392 L 15 188 Q 0 175 0 160 Z"
+                fill="url(#flapFrontGrad)"
+                stroke="#EAB4CE"
+                strokeWidth="1.8"
+              />
+              {/* Dainty stitched inner V-line */}
+              <path
+                d="M 16 14 L 414 14 L 414 156 L 230 374 Q 215 391 200 374 L 16 156 Z"
+                fill="none"
+                stroke="#D9A0B6"
+                strokeWidth="1.2"
+                strokeDasharray="4 5"
+                strokeOpacity="0.65"
+              />
+            </svg>
           </div>
-          <div className="lux-door-face lux-door-back">
-            <div className="absolute inset-4 border border-[#E5CA8C]/30 pointer-events-none" />
-            <div className="absolute inset-6 border border-[#E5CA8C]/18 pointer-events-none" />
+          {/* Inside Liner of V-Flap (visible as it unfolds upward) */}
+          <div className="cute-flap-face cute-flap-back">
+            <svg viewBox="0 0 430 430" preserveAspectRatio="none" className="w-full h-full">
+              <defs>
+                <linearGradient id="flapLinerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#F6EEFF" />
+                  <stop offset="50%" stopColor="#FFEAF2" />
+                  <stop offset="100%" stopColor="#F0E2FF" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M 0 0 L 430 0 L 430 160 Q 430 175 415 188 L 236 392 Q 215 414 194 392 L 15 188 Q 0 175 0 160 Z"
+                fill="url(#flapLinerGrad)"
+                stroke="#E6D4FF"
+                strokeWidth="1.5"
+              />
+            </svg>
           </div>
         </div>
       </div>
 
-      {/* Strict 3-Zone Non-Overlapping Vertical Layout */}
+      {/* Envelope Pocket Bottom Fold Accent Lines */}
+      <svg
+        viewBox="0 0 430 460"
+        preserveAspectRatio="none"
+        className="absolute bottom-0 left-0 right-0 w-full h-[54%] pointer-events-none z-10"
+      >
+        <path
+          d="M 0 60 L 215 210 L 430 60 L 430 460 L 0 460 Z"
+          fill="#FFFDFC"
+          fillOpacity="0.58"
+        />
+        <path
+          d="M 0 60 L 215 210 L 430 60"
+          fill="none"
+          stroke="#E8B4CC"
+          strokeWidth="1.4"
+          strokeOpacity="0.55"
+        />
+      </svg>
+
+      {/* Celebration Burst of Pastel Hearts & Flowers on Tap */}
+      {isUnsealing && !isHidden && (
+        <div className="absolute inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden">
+          {celebrationBurst.map((item) => (
+            <div
+              key={item.id}
+              className="cute-burst-particle"
+              style={{
+                '--dx': item.dx,
+                '--dy': item.dy,
+                '--rot': item.rot,
+                animationDelay: item.delay,
+              }}
+            >
+              <PastelFlowerSVG variant={item.variant} size={item.size} />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* 3-Zone Non-Overlapping Vertical Layout Over the Envelope */}
       <div className="absolute inset-0 z-30 flex flex-col justify-between pointer-events-none">
-        {/* 1. TOP ZONE */}
+        {/* TOP ZONE: Floating Heart Doodle, "You're Invited!" & Couple Names */}
         <div
-          className={`flex-1 flex flex-col items-center justify-end pb-5 pt-10 px-9 text-center transition-all duration-700 ease-out ${
-            isUnsealing ? 'opacity-0 -translate-y-4 blur-[3px]' : 'opacity-100 translate-y-0'
+          className={`flex-1 flex flex-col items-center justify-end pb-6 pt-10 px-8 text-center transition-all duration-600 ease-out ${
+            isUnsealing ? 'opacity-0 -translate-y-4 scale-95' : 'opacity-100 translate-y-0 scale-100'
           }`}
         >
-          <RoyalCrestFiligree />
+          {/* Cute little floating heart & sparkle doodle */}
+          <div className="flex items-center justify-center gap-2 mb-1.5 text-[#E887AB]">
+            <span className="text-xs cute-twinkle">✦</span>
+            <Heart className="w-4 h-4 fill-[#F8BBD0] text-[#E887AB] cute-float-slow" />
+            <span className="text-xs cute-twinkle" style={{ animationDelay: '400ms' }}>✦</span>
+          </div>
 
-          <p className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.3em] uppercase text-[#355E52] mb-3 leading-relaxed">
-            Together With Their Families
+          <p className="font-cute-script text-[32px] sm:text-[36px] leading-none text-[#D66E98] mb-2">
+            You&apos;re Invited!
           </p>
 
-          <h1 className="font-serif-editorial text-[32px] sm:text-[36px] font-normal tracking-[0.04em] text-[#0F3329] leading-tight">
+          <h1 className="font-cute-serif text-[30px] sm:text-[34px] font-semibold tracking-[0.02em] text-[#4A3259] leading-tight">
             {couple.bride}{' '}
-            <span className="font-serif-editorial italic text-[24px] sm:text-[26px] text-[#C8A252] mx-1.5">
+            <span className="font-cute-script text-[32px] sm:text-[36px] text-[#E887AB] mx-1 font-normal">
               &amp;
             </span>{' '}
             {couple.groom}
           </h1>
         </div>
 
-        {/* 2. MIDDLE ZONE (Dedicated 200px band — Zero text behind the seal) */}
-        <div className="relative h-[200px] shrink-0 w-full flex items-center justify-center">
-          <div className={`lux-ribbon-half lux-ribbon-left ${isUnsealing ? 'is-untied' : ''}`}>
-            <div className="lux-ribbon-piping-top" />
-            <div className="lux-ribbon-piping-bottom" />
-          </div>
-          <div className={`lux-ribbon-half lux-ribbon-right ${isUnsealing ? 'is-untied' : ''}`}>
-            <div className="lux-ribbon-piping-top" />
-            <div className="lux-ribbon-piping-bottom" />
-          </div>
+        {/* MIDDLE ZONE: Pastel Satin Ribbon, Bow & Sculpted Heart Wax Seal */}
+        <div className="relative h-[190px] shrink-0 w-full flex items-center justify-center">
+          {/* Pastel Satin Horizontal Ribbon Halves */}
+          <div className={`cute-ribbon-half cute-ribbon-left ${isUnsealing ? 'is-untied' : ''}`} />
+          <div className={`cute-ribbon-half cute-ribbon-right ${isUnsealing ? 'is-untied' : ''}`} />
 
+          {/* Satin Ribbon Bow behind the seal */}
           <div
-            className={`absolute flex items-center justify-center z-10 transition-all duration-700 ease-out ${
-              isUnsealing
-                ? 'opacity-0 scale-110 -translate-y-3 rotate-6'
-                : 'opacity-95 scale-100 translate-y-0 rotate-0'
+            className={`absolute flex items-center justify-center z-10 transition-all duration-600 ease-out ${
+              isUnsealing ? 'opacity-0 scale-110 translate-y-2' : 'opacity-95 scale-100'
             }`}
           >
-            <PressedBotanicalSprigSVG />
+            <CuteSatinBowSVG />
           </div>
 
+          {/* Interactive Heart-Shaped Pastel Wax Seal Button */}
           <div className="relative flex items-center justify-center z-20 pointer-events-auto">
-            {stage === 0 && <span className="lux-seal-aura" />}
-            {isUnsealing && <span className="lux-seal-click-glow" />}
+            {stage === 0 && <span className="cute-heart-pulse-ring" />}
+            {isUnsealing && <span className="cute-seal-pop-glow" />}
 
             <button
               type="button"
               onClick={onTriggerOpen}
-              aria-label="Tap the Royal Emerald and Champagne Gold Wax Seal to Open Invitation"
-              className={`lux-sculpted-seal-btn ${isUnsealing ? 'is-unsealing' : ''}`}
+              aria-label="Tap the Heart Wax Seal to Open Invitation"
+              className={`cute-heart-seal-btn ${isUnsealing ? 'is-unsealing' : ''}`}
             >
-              <SculptedWaxSealSVG
+              <CuteHeartWaxSealSVG
                 brideInitial={couple.brideInitial}
                 groomInitial={couple.groomInitial}
               />
@@ -1814,27 +1769,27 @@ const GatefoldCoverOverlay = ({ stage, onTriggerOpen, couple, dateSpaced }) => {
           </div>
         </div>
 
-        {/* 3. BOTTOM ZONE */}
+        {/* BOTTOM ZONE: Date, Location & Cute Open Pill Button */}
         <div
-          className={`flex-1 flex flex-col items-center justify-start pt-5 pb-10 px-9 text-center transition-all duration-700 ease-out ${
-            isUnsealing ? 'opacity-0 translate-y-4 blur-[3px]' : 'opacity-100 translate-y-0'
+          className={`flex-1 flex flex-col items-center justify-start pt-5 pb-10 px-8 text-center transition-all duration-600 ease-out ${
+            isUnsealing ? 'opacity-0 translate-y-4 scale-95' : 'opacity-100 translate-y-0 scale-100'
           }`}
         >
-          <p className="font-serif-editorial text-xl sm:text-[22px] tracking-[0.26em] text-[#0F3329] mb-1.5">
+          <p className="font-cute-serif text-xl sm:text-[22px] font-medium tracking-[0.22em] text-[#4A3259] mb-1">
             {dateSpaced}
           </p>
 
-          <p className="font-sans-clean text-[9px] tracking-[0.34em] uppercase text-[#355E52]/90 mb-6">
+          <p className="font-cute-sans text-[10px] font-semibold tracking-[0.28em] uppercase text-[#8A6D9C] mb-6">
             Madurai · India
           </p>
 
           <button
             type="button"
             onClick={onTriggerOpen}
-            className="lux-open-capsule pointer-events-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#C8A252]/65 bg-[#FCFBF7]/85 backdrop-blur-sm text-[#0F3329] font-sans-clean text-[9px] tracking-[0.26em] uppercase shadow-sm hover:bg-[#0F3329] hover:text-[#F6F4EC] hover:border-[#0F3329] transition-colors duration-300 cursor-pointer"
+            className="cute-open-pill pointer-events-auto inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#F48FB1] via-[#E887AB] to-[#C996E8] text-white font-cute-sans font-semibold text-[11px] tracking-[0.14em] uppercase shadow-[0_10px_24px_rgba(232,135,171,0.4)] hover:scale-[1.04] active:scale-[0.97] transition-transform duration-300 cursor-pointer"
           >
-            <Sparkles className="w-3 h-3 text-[#C8A252]" />
-            <span>Tap the Seal to Open</span>
+            <span>Tap the Heart to Open</span>
+            <span aria-hidden="true">✨</span>
           </button>
         </div>
       </div>
@@ -1888,32 +1843,37 @@ export default function App() {
     };
   }, []);
 
+  // Cute Love-Letter Opening Choreography
   const handleTriggerOpen = () => {
     if (introStage !== 0) return;
     clearChoreographyTimers();
 
+    // Stage 1: Heart seal pops, ribbon unties, pastel hearts & flowers burst
     setIntroStage(1);
     audioEngine.playSealChime();
     audioEngine.startAmbient();
     setIsAudioOn(true);
 
+    // Stage 2: Envelope V-flap smoothly unfolds upward in 3D
     timeoutsRef.current.push(
       setTimeout(() => {
         setIntroStage(2);
-      }, 620)
+      }, 480)
     );
 
+    // Stage 3: Envelope slides gently down & fades, revealing the invitation hero
     timeoutsRef.current.push(
       setTimeout(() => {
         setIntroStage(3);
         setHeroRevealed(true);
-      }, 1650)
+      }, 1220)
     );
 
+    // Stage 4: Unlock scrolling & hide overlay
     timeoutsRef.current.push(
       setTimeout(() => {
         setIntroStage(4);
-      }, 3000)
+      }, 2150)
     );
   };
 
@@ -1934,16 +1894,17 @@ export default function App() {
   const handleToggleAudio = () => {
     const playing = audioEngine.toggleMute();
     setIsAudioOn(playing);
-    showToast(playing ? 'Ambient harp & chimes unmuted' : 'Audio muted');
+    showToast(playing ? 'Sweet music box chimes on ♪' : 'Audio muted');
   };
 
   const isCoverLocked = introStage < 4;
 
   return (
-    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center relative overflow-x-hidden bg-[#06140F] text-[#0F3329] selection:bg-[#195240] selection:text-[#F6F4EC]">
+    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center relative overflow-x-hidden bg-pastel-dream text-[#4A3259] selection:bg-[#F8BBD0] selection:text-[#4A3259]">
+      {/* Cute Romantic Google Fonts */}
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Sacramento&display=swap"
       />
 
       <style>{`
@@ -1957,35 +1918,86 @@ export default function App() {
           display: block !important;
           text-align: initial;
           -webkit-font-smoothing: antialiased;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* Hide all scrollbars globally across Chrome, Safari, Firefox, Edge & mobile browsers */
+        *, html, body, #root, #invitation-scroll-container {
+          scrollbar-width: none !important;
+          -ms-overflow-style: none !important;
+        }
+
+        *::-webkit-scrollbar,
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        #root::-webkit-scrollbar,
+        #invitation-scroll-container::-webkit-scrollbar {
+          display: none !important;
+          width: 0 !important;
+          height: 0 !important;
+          background: transparent !important;
+        }
+
+        #invitation-scroll-container {
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
         }
 
         *, *::before, *::after {
           box-sizing: border-box;
         }
 
-        .font-serif-editorial {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+        .font-cute-serif {
+          font-family: 'Playfair Display', Georgia, serif;
         }
-        .font-script {
-          font-family: 'Pinyon Script', cursive;
+        .font-cute-script {
+          font-family: 'Sacramento', cursive;
         }
-        .font-sans-clean {
-          font-family: 'Montserrat', sans-serif;
+        .font-cute-sans {
+          font-family: 'Quicksand', sans-serif;
         }
 
-        .bg-alabaster-stationery {
-          background-color: #F7F5EE;
+        /* Dreamy Pastel Desktop Background */
+        .bg-pastel-dream {
+          background-color: #F6EEFF;
           background-image:
-            radial-gradient(at 50% 0%, rgba(255, 253, 248, 0.94) 0px, transparent 68%),
-            radial-gradient(at 14% 38%, rgba(240, 237, 226, 0.78) 0px, transparent 58%),
-            radial-gradient(at 88% 76%, rgba(231, 227, 213, 0.65) 0px, transparent 62%);
+            radial-gradient(circle at 15% 20%, rgba(255, 214, 231, 0.72) 0%, transparent 45%),
+            radial-gradient(circle at 85% 18%, rgba(230, 212, 255, 0.85) 0%, transparent 48%),
+            radial-gradient(circle at 50% 85%, rgba(255, 234, 242, 0.8) 0%, transparent 55%),
+            linear-gradient(135deg, #F6EEFF 0%, #FFEAF2 50%, #EFE4FF 100%);
         }
 
-        .bg-velvet-emerald {
-          background: radial-gradient(circle at 50% 20%, #164638 0%, #0D2C22 60%, #071A14 100%);
+        /* Marshmallow Cream Invitation Paper */
+        .bg-marshmallow-card {
+          background-color: #FFFDFC;
+          background-image:
+            radial-gradient(at 50% 0%, rgba(255, 240, 246, 0.75) 0px, transparent 58%),
+            radial-gradient(at 10% 45%, rgba(246, 238, 255, 0.65) 0px, transparent 52%),
+            radial-gradient(at 92% 80%, rgba(255, 234, 242, 0.58) 0px, transparent 56%);
         }
 
-        .lux-gatefold-overlay {
+        /* Dreamy Pastel Lavender-Plum Gradient for Countdown Section */
+        .bg-pastel-lavender-dream {
+          background: linear-gradient(155deg, #E8D5FF 0%, #F7D4E8 52%, #DFC6FA 100%);
+        }
+
+        /* Floating Desktop Bokeh Orbs */
+        .pastel-bokeh-orb {
+          position: fixed;
+          border-radius: 9999px;
+          filter: blur(28px);
+          pointer-events: none;
+          z-index: 0;
+          animation: bokehFloat 9s ease-in-out infinite;
+        }
+        @keyframes bokehFloat {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-18px) scale(1.06); }
+        }
+
+        /* Cute Love-Letter Envelope Overlay */
+        .cute-envelope-overlay {
           position: absolute;
           top: 0;
           left: 0;
@@ -1994,175 +2006,83 @@ export default function App() {
           max-height: 100%;
           z-index: 45;
           overflow: hidden;
+          transition:
+            transform 950ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 850ms ease;
+        }
+        .cute-envelope-overlay.is-sliding-away {
+          transform: translateY(110px) scale(0.96);
+          opacity: 0;
         }
 
         @media (min-width: 640px) {
-          .phone-frame-active .lux-gatefold-overlay {
+          .phone-frame-active .cute-envelope-overlay {
             height: 100%;
             border-radius: 36px;
           }
         }
 
-        .lux-gatefold-backdrop {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at 50% 50%, rgba(15, 51, 41, 0.08), rgba(6, 20, 15, 0.45));
-          transition: opacity 1800ms cubic-bezier(0.22, 1, 0.36, 1);
-          pointer-events: none;
-        }
-        .lux-gatefold-backdrop.is-clearing {
-          opacity: 0;
-        }
-
-        .lux-gatefold-stage {
-          position: absolute;
-          inset: 0;
-          perspective: 1800px;
-          perspective-origin: 50% 50%;
-          transform-style: preserve-3d;
-        }
-
-        .lux-door {
+        /* 3D Envelope Top V-Flap */
+        .cute-flap-perspective {
           position: absolute;
           top: 0;
-          bottom: 0;
-          width: 50.6%;
-          height: 100%;
-          transform-style: preserve-3d;
-          will-change: transform, opacity;
-          transition:
-            transform 1900ms cubic-bezier(0.22, 1, 0.36, 1),
-            opacity 900ms ease 1100ms;
-        }
-
-        .lux-door-left {
           left: 0;
-          transform-origin: left center;
-        }
-        .lux-door-right {
           right: 0;
-          transform-origin: right center;
+          height: 52%;
+          perspective: 1400px;
+          z-index: 20;
+          pointer-events: none;
         }
-
-        .lux-door-left.is-open {
-          transform: rotateY(-115deg);
-          opacity: 0;
+        .cute-envelope-flap {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transform-origin: top center;
+          transform-style: preserve-3d;
+          transition: transform 950ms cubic-bezier(0.22, 1, 0.36, 1);
+          filter: drop-shadow(0 12px 18px rgba(176, 118, 158, 0.18));
         }
-        .lux-door-right.is-open {
-          transform: rotateY(115deg);
-          opacity: 0;
+        .cute-envelope-flap.is-open {
+          transform: rotateX(174deg);
         }
-
-        .lux-door-face {
+        .cute-flap-face {
           position: absolute;
           inset: 0;
           backface-visibility: hidden;
           -webkit-backface-visibility: hidden;
         }
-
-        .lux-door-front {
-          background-image:
-            repeating-linear-gradient(
-              0deg,
-              rgba(15, 51, 41, 0.015) 0px,
-              rgba(15, 51, 41, 0.015) 1px,
-              transparent 1px,
-              transparent 3px
-            ),
-            linear-gradient(180deg, #F7F5EE 0%, #F1EFE5 52%, #EAE6D8 100%);
+        .cute-flap-back {
+          transform: rotateX(180deg);
         }
 
-        .lux-door-front-left,
-        .lux-door-front-right {
-          box-shadow: none;
-          transition: box-shadow 600ms ease;
-        }
-
-        .lux-door-left.is-open .lux-door-front-left {
-          box-shadow: 6px 0 24px rgba(6, 20, 15, 0.16);
-        }
-        .lux-door-right.is-open .lux-door-front-right {
-          box-shadow: -6px 0 24px rgba(6, 20, 15, 0.16);
-        }
-
-        .lux-door-back {
-          transform: rotateY(180deg);
-          background-color: #0D2C22;
-          background-image:
-            radial-gradient(at 25% 25%, rgba(200, 162, 82, 0.22) 0px, transparent 55%),
-            radial-gradient(at 78% 70%, rgba(34, 108, 84, 0.34) 0px, transparent 58%),
-            linear-gradient(145deg, #144032 0%, #0D2C22 60%, #061812 100%);
-          box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.55);
-        }
-
-        .lux-door-shade {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(90deg, rgba(6, 20, 15, 0.22), rgba(6, 20, 15, 0.04));
-          opacity: 0;
-          transition: opacity 1500ms ease;
-          pointer-events: none;
-        }
-        .lux-door-right .lux-door-shade {
-          background: linear-gradient(270deg, rgba(6, 20, 15, 0.22), rgba(6, 20, 15, 0.04));
-        }
-        .lux-door-shade.is-shaded {
-          opacity: 1;
-        }
-
-        .lux-ribbon-half {
+        /* Pastel Satin Ribbon Halves */
+        .cute-ribbon-half {
           position: absolute;
           top: 50%;
-          height: 34px;
+          height: 28px;
           width: 52%;
-          margin-top: -17px;
+          margin-top: -14px;
           z-index: 5;
-          background-image:
-            repeating-linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0.045) 0px,
-              rgba(255, 255, 255, 0.045) 1px,
-              transparent 1px,
-              transparent 3px
-            ),
-            linear-gradient(180deg, #0E382B 0%, #1E5D49 26%, #144636 52%, #0A2B20 82%, #061C15 100%);
-          box-shadow: 0 8px 18px rgba(4, 18, 13, 0.28), inset 0 1px 1px rgba(255, 245, 220, 0.28);
-          transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1), opacity 650ms ease;
+          background: linear-gradient(180deg, #FBD3E4 0%, #F4A7C7 45%, #E887AB 100%);
+          border-top: 1.5px solid rgba(255, 255, 255, 0.8);
+          border-bottom: 1.5px solid rgba(255, 255, 255, 0.8);
+          box-shadow: 0 6px 14px rgba(196, 112, 152, 0.22);
+          transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1), opacity 550ms ease;
           pointer-events: none;
         }
-        .lux-ribbon-left {
-          left: 0;
-        }
-        .lux-ribbon-right {
-          right: 0;
-        }
-        .lux-ribbon-left.is-untied {
-          transform: translateX(-105%) scaleY(0.92);
+        .cute-ribbon-left { left: 0; }
+        .cute-ribbon-right { right: 0; }
+        .cute-ribbon-left.is-untied {
+          transform: translateX(-105%) scaleY(0.9);
           opacity: 0;
         }
-        .lux-ribbon-right.is-untied {
-          transform: translateX(105%) scaleY(0.92);
+        .cute-ribbon-right.is-untied {
+          transform: translateX(105%) scaleY(0.9);
           opacity: 0;
         }
 
-        .lux-ribbon-piping-top {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 2px;
-          height: 1.5px;
-          background: linear-gradient(90deg, rgba(229, 202, 140, 0.65), #E5CA8C, rgba(229, 202, 140, 0.65));
-        }
-        .lux-ribbon-piping-bottom {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 2px;
-          height: 1.5px;
-          background: linear-gradient(90deg, rgba(229, 202, 140, 0.65), #E5CA8C, rgba(229, 202, 140, 0.65));
-        }
-
-        .lux-sculpted-seal-btn {
+        /* Heart Wax Seal Button */
+        .cute-heart-seal-btn {
           position: relative;
           background: transparent;
           border: none;
@@ -2173,230 +2093,256 @@ export default function App() {
           display: flex;
           align-items: center;
           justify-content: center;
+          animation: gentleHeartbeat 2.4s ease-in-out infinite;
           transition:
-            transform 660ms cubic-bezier(0.22, 1, 0.36, 1),
-            opacity 560ms ease 160ms,
-            filter 480ms ease;
+            transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 460ms ease 100ms,
+            filter 400ms ease;
         }
-        .lux-sculpted-seal-btn:hover {
-          transform: scale(1.045);
-          filter: brightness(1.07);
+        .cute-heart-seal-btn:hover {
+          transform: scale(1.07);
+          filter: brightness(1.05);
         }
-        .lux-sculpted-seal-btn:active {
-          transform: scale(0.95);
+        .cute-heart-seal-btn:active {
+          transform: scale(0.94);
         }
-        .lux-sculpted-seal-btn.is-unsealing {
-          transform: scale(1.1) translateY(-8px);
+        .cute-heart-seal-btn.is-unsealing {
+          animation: none;
+          transform: scale(1.22) translateY(-28px) rotate(-6deg);
           opacity: 0;
-          filter: brightness(1.22);
+          filter: brightness(1.18);
         }
 
-        .lux-seal-glint-sweep {
-          animation: diagonalGlintSweep 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-        @keyframes diagonalGlintSweep {
-          0%, 58% { transform: translateX(-60px) rotate(12deg); opacity: 0; }
-          68% { opacity: 1; }
-          86% { transform: translateX(300px) rotate(12deg); opacity: 0.9; }
-          100% { transform: translateX(320px) rotate(12deg); opacity: 0; }
+        @keyframes gentleHeartbeat {
+          0%, 100% { transform: scale(1); }
+          14% { transform: scale(1.045); }
+          28% { transform: scale(1); }
+          42% { transform: scale(1.03); }
+          60% { transform: scale(1); }
         }
 
-        .lux-seal-aura {
+        .cute-heartbeat {
+          animation: gentleHeartbeat 2.2s ease-in-out infinite;
+        }
+
+        .cute-heart-pulse-ring {
           position: absolute;
-          width: 144px;
-          height: 144px;
+          width: 146px;
+          height: 146px;
           border-radius: 9999px;
-          border: 1px solid rgba(229, 202, 140, 0.52);
-          box-shadow: 0 0 24px rgba(229, 202, 140, 0.25);
-          animation: sealAuraPulse 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+          border: 2px solid rgba(244, 143, 177, 0.45);
+          box-shadow: 0 0 26px rgba(248, 187, 208, 0.55);
+          animation: cutePulseAura 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
           pointer-events: none;
         }
-        @keyframes sealAuraPulse {
-          0% { transform: scale(0.93); opacity: 0.72; }
-          100% { transform: scale(1.3); opacity: 0; }
+        @keyframes cutePulseAura {
+          0% { transform: scale(0.9); opacity: 0.78; }
+          100% { transform: scale(1.36); opacity: 0; }
         }
 
-        .lux-seal-click-glow {
+        .cute-seal-pop-glow {
           position: absolute;
-          width: 148px;
-          height: 148px;
+          width: 150px;
+          height: 150px;
           border-radius: 9999px;
           background: radial-gradient(
             circle,
-            rgba(255, 248, 224, 0.9) 0%,
-            rgba(229, 202, 140, 0.58) 38%,
-            rgba(38, 110, 88, 0.34) 66%,
-            transparent 82%
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(255, 209, 227, 0.72) 42%,
+            rgba(214, 180, 248, 0.4) 70%,
+            transparent 85%
           );
-          animation: sealClickGlow 850ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: cutePopGlow 760ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
           pointer-events: none;
         }
-        @keyframes sealClickGlow {
-          0% { transform: scale(0.62); opacity: 1; }
-          100% { transform: scale(2.15); opacity: 0; }
+        @keyframes cutePopGlow {
+          0% { transform: scale(0.55); opacity: 1; }
+          100% { transform: scale(2.2); opacity: 0; }
         }
 
-        .lux-dust-mote {
+        .cute-seal-glint-sweep {
+          animation: cuteGlintSweep 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        @keyframes cuteGlintSweep {
+          0%, 56% { transform: translateX(-60px) rotate(14deg); opacity: 0; }
+          66% { opacity: 1; }
+          85% { transform: translateX(300px) rotate(14deg); opacity: 0.95; }
+          100% { transform: translateX(320px) rotate(14deg); opacity: 0; }
+        }
+
+        .cute-burst-particle {
           position: absolute;
-          border-radius: 9999px;
           opacity: 0;
-          animation: dustMoteDrift 2300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: cuteBurstFloat 1600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        @keyframes dustMoteDrift {
-          0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.4); }
-          25% { opacity: 0.95; transform: translate3d(calc(var(--dx) * 0.35), calc(var(--dy) * 0.35), 0) scale(1.1); }
-          100% { opacity: 0; transform: translate3d(var(--dx), var(--dy), 0) scale(0.5); }
+        @keyframes cuteBurstFloat {
+          0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.2) rotate(0deg); }
+          25% { opacity: 1; transform: translate3d(calc(var(--dx) * 0.55), calc(var(--dy) * 0.55), 0) scale(1.1) rotate(var(--rot)); }
+          100% { opacity: 0; transform: translate3d(var(--dx), var(--dy), 0) scale(0.75) rotate(calc(var(--rot) + 18deg)); }
         }
 
-        .lux-open-capsule {
+        .cute-open-pill {
           position: relative;
           overflow: hidden;
         }
-        .lux-open-capsule::after {
+        .cute-open-pill::after {
           content: '';
           position: absolute;
           top: 0;
           left: -120%;
-          width: 70%;
+          width: 65%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(229, 202, 140, 0.45), transparent);
-          animation: capsuleShimmer 3.8s ease-in-out infinite;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+          animation: pillShimmer 3.4s ease-in-out infinite;
           pointer-events: none;
         }
-        @keyframes capsuleShimmer {
-          0%, 62% { left: -120%; }
-          100% { left: 160%; }
+        @keyframes pillShimmer {
+          0%, 60% { left: -120%; }
+          100% { left: 165%; }
         }
 
-        .lux-hero-item {
+        /* Hero Reveal Stagger */
+        .cute-hero-item {
           opacity: 0;
-          transform: translateY(20px) scale(0.97);
-          filter: blur(5px);
+          transform: translateY(18px) scale(0.97);
+          filter: blur(4px);
           transition:
-            opacity 950ms cubic-bezier(0.16, 1, 0.3, 1),
-            transform 950ms cubic-bezier(0.16, 1, 0.3, 1),
-            filter 950ms cubic-bezier(0.16, 1, 0.3, 1);
+            opacity 850ms cubic-bezier(0.16, 1, 0.3, 1),
+            transform 850ms cubic-bezier(0.16, 1, 0.3, 1),
+            filter 850ms cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .lux-hero-item.is-revealed {
+        .cute-hero-item.is-revealed {
           opacity: 1;
           transform: translateY(0) scale(1);
           filter: blur(0px);
         }
 
-        .emerald-flower-particle {
+        /* Scratch Card Blooming Pastel Flowers */
+        .pastel-flower-particle {
           position: absolute;
           opacity: 0;
-          animation: emeraldFlowerBloom 2800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: pastelFlowerBloom 2500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        @keyframes emeraldFlowerBloom {
-          0% { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.15) rotate(0deg); }
-          28% { opacity: 1; transform: translate3d(var(--tx), var(--ty), 0) scale(var(--sc)) rotate(var(--rot)); }
+        @keyframes pastelFlowerBloom {
+          0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.15) rotate(0deg); }
+          26% { opacity: 1; transform: translate3d(var(--tx), var(--ty), 0) scale(var(--sc)) rotate(var(--rot)); }
           75% { opacity: 0.95; transform: translate3d(var(--tx), calc(var(--ty) - 10px), 0) scale(var(--sc)) rotate(calc(var(--rot) + 12deg)); }
           100% { opacity: 0; transform: translate3d(var(--tx), calc(var(--ty) - 22px), 0) scale(calc(var(--sc) * 0.85)) rotate(calc(var(--rot) + 20deg)); }
         }
 
         .corner-flower-pop {
           opacity: 0;
-          animation: cornerFlowerIn 1150ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          animation: cornerFlowerIn 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
         @keyframes cornerFlowerIn {
-          0% { opacity: 0; transform: scale(0.2) rotate(-35deg); }
-          100% { opacity: 0.92; transform: scale(1) rotate(0deg); }
+          0% { opacity: 0; transform: scale(0.2) rotate(-30deg); }
+          100% { opacity: 0.94; transform: scale(1) rotate(0deg); }
         }
 
         .date-number-rise {
-          animation: dateNumberRise 1050ms cubic-bezier(0.22, 1, 0.36, 1) both;
+          animation: dateNumberRise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         @keyframes dateNumberRise {
-          0% { opacity: 0; transform: translateY(20px) scale(0.92); filter: blur(5px); }
+          0% { opacity: 0; transform: translateY(16px) scale(0.94); filter: blur(4px); }
           100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
         }
 
         .countdown-digit-pop {
-          animation: countdownDigitPop 950ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+          animation: countdownDigitPop 850ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
         @keyframes countdownDigitPop {
-          0% { opacity: 0; transform: translateY(24px) scale(0.7); }
+          0% { opacity: 0; transform: translateY(18px) scale(0.75); }
           100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .lux-reveal {
+        /* Scroll Reveal */
+        .cute-reveal {
           opacity: 0;
           will-change: transform, opacity, filter;
           transition:
-            opacity 1050ms cubic-bezier(0.22, 1, 0.36, 1),
-            transform 1050ms cubic-bezier(0.22, 1, 0.36, 1),
-            filter 1050ms cubic-bezier(0.22, 1, 0.36, 1);
+            opacity 950ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 950ms cubic-bezier(0.22, 1, 0.36, 1),
+            filter 950ms cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .lux-reveal-fade-up {
-          transform: translateY(32px);
-          filter: blur(4px);
+        .cute-reveal-fade-up {
+          transform: translateY(28px);
+          filter: blur(3px);
         }
-        .lux-reveal-scale {
-          transform: translateY(22px) scale(0.95);
-          filter: blur(4px);
+        .cute-reveal-scale {
+          transform: translateY(18px) scale(0.95);
+          filter: blur(3px);
         }
-        .lux-reveal.is-visible {
+        .cute-reveal.is-visible {
           opacity: 1;
           transform: translateY(0) scale(1);
           filter: blur(0px);
         }
 
-        .lux-float-slow {
-          animation: floatSlow 6s ease-in-out infinite;
+        .cute-float-slow {
+          animation: cuteFloatSlow 5s ease-in-out infinite;
         }
-        @keyframes floatSlow {
+        @keyframes cuteFloatSlow {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-5px); }
+          50% { transform: translateY(-6px); }
         }
 
-        .lux-twinkle {
-          animation: candleTwinkle 2.4s ease-in-out infinite;
-          transform-origin: center bottom;
+        .cute-twinkle {
+          animation: cuteTwinkle 2.6s ease-in-out infinite;
         }
-        @keyframes candleTwinkle {
-          0%, 100% { opacity: 0.55; transform: scaleY(1); }
-          50% { opacity: 1; transform: scaleY(1.16); }
+        @keyframes cuteTwinkle {
+          0%, 100% { opacity: 0.45; transform: scale(0.92); }
+          50% { opacity: 1; transform: scale(1.14); }
         }
 
-        .lux-scroll-line {
-          animation: editorialScrollPulse 2.8s ease-in-out infinite;
+        .cute-bounce-heart {
+          animation: cuteBounceHeart 2s ease-in-out infinite;
         }
-        @keyframes editorialScrollPulse {
-          0%, 100% { opacity: 0.35; transform: scaleY(0.88); transform-origin: top center; }
-          50% { opacity: 0.95; transform: scaleY(1); transform-origin: top center; }
+        @keyframes cuteBounceHeart {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(5px); }
         }
       `}</style>
 
-      {/* Toast Banner */}
+      {/* Soft Dreamy Floating Pastel Bokeh Background Orbs (Desktop) */}
+      <div className="pastel-bokeh-orb w-72 h-72 bg-[#F8BBD0]/40 top-8 -left-16 hidden sm:block" />
+      <div
+        className="pastel-bokeh-orb w-80 h-80 bg-[#E6D4FF]/50 bottom-10 -right-16 hidden sm:block"
+        style={{ animationDelay: '3s' }}
+      />
+      <div
+        className="pastel-bokeh-orb w-56 h-56 bg-[#FFE0B2]/30 top-1/2 left-12 hidden md:block"
+        style={{ animationDelay: '1.5s' }}
+      />
+
+      {/* Cute Pastel Toast Banner */}
       {toastMessage && (
-        <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 px-5 py-2 rounded-full bg-[#0D2C22]/95 text-[#F6F4EC] border border-[#E5CA8C]/35 shadow-2xl text-[11px] font-sans-clean tracking-wide flex items-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-[#E5CA8C]" />
+        <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-full bg-white/95 text-[#4A3259] border border-[#F8BBD0] shadow-[0_10px_28px_rgba(148,96,158,0.22)] text-xs font-cute-sans font-semibold tracking-wide flex items-center gap-2">
+          <Sparkles className="w-3.5 h-3.5 text-[#E887AB]" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Subtle Floating Audio Mute/Unmute Toggle */}
+      {/* Cute Floating Pastel Audio Mute/Unmute Toggle */}
       {introStage >= 3 && (
         <button
           type="button"
           onClick={handleToggleAudio}
           aria-label={isAudioOn ? 'Mute invitation audio' : 'Unmute invitation audio'}
-          className="fixed bottom-5 right-5 z-50 w-10 h-10 rounded-full bg-[#0D2C22]/85 backdrop-blur-md border border-[#E5CA8C]/45 text-[#E5CA8C] flex items-center justify-center shadow-xl hover:bg-[#164638] transition cursor-pointer"
+          className="fixed bottom-5 right-5 z-50 w-11 h-11 rounded-full bg-white/90 backdrop-blur-md border-2 border-[#F8BBD0] text-[#D66E98] flex items-center justify-center shadow-[0_8px_22px_rgba(180,104,154,0.25)] hover:bg-[#FFEAF2] hover:scale-105 transition cursor-pointer"
         >
-          {isAudioOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 opacity-75" />}
+          {isAudioOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 opacity-70" />}
         </button>
       )}
 
-      {/* Main Invitation Folio Viewport */}
+      {/* Main Rounded Mobile Invitation Card Viewport */}
       <div
         id="invitation-scroll-container"
-        className={`phone-frame-active relative w-full mx-auto bg-alabaster-stationery overflow-x-hidden sm:max-w-[430px] sm:my-10 sm:rounded-[40px] sm:shadow-[0_32px_90px_rgba(0,0,0,0.85)] sm:border sm:border-[#C8A252]/40 ${
-          isCoverLocked ? 'h-[100dvh] sm:h-[844px] overflow-y-hidden' : 'min-h-[100dvh]'
+        className={`phone-frame-active relative z-10 w-full mx-auto bg-marshmallow-card overflow-x-hidden sm:max-w-[430px] sm:my-10 sm:rounded-[40px] sm:shadow-[0_24px_75px_rgba(146,102,172,0.24)] sm:border-2 sm:border-white/90 ${
+          isCoverLocked ? 'h-[100dvh] sm:h-[844px] overflow-y-hidden' : 'min-h-[100dvh] overflow-y-visible'
         }`}
       >
-        {/* SEAMLESS 3D ROYAL DOUBLE-DOOR GATEFOLD COVER & WAX SEAL */}
-        <GatefoldCoverOverlay
+        {/* CUTE PASTEL LOVE-LETTER ENVELOPE & HEART WAX SEAL COVER */}
+        <CuteEnvelopeCoverOverlay
           stage={introStage}
           onTriggerOpen={handleTriggerOpen}
           couple={WEDDING_CONFIG.couple}
@@ -2404,97 +2350,97 @@ export default function App() {
         />
 
         {/* ==================================================================
-            SECTION 1: CLASSY EDITORIAL LETTERPRESS HERO
+            SECTION 1: CUTE PASTEL HERO WITH SCALLOPED ARCH & FAIRY LIGHTS
         ================================================================== */}
-        <section className="relative min-h-[100dvh] sm:min-h-[828px] flex flex-col items-center justify-between px-8 py-14 sm:py-16 overflow-hidden">
-          <HeroStationeryFrameSVG />
+        <section className="relative min-h-[100dvh] sm:min-h-[828px] flex flex-col items-center justify-between px-7 py-10 sm:py-12 overflow-hidden">
+          <CuteHeroArchFrameSVG />
 
+          {/* Hanging Fairy Lights & Floral Cluster */}
           <div
-            style={{ transitionDelay: '100ms' }}
-            className={`lux-hero-item ${heroRevealed ? 'is-revealed' : ''} relative z-10 pt-2`}
+            style={{ transitionDelay: '80ms' }}
+            className={`cute-hero-item ${heroRevealed ? 'is-revealed' : ''} relative z-10 w-full pt-1`}
           >
-            <HeroTopOrnamentSVG />
+            <CuteFairyLightsHeaderSVG />
           </div>
 
-          <div className="relative z-10 w-full max-w-[310px] mx-auto flex flex-col items-center justify-center text-center my-auto py-6">
-            {/* Hairline-Flanked Eyebrow */}
+          {/* Center Couple & Date Lockup */}
+          <div className="relative z-10 w-full max-w-[310px] mx-auto flex flex-col items-center justify-center text-center my-auto py-2">
+            {/* Soft Tagline Pill */}
             <div
-              style={{ transitionDelay: '200ms' }}
-              className={`lux-hero-item ${
+              style={{ transitionDelay: '180ms' }}
+              className={`cute-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } flex items-center justify-center gap-3 mb-7`}
+              } inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F6EEFF]/80 border border-[#E6D4FF] mb-5`}
             >
-              <span className="w-6 h-[1px] bg-[#C8A252]/75 shrink-0" />
-              <p className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.3em] uppercase text-[#355E52] whitespace-nowrap">
+              <span className="text-[10px] text-[#E887AB]">✦</span>
+              <p className="font-cute-sans text-[10px] font-semibold tracking-[0.18em] uppercase text-[#7C608C]">
                 {WEDDING_CONFIG.couple.tagline}
               </p>
-              <span className="w-6 h-[1px] bg-[#C8A252]/75 shrink-0" />
+              <span className="text-[10px] text-[#E887AB]">✦</span>
             </div>
 
-            {/* Cleanly Proportioned Couple Names Lockup */}
+            {/* Couple Names Lockup with Tiny Rose-Gold Heart Divider */}
             <div
-              style={{ transitionDelay: '340ms' }}
-              className={`lux-hero-item ${
+              style={{ transitionDelay: '300ms' }}
+              className={`cute-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } w-full flex flex-col items-center justify-center mb-6`}
+              } w-full flex flex-col items-center justify-center mb-4`}
             >
-              <h1 className="w-full flex flex-col items-center font-serif-editorial font-light text-[#0F3329]">
-                <span className="block text-5xl sm:text-6xl font-light leading-[1.08] tracking-[0.04em] text-[#0F3329]">
+              <h1 className="w-full flex flex-col items-center font-cute-serif font-semibold text-[#4A3259]">
+                <span className="block text-[46px] sm:text-[54px] leading-[1.06] tracking-[0.02em] text-[#4A3259]">
                   {WEDDING_CONFIG.couple.bride}
                 </span>
 
-                <span className="my-2.5 flex items-center justify-center gap-3">
-                  <span className="w-8 sm:w-10 h-[1px] bg-[#C8A252]/65" />
-                  <span className="font-serif-editorial italic text-2xl leading-none text-[#C8A252] select-none">
-                    &amp;
-                  </span>
-                  <span className="w-8 sm:w-10 h-[1px] bg-[#C8A252]/65" />
+                <span className="my-2 flex items-center justify-center gap-3">
+                  <span className="w-10 h-[1.5px] rounded-full bg-gradient-to-r from-transparent to-[#E4A9B8]" />
+                  <Heart className="w-5 h-5 fill-[#F8BBD0] text-[#E887AB] cute-heartbeat" />
+                  <span className="w-10 h-[1.5px] rounded-full bg-gradient-to-l from-transparent to-[#E4A9B8]" />
                 </span>
 
-                <span className="block text-5xl sm:text-6xl font-light leading-[1.08] tracking-[0.04em] text-[#0F3329]">
+                <span className="block text-[46px] sm:text-[54px] leading-[1.06] tracking-[0.02em] text-[#4A3259]">
                   {WEDDING_CONFIG.couple.groom}
                 </span>
               </h1>
             </div>
 
-            {/* Italic Letterpress Subtitle */}
+            {/* Sweet Subtitle */}
             <p
-              style={{ transitionDelay: '480ms' }}
-              className={`lux-hero-item ${
+              style={{ transitionDelay: '420ms' }}
+              className={`cute-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } font-serif-editorial italic text-[15px] sm:text-[16px] leading-relaxed text-[#355E52]/90 max-w-[250px] mb-8`}
+              } font-cute-serif italic text-[15px] sm:text-[16px] leading-relaxed text-[#7C608C] max-w-[260px] mb-6`}
             >
               Joyfully invite you to celebrate their engagement
             </p>
 
-            {/* Classic 3-Column Gold-Ruled Date Lockup */}
+            {/* Cute Rounded Pastel Calendar Badge */}
             <div
-              style={{ transitionDelay: '620ms' }}
-              className={`lux-hero-item ${
+              style={{ transitionDelay: '540ms' }}
+              className={`cute-hero-item ${
                 heroRevealed ? 'is-revealed' : ''
-              } w-full max-w-[292px] border-y border-[#C8A252]/50 py-3.5 mb-7`}
+              } w-full max-w-[295px] rounded-[24px] bg-gradient-to-r from-[#FFF0F6] via-[#FFFDFC] to-[#F4EBFF] border border-[#F8BBD0]/85 px-4 py-3.5 shadow-[0_8px_22px_rgba(214,158,198,0.18)] mb-6`}
             >
               <div className="grid grid-cols-[1fr_auto_1fr] items-center">
-                <div className="pr-3 text-center">
-                  <span className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.26em] uppercase text-[#355E52] whitespace-nowrap">
+                <div className="pr-2.5 text-center">
+                  <span className="font-cute-sans text-[10px] font-bold tracking-[0.16em] uppercase text-[#7C608C]">
                     Thursday
                   </span>
                 </div>
 
-                <div className="px-4 sm:px-5 border-x border-[#C8A252]/40 flex flex-col items-center justify-center">
-                  <span className="font-sans-clean text-[8px] tracking-[0.3em] uppercase text-[#9A7832] whitespace-nowrap">
+                <div className="px-4 border-x border-[#F8BBD0]/75 flex flex-col items-center justify-center">
+                  <span className="font-cute-sans text-[9px] font-bold tracking-[0.22em] uppercase text-[#D66E98]">
                     December
                   </span>
-                  <span className="font-serif-editorial font-light text-[36px] sm:text-[40px] leading-none text-[#0F3329] my-0.5">
+                  <span className="font-cute-serif font-bold text-[34px] sm:text-[38px] leading-none text-[#4A3259] my-0.5">
                     10
                   </span>
-                  <span className="font-sans-clean text-[8.5px] tracking-[0.28em] text-[#355E52] whitespace-nowrap">
+                  <span className="font-cute-sans text-[10px] font-bold tracking-[0.2em] text-[#7C608C]">
                     2026
                   </span>
                 </div>
 
-                <div className="pl-3 text-center">
-                  <span className="font-sans-clean text-[8.5px] sm:text-[9px] tracking-[0.26em] uppercase text-[#355E52] whitespace-nowrap">
+                <div className="pl-2.5 text-center">
+                  <span className="font-cute-sans text-[10px] font-bold tracking-[0.14em] uppercase text-[#7C608C]">
                     6:00 PM
                   </span>
                 </div>
@@ -2503,68 +2449,73 @@ export default function App() {
 
             {/* Venue Lockup */}
             <div
-              style={{ transitionDelay: '760ms' }}
-              className={`lux-hero-item ${heroRevealed ? 'is-revealed' : ''}`}
+              style={{ transitionDelay: '660ms' }}
+              className={`cute-hero-item ${heroRevealed ? 'is-revealed' : ''}`}
             >
-              <p className="font-serif-editorial text-[22px] sm:text-[24px] tracking-[0.06em] text-[#0F3329]">
+              <p className="font-cute-serif text-[23px] font-semibold tracking-[0.03em] text-[#4A3259]">
                 {WEDDING_CONFIG.venue.name}
               </p>
-              <p className="font-sans-clean text-[9px] tracking-[0.34em] uppercase text-[#9A7832] mt-1">
+              <p className="font-cute-sans text-[10px] font-semibold tracking-[0.26em] uppercase text-[#D66E98] mt-0.5">
                 Madurai · India
               </p>
             </div>
           </div>
 
-          {/* Minimal Pulsing Vertical Gold Hairline Scroll Cue */}
+          {/* Gentle Bouncing Heart Scroll Cue */}
           <div
-            style={{ transitionDelay: '900ms' }}
-            className={`lux-hero-item ${
+            style={{ transitionDelay: '780ms' }}
+            className={`cute-hero-item ${
               heroRevealed ? 'is-revealed' : ''
-            } relative z-10 flex flex-col items-center gap-2 pt-2`}
+            } relative z-10 flex flex-col items-center gap-1 pt-2`}
           >
-            <span className="font-sans-clean text-[7.5px] tracking-[0.36em] uppercase text-[#9A7832]/85 pl-[0.36em]">
-              Scroll
+            <span className="font-cute-sans text-[9px] font-semibold tracking-[0.24em] uppercase text-[#9A7CAE]">
+              Scroll Down
             </span>
-            <span className="w-[1px] h-7 bg-gradient-to-b from-[#C8A252] to-transparent lux-scroll-line" />
+            <Heart className="w-4 h-4 fill-[#F8BBD0] text-[#E887AB] cute-bounce-heart" />
           </div>
         </section>
 
         {/* ==================================================================
-            SECTION 2: INVITATION STATEMENT & KISSING SWANS
+            SECTION 2: INVITATION STATEMENT & CUTE KISSING LOVEBIRDS
         ================================================================== */}
-        <section className="relative px-8 pt-8 pb-16 text-center">
+        <section className="relative px-8 pt-6 pb-14 text-center">
           <RevealOnScroll variant="scale">
-            <SwansIllustration />
+            <CuteLovebirdsIllustration />
           </RevealOnScroll>
 
-          <RevealOnScroll delay={140}>
-            <h2 className="font-serif-editorial text-2xl sm:text-3xl text-[#0F3329] mt-4 mb-4 leading-tight">
+          <RevealOnScroll delay={120}>
+            <h2 className="font-cute-serif text-2xl sm:text-[28px] font-semibold text-[#4A3259] mt-3 mb-4 leading-snug">
               Together with their
               <br />
-              families
+              <span className="font-cute-script text-4xl font-normal text-[#D66E98]">families</span>
             </h2>
           </RevealOnScroll>
 
-          <RevealOnScroll delay={260}>
-            <p className="font-sans-clean text-xs sm:text-[13px] leading-relaxed text-[#355E52] max-w-xs mx-auto font-light">
-              {WEDDING_CONFIG.couple.invitationText}
-            </p>
+          <RevealOnScroll delay={220}>
+            <div className="rounded-[24px] bg-[#FFF8FB] border border-[#F8BBD0]/65 px-5 py-5 shadow-sm max-w-xs mx-auto">
+              <p className="font-cute-sans text-[13px] leading-relaxed text-[#6E5280] font-medium">
+                {WEDDING_CONFIG.couple.invitationText}
+              </p>
+            </div>
           </RevealOnScroll>
         </section>
 
         {/* ==================================================================
-            SECTION 3: SCRATCH-TO-REVEAL DATE & LIVE COUNTDOWN
+            SECTION 3: CUTE SCRATCH-TO-REVEAL DATE & LIVE COUNTDOWN
         ================================================================== */}
-        <section className="relative bg-velvet-emerald text-[#F6F4EC]">
-          <ScallopedLaceDivider position="top" />
+        <section className="relative bg-pastel-lavender-dream text-[#4A3259]">
+          <CuteScallopCloudDivider position="top" />
 
-          <div className="px-6 py-12 text-center overflow-hidden">
+          <div className="px-5 py-10 text-center overflow-hidden">
             <RevealOnScroll variant="scale">
-              <h2 className="font-serif-editorial text-3xl sm:text-4xl tracking-wide mb-2 text-[#F6F4EC]">
+              <p className="font-cute-script text-3xl text-[#B95D88] leading-none mb-1">
+                Counting the days
+              </p>
+              <h2 className="font-cute-serif text-3xl sm:text-[34px] font-semibold tracking-wide mb-2 text-[#4A3259]">
                 Countdown
               </h2>
-              <p className="font-sans-clean text-[10px] tracking-[0.24em] uppercase text-[#E5CA8C]/85 mb-6">
-                Scratch the Foil Below to Reveal Our Date
+              <p className="font-cute-sans text-[11px] font-semibold tracking-[0.16em] uppercase text-[#7C608C] mb-6">
+                Scratch the Pastel Foil to Reveal Our Date ✨
               </p>
 
               <ScratchToRevealCountdown
@@ -2575,7 +2526,7 @@ export default function App() {
             </RevealOnScroll>
           </div>
 
-          <ScallopedLaceDivider position="bottom" flip />
+          <CuteScallopCloudDivider position="bottom" flip />
         </section>
 
         {/* ==================================================================
@@ -2583,37 +2534,42 @@ export default function App() {
         ================================================================== */}
         <section className="px-8 py-14 text-center">
           <RevealOnScroll>
-            <h2 className="font-serif-editorial text-4xl text-[#0F3329] mb-2">Location</h2>
-            <p className="font-script text-4xl text-[#0F3329] my-1">
+            <p className="font-cute-sans text-[10px] font-bold tracking-[0.24em] uppercase text-[#B58CE0] mb-1">
+              ♡ Where We Celebrate ♡
+            </p>
+            <h2 className="font-cute-serif text-3xl sm:text-4xl font-semibold text-[#4A3259] mb-1">
+              Location
+            </h2>
+            <p className="font-cute-script text-5xl text-[#D66E98] my-1 leading-tight">
               {WEDDING_CONFIG.venue.name}
             </p>
-            <p className="font-sans-clean text-[10px] tracking-[0.28em] uppercase text-[#355E52] mb-6">
+            <p className="font-cute-sans text-[11px] font-bold tracking-[0.22em] uppercase text-[#7C608C] mb-5">
               {WEDDING_CONFIG.venue.cityCountry}
             </p>
           </RevealOnScroll>
 
-          <RevealOnScroll delay={140}>
-            <p className="font-sans-clean text-xs leading-relaxed text-[#355E52] max-w-xs mx-auto mb-4 font-light">
+          <RevealOnScroll delay={120}>
+            <p className="font-cute-sans text-[13px] leading-relaxed text-[#6E5280] max-w-xs mx-auto mb-3 font-medium">
               {WEDDING_CONFIG.venue.description1}
             </p>
-            <p className="font-sans-clean text-xs leading-relaxed text-[#355E52] max-w-xs mx-auto font-light">
+            <p className="font-cute-sans text-[13px] leading-relaxed text-[#6E5280] max-w-xs mx-auto font-medium">
               {WEDDING_CONFIG.venue.description2}
             </p>
           </RevealOnScroll>
 
-          <RevealOnScroll delay={240} variant="scale">
-            <VenueOvalIllustration />
+          <RevealOnScroll delay={220} variant="scale">
+            <CuteVenueArchIllustration />
           </RevealOnScroll>
 
-          <RevealOnScroll delay={320}>
+          <RevealOnScroll delay={300}>
             <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
               <a
                 href={WEDDING_CONFIG.venue.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-[#0F3329]/55 text-[#0F3329] font-sans-clean text-[10px] tracking-[0.25em] uppercase hover:bg-[#0F3329] hover:text-[#F6F4EC] hover:border-[#0F3329] transition cursor-pointer"
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[#F48FB1] to-[#C996E8] text-white font-cute-sans font-semibold text-[11px] tracking-[0.18em] uppercase shadow-[0_10px_24px_rgba(201,150,232,0.38)] hover:scale-[1.03] transition cursor-pointer"
               >
-                <MapPin className="w-3.5 h-3.5 text-[#C8A252]" />
+                <MapPin className="w-4 h-4" />
                 <span>Open Google Maps</span>
               </a>
             </div>
@@ -2623,89 +2579,97 @@ export default function App() {
         {/* ==================================================================
             SECTION 5: THE DAY — DECEMBER 10, 2026 (3-EVENT TIMELINE)
         ================================================================== */}
-        <section className="pt-4 pb-8 text-center">
+        <section className="pt-2 pb-10 text-center bg-gradient-to-b from-transparent via-[#FAF3FF]/75 to-transparent">
           <RevealOnScroll>
-            <HangingGarlandIllustration />
+            <CuteBuntingGarlandSVG />
 
             <div className="px-6">
-              <h2 className="font-serif-editorial text-4xl text-[#0F3329] mb-1">The Day</h2>
-              <p className="font-sans-clean text-[10px] tracking-[0.26em] uppercase text-[#355E52] font-medium mb-2">
+              <h2 className="font-cute-serif text-3xl sm:text-4xl font-semibold text-[#4A3259] mb-1">
+                The Day
+              </h2>
+              <p className="font-cute-sans text-[11px] font-bold tracking-[0.22em] uppercase text-[#D66E98] mb-2">
                 {WEDDING_CONFIG.date.displayFull}
               </p>
-              <p className="font-sans-clean text-xs text-[#355E52]/85 font-light mb-10">
-                An evening of love, rings, and celebration.
+              <p className="font-cute-sans text-xs text-[#7C608C] font-medium mb-9">
+                An evening of love, rings, and sweet celebration ♡
               </p>
             </div>
           </RevealOnScroll>
 
-          <div className="px-6">
-            <div className="relative max-w-xs mx-auto text-left">
-              <div className="absolute left-[46%] top-3 bottom-3 w-[1px] bg-gradient-to-b from-[#C8A252]/70 via-[#0F3329]/30 to-[#C8A252]/70" />
+          <div className="px-5">
+            <div className="relative max-w-[340px] mx-auto text-left">
+              {/* Cute Vertical Dotted Pastel Line */}
+              <div
+                className="absolute left-[43%] top-4 bottom-4 w-0 border-l-2 border-dotted border-[#E4A9B8]"
+              />
 
               {WEDDING_CONFIG.timeline.map((item, idx) => (
-                <RevealOnScroll key={idx} delay={idx * 150}>
-                  <div className="relative grid grid-cols-12 items-start mb-10 last:mb-0">
-                    <div className="col-span-5 flex items-center justify-end pr-3 gap-1.5">
-                      <div className="shrink-0">
-                        <TimelineIcon type={item.icon} />
+                <RevealOnScroll key={idx} delay={idx * 140}>
+                  <div className="relative grid grid-cols-12 items-center mb-8 last:mb-0">
+                    {/* Left: Cute Icon & Time */}
+                    <div className="col-span-5 flex flex-col items-end pr-4 text-right">
+                      <div className="mb-1">
+                        <CuteTimelineIcon type={item.icon} />
                       </div>
-                      <span className="font-serif-editorial text-base sm:text-lg text-[#0F3329] whitespace-nowrap font-medium">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFEAF2] border border-[#F8BBD0]/80 font-cute-sans text-xs font-bold text-[#4A3259] whitespace-nowrap">
                         {item.time}
                       </span>
                     </div>
 
-                    <div className="col-span-1 flex justify-center pt-5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#0F3329] ring-[3px] ring-[#E5CA8C]/70" />
+                    {/* Center: Cute Heart Node */}
+                    <div className="col-span-1 flex justify-center z-10">
+                      <span className="w-5 h-5 rounded-full bg-white border-2 border-[#E887AB] flex items-center justify-center shadow-sm">
+                        <span className="w-2 h-2 rounded-full bg-[#E887AB]" />
+                      </span>
                     </div>
 
-                    <div className="col-span-6 pl-2 pt-0.5">
-                      <span className="block font-sans-clean text-[8px] tracking-[0.2em] uppercase text-[#9A7832] font-medium mb-0.5">
-                        {item.dateLabel}
-                      </span>
-                      <h3 className="font-sans-clean text-[11px] font-medium tracking-[0.18em] uppercase text-[#0F3329] mb-1">
-                        {item.title}
-                      </h3>
-                      <p className="font-sans-clean text-[11px] leading-relaxed text-[#355E52] font-light">
-                        {item.description}
-                      </p>
+                    {/* Right: Event Details Card */}
+                    <div className="col-span-6 pl-3">
+                      <div className="rounded-2xl bg-white/85 border border-[#E6D4FF] p-3.5 shadow-sm">
+                        <span className="block font-cute-sans text-[8.5px] font-bold tracking-[0.16em] uppercase text-[#B58CE0] mb-0.5">
+                          {item.dateLabel}
+                        </span>
+                        <h3 className="font-cute-serif text-[13px] font-bold tracking-[0.06em] uppercase text-[#4A3259] mb-1">
+                          {item.title}
+                        </h3>
+                        <p className="font-cute-sans text-[11.5px] leading-relaxed text-[#6E5280] font-medium">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </RevealOnScroll>
               ))}
             </div>
           </div>
-
-          {/* <RevealOnScroll delay={200}>
-            <BanquetTableIllustration />
-          </RevealOnScroll> */}
         </section>
 
         {/* ==================================================================
-            FOOTER: CLOSING NOTE & REPLAY BUTTON
+            FOOTER: CLOSING NOTE & REPLAY ENVELOPE BUTTON
         ================================================================== */}
-        <footer className="px-6 pt-12 pb-16 text-center">
+        <footer className="px-6 pt-10 pb-16 text-center">
           <RevealOnScroll variant="scale">
-            <WeddingRingsIllustration />
+            <CuteWeddingRingsSVG />
           </RevealOnScroll>
 
-          <RevealOnScroll delay={140}>
-            <p className="font-serif-editorial text-2xl sm:text-3xl text-[#0F3329] mb-6 leading-snug">
+          <RevealOnScroll delay={120}>
+            <p className="font-cute-serif text-2xl sm:text-[26px] font-semibold text-[#4A3259] mb-5 leading-snug">
               We can&apos;t wait to celebrate with you.
             </p>
 
-            <p className="font-sans-clean text-xs text-[#355E52] font-light mb-2">
+            <p className="font-cute-sans text-xs font-semibold text-[#9A7CAE] mb-1">
               With love,
             </p>
 
-            <h2 className="font-serif-editorial text-3xl sm:text-4xl text-[#0F3329] tracking-wide mb-3">
+            <h2 className="font-cute-serif text-3xl sm:text-4xl font-semibold text-[#4A3259] tracking-wide mb-2">
               {WEDDING_CONFIG.couple.bride}{' '}
-              <span className="font-serif-editorial italic text-2xl sm:text-3xl mx-1.5 text-[#C8A252]">
+              <span className="font-cute-script text-4xl font-normal mx-1 text-[#E887AB]">
                 &amp;
               </span>{' '}
               {WEDDING_CONFIG.couple.groom}
             </h2>
 
-            <p className="font-sans-clean text-xs tracking-[0.22em] uppercase text-[#355E52] mb-8">
+            <p className="font-cute-sans text-xs font-bold tracking-[0.2em] uppercase text-[#7C608C] mb-8">
               {WEDDING_CONFIG.date.displayFull}
             </p>
 
@@ -2713,10 +2677,10 @@ export default function App() {
               <button
                 type="button"
                 onClick={handleReplayOpening}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#0F3329]/45 text-[#0F3329] font-sans-clean text-[10px] tracking-[0.22em] uppercase hover:bg-[#0F3329] hover:text-[#F6F4EC] transition cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#FFF0F6] border-2 border-[#F8BBD0] text-[#5E3D72] font-cute-sans font-semibold text-[11px] tracking-[0.14em] uppercase hover:bg-[#FFE0EC] hover:scale-[1.03] transition cursor-pointer shadow-sm"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-[#C8A252]" />
-                <span>Replay Seal &amp; Opening</span>
+                <RotateCcw className="w-3.5 h-3.5 text-[#E887AB]" />
+                <span>Replay Envelope &amp; Seal</span>
               </button>
             </div>
           </RevealOnScroll>
