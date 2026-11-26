@@ -8,6 +8,8 @@ import {
   X,
   Clock,
   Navigation,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 
 // ============================================================================
@@ -28,20 +30,20 @@ const WEDDING_CONFIG = {
     displayFull: 'December 10, 2026',
     displayTime: 'Thursday · 6:00 PM Onwards',
     isoTarget: '2026-12-10T18:00:00',
-    calendarTitle: "Harini & Adharsh's Engagement Celebration — MAHAL",
+    calendarTitle: "Harini & Adharsh's Engagement Celebration",
     calendarStart: '20261210T180000',
     calendarEnd: '20261210T233000',
   },
   venue: {
-    name: 'Mahal',
+    name: 'Andril Mini Banquet Hall',
     cityCountry: 'Madurai, India',
     address: 'Address',
     description1:
-      'Description if required. We are excited to celebrate this special occasion with you at the beautiful Mahal in Madurai, India.',
+      'We are delighted to celebrate the beginning of our forever with you in the heart of Madurai, surrounded by warmth, blessings, and the people who mean the most to us.',
     description2:
-      'We recommend arriving a little early to take in and enjoy the surroundings before the engagement begins.',
+      'Tap the button below for directions, and we look forward to welcoming you with open arms and warm smiles.',
     mapsUrl:
-      'https://maps.google.com/?q=Villa+Aurelia+Largo+di+Porta+San+Pancrazio+Rome+Italy',
+      'https://maps.app.goo.gl/fnPNKZxAQ4nKQ9jG9',
   },
   timeline: [
     {
@@ -71,6 +73,12 @@ const WEDDING_CONFIG = {
   footer: {
     creditName: 'The Digital Yes',
   },
+  music: {
+    songUrl: '/song.mp3', // Place your MP3 inside the /public folder
+    volume: 0.65,         // 0.0 to 1.0
+    loop: false,
+    fadeOutSeconds: 2.5
+  },
 };
 
 // ============================================================================
@@ -79,17 +87,9 @@ const WEDDING_CONFIG = {
 class RomanticAudioEngine {
   constructor() {
     this.ctx = null;
+    this.bgAudio = null;
+    this.fadeInterval = null;
     this.isPlaying = false;
-    this.intervalId = null;
-    this.step = 0;
-    this.noiseBuffer = null;
-    // Expressive cello & harp progression
-    this.progression = [
-      { bass: 146.83, notes: [293.66, 349.23, 440.0, 587.33] }, // Dm
-      { bass: 116.54, notes: [233.08, 349.23, 440.0, 523.25] }, // BbMaj7
-      { bass: 174.61, notes: [261.63, 349.23, 440.0, 523.25] }, // F
-      { bass: 130.81, notes: [261.63, 329.63, 392.0, 523.25] }, // C
-    ];
   }
 
   init() {
@@ -103,119 +103,133 @@ class RomanticAudioEngine {
       if (this.ctx.state === 'suspended') {
         this.ctx.resume();
       }
-      // Pre-generate and cache a short 0.8s looped white-noise buffer once (zero click-time lag)
-      if (!this.noiseBuffer && this.ctx) {
-        const bufferSize = Math.floor(this.ctx.sampleRate * 0.8);
-        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-        const output = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = Math.random() * 2 - 1;
-        }
-        this.noiseBuffer = buffer;
-      }
     } catch {
-      // Silently ignore audio initialization errors on restricted browsers
+      // Silently ignore audio initialization errors
     }
   }
 
-  // Slow, ceremonial wax-seal unsealing, silk ribbon untie, satin rustle & extended harp glissando
-  playSealChime() {
-    this.init();
-    if (!this.ctx) return;
+  // Plays the configured song with a gentle 2-second fade-in
+  playSong(url, targetVolume = 0.65, loop = false, onEnded = null, fadeOutSeconds = 3.5) {
+    if (typeof window === 'undefined' || !url) return;
     try {
-      const baseTime = this.ctx.currentTime;
-
-      // 1. Deep warm wax-seal press & unseal thud (0.00s)
-      const popOsc = this.ctx.createOscillator();
-      const popGain = this.ctx.createGain();
-      popOsc.type = 'triangle';
-      popOsc.frequency.setValueAtTime(145, baseTime);
-      popOsc.frequency.exponentialRampToValueAtTime(38, baseTime + 0.22);
-      popGain.gain.setValueAtTime(0.15, baseTime);
-      popGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 0.25);
-      popOsc.connect(popGain);
-      popGain.connect(this.ctx.destination);
-      popOsc.start(baseTime);
-      popOsc.stop(baseTime + 0.26);
-
-      // 2. Delicate crystalline wax crackle & ribbon release (0.45s)
-      const crackOsc = this.ctx.createOscillator();
-      const crackGain = this.ctx.createGain();
-      crackOsc.type = 'sine';
-      crackOsc.frequency.setValueAtTime(520, baseTime + 0.45);
-      crackOsc.frequency.exponentialRampToValueAtTime(180, baseTime + 0.75);
-      crackGain.gain.setValueAtTime(0.0001, baseTime + 0.45);
-      crackGain.gain.linearRampToValueAtTime(0.045, baseTime + 0.5);
-      crackGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 0.78);
-      crackOsc.connect(crackGain);
-      crackGain.connect(this.ctx.destination);
-      crackOsc.start(baseTime + 0.45);
-      crackOsc.stop(baseTime + 0.8);
-
-      // 3. Extended cotton-paper & silk unfolding swoosh using cached looped buffer
-      if (this.noiseBuffer) {
-        const whiteNoise = this.ctx.createBufferSource();
-        whiteNoise.buffer = this.noiseBuffer;
-        whiteNoise.loop = true;
-
-        const bandpass = this.ctx.createBiquadFilter();
-        bandpass.type = 'bandpass';
-        bandpass.frequency.setValueAtTime(480, baseTime + 0.9);
-        bandpass.frequency.exponentialRampToValueAtTime(1550, baseTime + 2.8);
-        bandpass.frequency.exponentialRampToValueAtTime(420, baseTime + 5.8);
-        bandpass.Q.setValueAtTime(2.0, baseTime + 0.9);
-
-        const rustleGain = this.ctx.createGain();
-        rustleGain.gain.setValueAtTime(0.0001, baseTime + 0.9);
-        rustleGain.gain.linearRampToValueAtTime(0.02, baseTime + 2.2);
-        rustleGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 5.9);
-
-        whiteNoise.connect(bandpass);
-        bandpass.connect(rustleGain);
-        rustleGain.connect(this.ctx.destination);
-        whiteNoise.start(baseTime + 0.9);
-        whiteNoise.stop(baseTime + 6.0);
+      if (!this.bgAudio) {
+        this.bgAudio = new Audio(url);
+        this.bgAudio.preload = 'auto';
       }
 
-      // 4. Slow, dreamy 12-note celestial harp glissando across 4.5 seconds
-      const chimeNotes = [
-        261.63, 293.66, 349.23, 392.0, 440.0, 523.25,
-        587.33, 659.25, 698.46, 783.99, 880.0, 1046.5,
-      ];
-      chimeNotes.forEach((freq, idx) => {
-        const startTime = baseTime + 0.65 + idx * 0.28;
-        const osc = this.ctx.createOscillator();
-        const overtone = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        const filter = this.ctx.createBiquadFilter();
+      this.targetVolume = targetVolume;
+      this.isFadingOut = false;
+      this.bgAudio.loop = loop;
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, startTime);
+      if (this.fadeInterval) clearInterval(this.fadeInterval);
 
-        overtone.type = 'triangle';
-        overtone.frequency.setValueAtTime(freq * 2, startTime);
+      // Smoothly fade out during the final `fadeOutSeconds`
+      this.bgAudio.ontimeupdate = () => {
+        if (
+          loop ||
+          this.isFadingOut ||
+          !this.bgAudio ||
+          !this.bgAudio.duration ||
+          Number.isNaN(this.bgAudio.duration)
+        ) {
+          return;
+        }
 
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(2200, startTime);
-        filter.frequency.exponentialRampToValueAtTime(460, startTime + 3.4);
+        const timeRemaining = this.bgAudio.duration - this.bgAudio.currentTime;
+        if (timeRemaining <= fadeOutSeconds && timeRemaining > 0) {
+          this.isFadingOut = true;
+          if (this.fadeInterval) clearInterval(this.fadeInterval);
 
-        gain.gain.setValueAtTime(0.0001, startTime);
-        gain.gain.linearRampToValueAtTime(0.038, startTime + 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 3.5);
+          const startVol = this.bgAudio.volume;
+          const steps = Math.max(1, Math.floor((timeRemaining * 1000) / 50));
+          const stepDrop = startVol / steps;
 
-        osc.connect(filter);
-        overtone.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.ctx.destination);
+          this.fadeInterval = setInterval(() => {
+            if (!this.bgAudio) return;
+            const nextVol = Math.max(0, this.bgAudio.volume - stepDrop);
+            this.bgAudio.volume = nextVol;
+            if (nextVol <= 0.001) {
+              this.bgAudio.volume = 0;
+              clearInterval(this.fadeInterval);
+              this.fadeInterval = null;
+            }
+          }, 50);
+        }
+      };
 
-        osc.start(startTime);
-        overtone.start(startTime);
-        osc.stop(startTime + 3.6);
-        overtone.stop(startTime + 3.6);
-      });
+      this.bgAudio.onended = () => {
+        if (this.fadeInterval) {
+          clearInterval(this.fadeInterval);
+          this.fadeInterval = null;
+        }
+        this.isFadingOut = false;
+        this.isPlaying = false;
+        if (onEnded) onEnded();
+      };
+
+      this.bgAudio.currentTime = 0;
+      this.bgAudio.volume = 0;
+
+      const playPromise = this.bgAudio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            this.isPlaying = true;
+            // Smooth 2-second fade-in
+            let currentVol = 0;
+            const step = targetVolume / 20;
+            this.fadeInterval = setInterval(() => {
+              if (this.isFadingOut || !this.bgAudio) {
+                clearInterval(this.fadeInterval);
+                return;
+              }
+              currentVol = Math.min(targetVolume, currentVol + step);
+              this.bgAudio.volume = currentVol;
+              if (currentVol >= targetVolume) {
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = null;
+              }
+            }, 100);
+          })
+          .catch(() => {
+            this.isPlaying = false;
+          });
+      }
     } catch {
-      // Ignore transient Web Audio errors
+      // Ignore playback errors on restricted browsers
     }
+  }
+
+  toggleSong() {
+    if (!this.bgAudio) return false;
+    if (this.bgAudio.paused) {
+      // If the song had finished, reset volume & fade state before replaying
+      if (this.bgAudio.ended || this.bgAudio.currentTime >= this.bgAudio.duration - 0.1) {
+        this.bgAudio.currentTime = 0;
+        this.bgAudio.volume = this.targetVolume ?? 0.65;
+        this.isFadingOut = false;
+      }
+      this.bgAudio.play().catch(() => {});
+      this.isPlaying = true;
+      return true;
+    } else {
+      this.bgAudio.pause();
+      this.isPlaying = false;
+      return false;
+    }
+  }
+
+  stop() {
+    if (this.fadeInterval) {
+      clearInterval(this.fadeInterval);
+      this.fadeInterval = null;
+    }
+    this.isFadingOut = false;
+    if (this.bgAudio) {
+      this.bgAudio.pause();
+      this.bgAudio.currentTime = 0;
+    }
+    this.isPlaying = false;
   }
 
   // Magical ascending celestial harp arpeggio when the date is scratched & revealed
@@ -244,55 +258,6 @@ class RomanticAudioEngine {
         }
       }, idx * 75);
     });
-  }
-
-  playNote(freq, duration = 2.8, volume = 0.038, type = 'sine', attack = 0.16) {
-    // Background loop muted per user preference; seal chime & bloom arpeggio remain active
-    void freq;
-    void duration;
-    void volume;
-    void type;
-    void attack;
-  }
-
-  start() {
-    this.init();
-    if (this.isPlaying) return;
-    this.isPlaying = true;
-
-    const triggerStep = () => {
-      if (!this.isPlaying) return;
-      const chordIdx = Math.floor(this.step / 4) % this.progression.length;
-      const noteIdx = this.step % 4;
-      const chord = this.progression[chordIdx];
-
-      if (noteIdx === 0) {
-        this.playNote(chord.bass, 3.8, 0.042, 'sawtooth', 0.45);
-      }
-      this.playNote(chord.notes[noteIdx], 2.5, 0.034, 'sine', 0.09);
-
-      this.step++;
-    };
-
-    triggerStep();
-    this.intervalId = setInterval(triggerStep, 760);
-  }
-
-  stop() {
-    this.isPlaying = false;
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-    }
-  }
-
-  toggle() {
-    if (this.isPlaying) {
-      this.stop();
-      return false;
-    }
-    this.start();
-    return true;
   }
 }
 
@@ -2332,40 +2297,31 @@ export default function App() {
 
     setIntroStage(1);
     setIsPastelPurpleTheme(true);
-    audioEngine.playSealChime();
-    if (!isPlayingMusic) {
-      audioEngine.start();
-      setIsPlayingMusic(true);
-    }
 
-    timeoutsRef.current.push(
-      setTimeout(() => {
-        setIntroStage(2);
-      }, 1800)
+    // Play song directly inside click handler (required for mobile Safari/Chrome)
+    audioEngine.playSong(
+      WEDDING_CONFIG.music.songUrl,
+      WEDDING_CONFIG.music.volume,
+      WEDDING_CONFIG.music.loop,
+      WEDDING_CONFIG.music.fadeOutSeconds
     );
+    setIsPlayingMusic(true);
 
-    timeoutsRef.current.push(
-      setTimeout(() => {
-        setIntroStage(3);
-      }, 3200)
-    );
-
-    timeoutsRef.current.push(
-      setTimeout(() => {
-        setHeroRevealed(true);
-      }, 6500)
-    );
-
-    timeoutsRef.current.push(
-      setTimeout(() => {
-        setIntroStage(4);
-      }, 11200)
-    );
+    timeoutsRef.current.push(setTimeout(() => setIntroStage(2), 1800));
+    timeoutsRef.current.push(setTimeout(() => setIntroStage(3), 3200));
+    timeoutsRef.current.push(setTimeout(() => setHeroRevealed(true), 6500));
+    timeoutsRef.current.push(setTimeout(() => setIntroStage(4), 11200));
   };
 
-  // Replay Envelope Choreography Anytime
+  const handleToggleMusic = () => {
+    const playing = audioEngine.toggleSong();
+    setIsPlayingMusic(playing);
+  };
+
   const handleReplayEnvelope = () => {
     clearChoreographyTimers();
+    audioEngine.stop();
+    setIsPlayingMusic(false);
     const scrollContainer = document.getElementById('invitation-scroll-container');
     if (scrollContainer) {
       scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2948,7 +2904,7 @@ export default function App() {
       {/* ====================================================================
           TOP FLOATING CONTROL BAR
       ==================================================================== */}
-      {introStage <= 0 && (
+      {/* {introStage <= 0 && (
         <div className="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2B0916]/90 backdrop-blur-md border border-[#F4EEF1]/20 text-[#F4EEF1] shadow-2xl text-xs font-sans-clean whitespace-nowrap">
           <button
             type="button"
@@ -2960,8 +2916,18 @@ export default function App() {
             <span>Tap Seal Below</span>
           </button>
         </div>
-      )}
+      )} */}
 
+{/* {introStage >= 1 && (
+        <button
+          type="button"
+          onClick={handleToggleMusic}
+          aria-label={isPlayingMusic ? 'Mute music' : 'Play music'}
+          className="fixed bottom-5 right-5 z-50 w-10 h-10 rounded-full bg-[#380B1B]/85 backdrop-blur-md border border-[#DFC085]/45 text-[#FAF5FF] shadow-xl flex items-center justify-center hover:bg-[#4E1B42] transition cursor-pointer"
+        >
+          {isPlayingMusic ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+        </button>
+      )} */}
       {/* ====================================================================
           TOAST NOTIFICATION BANNER
       ==================================================================== */}
@@ -3134,9 +3100,9 @@ export default function App() {
                 heroRevealed ? 'is-revealed' : ''
               } font-serif-editorial italic text-[15px] sm:text-[16px] text-[#5E4E69] leading-relaxed mb-6`}
             >
-              Joyfully invite you to celebrate their
+              Joyfully invite you to the engagement
               <br />
-              engagement
+              ceremony
             </p>
 
             {/* 5. Architectural 3-Column Date & Time Grid */}
@@ -3300,7 +3266,7 @@ export default function App() {
             <HangingGarlandIllustration />
 
             <div className="px-6">
-              <h2 className="font-serif-editorial text-4xl text-[#4A1222] mb-1">The Day</h2>
+              <h2 className="font-serif-editorial text-4xl text-[#4A1222] mb-1">Ring Ceremony</h2>
               <p className="font-sans-clean text-[10px] tracking-[0.26em] uppercase text-[#4A1222]/80 font-medium mb-2">
                 {WEDDING_CONFIG.date.displayFull}
               </p>
@@ -3347,9 +3313,9 @@ export default function App() {
             </div>
           </div>
 
-          <RevealOnScroll delay={220}>
+          {/* <RevealOnScroll delay={220}>
             <BanquetTableIllustration />
-          </RevealOnScroll>
+          </RevealOnScroll> */}
         </section>
 
         {/* ==================================================================
