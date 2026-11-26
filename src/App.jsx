@@ -107,6 +107,31 @@ class RomanticAudioEngine {
       // Silently ignore audio initialization errors
     }
   }
+  preloadSong(url) {
+    if (typeof window === 'undefined' || !url || this.bgAudio) return;
+    try {
+      this.bgAudio = new Audio(url);
+      this.bgAudio.preload = 'auto';
+      this.bgAudio.load();
+
+      // Force full download into browser cache/memory on mobile Safari & Chrome
+      fetch(url)
+        .then((res) => res.blob())
+        .then((blob) => {
+          // Only swap to the preloaded blob if playback hasn't started yet
+          if (this.bgAudio && this.bgAudio.paused && this.bgAudio.currentTime === 0) {
+            this.blobUrl = URL.createObjectURL(blob);
+            this.bgAudio.src = this.blobUrl;
+            this.bgAudio.load();
+          }
+        })
+        .catch(() => {
+          // Silently fall back to the original URL if fetch fails
+        });
+    } catch {
+      // Ignore preload errors
+    }
+  }
 
   // Plays the configured song with a gentle 2-second fade-in
   playSong(url, targetVolume = 0.65, loop = false, onEnded = null, fadeOutSeconds = 3.5) {
@@ -289,6 +314,10 @@ const RevealOnScroll = ({ children, className = '', delay = 0, variant = 'fade-u
     );
     observer.observe(el);
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    audioEngine.preloadSong(WEDDING_CONFIG.music.songUrl);
   }, []);
 
   return (
