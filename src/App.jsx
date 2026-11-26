@@ -4,7 +4,6 @@ import {
   Calendar,
   RotateCcw,
   Sparkles,
-  ChevronDown,
   ExternalLink,
   X,
   Clock,
@@ -16,61 +15,61 @@ import {
 // ============================================================================
 const WEDDING_CONFIG = {
   couple: {
-    bride: "Harini",
-    groom: "Adharsh",
-    monogram: "H & A",
-    crestInitial: "A",
-    tagline: "Together with their families",
+    bride: 'Harini',
+    groom: 'Adharsh',
+    monogram: 'H & A',
+    crestInitial: 'A',
+    tagline: 'Together with their families',
     invitationText:
-      "Harini & Adharsh joyfully request the pleasure of your company as they celebrate their engagement and begin this beautiful new chapter surrounded by the people they love most.",
+      'Harini & Adharsh joyfully request the pleasure of your company as they celebrate their engagement and begin this beautiful new chapter surrounded by the people they love most.',
   },
   date: {
-    displayDots: "10.12.2026",
-    displayFull: "December 10, 2026",
-    displayTime: "Thursday · 6:00 PM Onwards",
-    isoTarget: "2026-12-10T18:00:00",
+    displayDots: '10.12.2026',
+    displayFull: 'December 10, 2026',
+    displayTime: 'Thursday · 6:00 PM Onwards',
+    isoTarget: '2026-12-10T18:00:00',
     calendarTitle: "Harini & Adharsh's Engagement Celebration — MAHAL",
-    calendarStart: "20261210T180000",
-    calendarEnd: "20261210T233000",
+    calendarStart: '20261210T180000',
+    calendarEnd: '20261210T233000',
   },
   venue: {
-    name: "Mahal",
-    cityCountry: "Madurai, India",
-    address: "Address",
+    name: 'Mahal',
+    cityCountry: 'Madurai, India',
+    address: 'Address',
     description1:
-      "Description if required. We are excited to celebrate this special occasion with you at the beautiful Mahal in Madurai, India.",
+      'Description if required. We are excited to celebrate this special occasion with you at the beautiful Mahal in Madurai, India.',
     description2:
-      "We recommend arriving a little early to take in and enjoy the surroundings before the engagement begins.",
-    mapsUrl: "https://maps.google.com/?q=Villa+Aurelia+Largo+di+Porta+San+Pancrazio+Rome+Italy",
+      'We recommend arriving a little early to take in and enjoy the surroundings before the engagement begins.',
+    mapsUrl:
+      'https://maps.google.com/?q=Villa+Aurelia+Largo+di+Porta+San+Pancrazio+Rome+Italy',
   },
   timeline: [
     {
-      time: "6:00 PM",
-      dateLabel: "DECEMBER 10, 2026",
-      title: "WELCOME",
+      time: '6:00 PM',
+      dateLabel: 'DECEMBER 10, 2026',
+      title: 'WELCOME',
       description:
-        "Warm welcome drinks and gathering of family and friends at the mahal on December 10, 2026.",
-      icon: "welcome_flutes",
+        'Warm welcome drinks and gathering of family and friends at the mahal on December 10, 2026.',
+      icon: 'welcome_flutes',
     },
     {
-      time: "6:30 PM",
-      dateLabel: "THE EXCHANGE OF RINGS",
-      title: "ENGAGEMENT CEREMONY",
+      time: '6:30 PM',
+      dateLabel: 'THE EXCHANGE OF RINGS',
+      title: 'ENGAGEMENT CEREMONY',
       description:
-        "Exchange of rings, blessings, and heartfelt vows surrounded by our dearest loved ones.",
-      icon: "ceremony_rings",
+        'Exchange of rings, blessings, and heartfelt vows surrounded by our dearest loved ones.',
+      icon: 'ceremony_rings',
     },
     {
-      time: "7:00 PM",
-      dateLabel: "CELEBRATORY BANQUET",
-      title: "DINNER",
-      description:
-        "A dinner filled with tasty foods and deserts.",
-      icon: "dinner_cloche",
+      time: '7:00 PM',
+      dateLabel: 'CELEBRATORY BANQUET',
+      title: 'DINNER',
+      description: 'A dinner filled with tasty foods and deserts.',
+      icon: 'dinner_cloche',
     },
   ],
   footer: {
-    creditName: "The Digital Yes",
+    creditName: 'The Digital Yes',
   },
 };
 
@@ -95,6 +94,7 @@ class RomanticAudioEngine {
 
   init() {
     try {
+      if (typeof window === 'undefined') return;
       if (!this.ctx) {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if (!AudioCtx) return;
@@ -122,96 +122,100 @@ class RomanticAudioEngine {
   playSealChime() {
     this.init();
     if (!this.ctx) return;
-    const baseTime = this.ctx.currentTime;
+    try {
+      const baseTime = this.ctx.currentTime;
 
-    // 1. Deep warm wax-seal press & unseal thud (0.00s)
-    const popOsc = this.ctx.createOscillator();
-    const popGain = this.ctx.createGain();
-    popOsc.type = 'triangle';
-    popOsc.frequency.setValueAtTime(145, baseTime);
-    popOsc.frequency.exponentialRampToValueAtTime(38, baseTime + 0.22);
-    popGain.gain.setValueAtTime(0.15, baseTime);
-    popGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 0.25);
-    popOsc.connect(popGain);
-    popGain.connect(this.ctx.destination);
-    popOsc.start(baseTime);
-    popOsc.stop(baseTime + 0.26);
+      // 1. Deep warm wax-seal press & unseal thud (0.00s)
+      const popOsc = this.ctx.createOscillator();
+      const popGain = this.ctx.createGain();
+      popOsc.type = 'triangle';
+      popOsc.frequency.setValueAtTime(145, baseTime);
+      popOsc.frequency.exponentialRampToValueAtTime(38, baseTime + 0.22);
+      popGain.gain.setValueAtTime(0.15, baseTime);
+      popGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 0.25);
+      popOsc.connect(popGain);
+      popGain.connect(this.ctx.destination);
+      popOsc.start(baseTime);
+      popOsc.stop(baseTime + 0.26);
 
-    // 2. Delicate crystalline wax crackle & ribbon release (0.45s)
-    const crackOsc = this.ctx.createOscillator();
-    const crackGain = this.ctx.createGain();
-    crackOsc.type = 'sine';
-    crackOsc.frequency.setValueAtTime(520, baseTime + 0.45);
-    crackOsc.frequency.exponentialRampToValueAtTime(180, baseTime + 0.75);
-    crackGain.gain.setValueAtTime(0.0001, baseTime + 0.45);
-    crackGain.gain.linearRampToValueAtTime(0.045, baseTime + 0.5);
-    crackGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 0.78);
-    crackOsc.connect(crackGain);
-    crackGain.connect(this.ctx.destination);
-    crackOsc.start(baseTime + 0.45);
-    crackOsc.stop(baseTime + 0.8);
+      // 2. Delicate crystalline wax crackle & ribbon release (0.45s)
+      const crackOsc = this.ctx.createOscillator();
+      const crackGain = this.ctx.createGain();
+      crackOsc.type = 'sine';
+      crackOsc.frequency.setValueAtTime(520, baseTime + 0.45);
+      crackOsc.frequency.exponentialRampToValueAtTime(180, baseTime + 0.75);
+      crackGain.gain.setValueAtTime(0.0001, baseTime + 0.45);
+      crackGain.gain.linearRampToValueAtTime(0.045, baseTime + 0.5);
+      crackGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 0.78);
+      crackOsc.connect(crackGain);
+      crackGain.connect(this.ctx.destination);
+      crackOsc.start(baseTime + 0.45);
+      crackOsc.stop(baseTime + 0.8);
 
-    // 3. Extended pleated silk & Chantilly lace unfolding swoosh using cached looped buffer
-    if (this.noiseBuffer) {
-      const whiteNoise = this.ctx.createBufferSource();
-      whiteNoise.buffer = this.noiseBuffer;
-      whiteNoise.loop = true;
+      // 3. Extended cotton-paper & silk unfolding swoosh using cached looped buffer
+      if (this.noiseBuffer) {
+        const whiteNoise = this.ctx.createBufferSource();
+        whiteNoise.buffer = this.noiseBuffer;
+        whiteNoise.loop = true;
 
-      const bandpass = this.ctx.createBiquadFilter();
-      bandpass.type = 'bandpass';
-      bandpass.frequency.setValueAtTime(480, baseTime + 0.9);
-      bandpass.frequency.exponentialRampToValueAtTime(1550, baseTime + 2.8);
-      bandpass.frequency.exponentialRampToValueAtTime(420, baseTime + 5.8);
-      bandpass.Q.setValueAtTime(2.0, baseTime + 0.9);
+        const bandpass = this.ctx.createBiquadFilter();
+        bandpass.type = 'bandpass';
+        bandpass.frequency.setValueAtTime(480, baseTime + 0.9);
+        bandpass.frequency.exponentialRampToValueAtTime(1550, baseTime + 2.8);
+        bandpass.frequency.exponentialRampToValueAtTime(420, baseTime + 5.8);
+        bandpass.Q.setValueAtTime(2.0, baseTime + 0.9);
 
-      const rustleGain = this.ctx.createGain();
-      rustleGain.gain.setValueAtTime(0.0001, baseTime + 0.9);
-      rustleGain.gain.linearRampToValueAtTime(0.02, baseTime + 2.2);
-      rustleGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 5.9);
+        const rustleGain = this.ctx.createGain();
+        rustleGain.gain.setValueAtTime(0.0001, baseTime + 0.9);
+        rustleGain.gain.linearRampToValueAtTime(0.02, baseTime + 2.2);
+        rustleGain.gain.exponentialRampToValueAtTime(0.0001, baseTime + 5.9);
 
-      whiteNoise.connect(bandpass);
-      bandpass.connect(rustleGain);
-      rustleGain.connect(this.ctx.destination);
-      whiteNoise.start(baseTime + 0.9);
-      whiteNoise.stop(baseTime + 6.0);
+        whiteNoise.connect(bandpass);
+        bandpass.connect(rustleGain);
+        rustleGain.connect(this.ctx.destination);
+        whiteNoise.start(baseTime + 0.9);
+        whiteNoise.stop(baseTime + 6.0);
+      }
+
+      // 4. Slow, dreamy 12-note celestial harp glissando across 4.5 seconds
+      const chimeNotes = [
+        261.63, 293.66, 349.23, 392.0, 440.0, 523.25,
+        587.33, 659.25, 698.46, 783.99, 880.0, 1046.5,
+      ];
+      chimeNotes.forEach((freq, idx) => {
+        const startTime = baseTime + 0.65 + idx * 0.28;
+        const osc = this.ctx.createOscillator();
+        const overtone = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+
+        overtone.type = 'triangle';
+        overtone.frequency.setValueAtTime(freq * 2, startTime);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2200, startTime);
+        filter.frequency.exponentialRampToValueAtTime(460, startTime + 3.4);
+
+        gain.gain.setValueAtTime(0.0001, startTime);
+        gain.gain.linearRampToValueAtTime(0.038, startTime + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 3.5);
+
+        osc.connect(filter);
+        overtone.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(startTime);
+        overtone.start(startTime);
+        osc.stop(startTime + 3.6);
+        overtone.stop(startTime + 3.6);
+      });
+    } catch {
+      // Ignore transient Web Audio errors
     }
-
-    // 4. Slow, dreamy 12-note celestial harp glissando across 4.5 seconds
-    const chimeNotes = [
-      261.63, 293.66, 349.23, 392.0, 440.0, 523.25,
-      587.33, 659.25, 698.46, 783.99, 880.0, 1046.5,
-    ];
-    chimeNotes.forEach((freq, idx) => {
-      const startTime = baseTime + 0.65 + idx * 0.28;
-      const osc = this.ctx.createOscillator();
-      const overtone = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      const filter = this.ctx.createBiquadFilter();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, startTime);
-
-      overtone.type = 'triangle';
-      overtone.frequency.setValueAtTime(freq * 2, startTime);
-
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(2200, startTime);
-      filter.frequency.exponentialRampToValueAtTime(460, startTime + 3.4);
-
-      gain.gain.setValueAtTime(0.0001, startTime);
-      gain.gain.linearRampToValueAtTime(0.038, startTime + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 3.5);
-
-      osc.connect(filter);
-      overtone.connect(filter);
-      filter.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(startTime);
-      overtone.start(startTime);
-      osc.stop(startTime + 3.6);
-      overtone.stop(startTime + 3.6);
-    });
   }
 
   // Magical ascending celestial harp arpeggio when the date is scratched & revealed
@@ -222,18 +226,22 @@ class RomanticAudioEngine {
     notes.forEach((freq, idx) => {
       setTimeout(() => {
         if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, now);
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.linearRampToValueAtTime(0.05, now + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.6);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 2.7);
+        try {
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.linearRampToValueAtTime(0.05, now + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.6);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 2.7);
+        } catch {
+          // Ignore transient Web Audio errors
+        }
       }, idx * 75);
     });
   }
@@ -282,31 +290,17 @@ class RomanticAudioEngine {
     if (this.isPlaying) {
       this.stop();
       return false;
-    } else {
-      this.start();
-      return true;
     }
+    this.start();
+    return true;
   }
 }
 
 const audioEngine = new RomanticAudioEngine();
 
 // ============================================================================
-// ✨ REUSABLE 3D PEARL, SCROLL REVEAL & CHANTILLY LACE COMPONENTS
+// ✨ REUSABLE SCROLL REVEAL & CHANTILLY LACE COMPONENTS
 // ============================================================================
-
-/** Realistic 3D Specular Pearl with GPU-Only Breathing Lustre (pauses while opening) */
-const Pearl = ({ size = 10, className = '', style = {}, delay = 0, isOpening = false }) => (
-  <span
-    className={`luxury-pearl ${isOpening ? 'is-paused' : ''} ${className}`}
-    style={{
-      width: `${size}px`,
-      height: `${size}px`,
-      animationDelay: `${delay}ms`,
-      ...style,
-    }}
-  />
-);
 
 /** IntersectionObserver Scroll-Triggered GPU-Only Reveal (transform & opacity only) */
 const RevealOnScroll = ({ children, className = '', delay = 0, variant = 'fade-up' }) => {
@@ -316,9 +310,13 @@ const RevealOnScroll = ({ children, className = '', delay = 0, variant = 'fade-u
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
+    if (typeof window === 'undefined' || typeof window.IntersectionObserver === 'undefined') {
+      setIsVisible(true);
+      return;
+    }
+    const observer = new window.IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry && entry.isIntersecting) {
           setIsVisible(true);
         }
       },
@@ -356,6 +354,7 @@ const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
         viewBox="0 0 800 130"
         preserveAspectRatio="none"
         className="w-full h-full"
+        aria-hidden="true"
       >
         <defs>
           <pattern id="chantillyHexMesh" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -430,7 +429,13 @@ const ScallopedLaceDivider = ({ position = 'top', flip = false }) => {
 
             {/* Side Blossoms */}
             {[20, 140].map((bx) => (
-              <g key={bx} transform={`translate(${bx}, 44)`} stroke="#FFFFFF" fill="#FFFFFF" fillOpacity="0.75">
+              <g
+                key={bx}
+                transform={`translate(${bx}, 44)`}
+                stroke="#FFFFFF"
+                fill="#FFFFFF"
+                fillOpacity="0.75"
+              >
                 <circle cx="0" cy="0" r="7.5" strokeWidth="1.1" />
                 <circle cx="0" cy="0" r="2.8" />
               </g>
@@ -453,7 +458,13 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36, noShadow = false }) => {
   if (variant % 3 === 0) {
     // Lush Multi-Petal Royal Purple Rose
     return (
-      <svg width={size} height={size} viewBox="0 0 64 64" className={`overflow-visible ${shadowClass}`}>
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 64 64"
+        className={`overflow-visible ${shadowClass}`}
+        aria-hidden="true"
+      >
         <defs>
           <radialGradient id="purpleRoseGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#F5E6FF" />
@@ -499,7 +510,13 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36, noShadow = false }) => {
   if (variant % 3 === 1) {
     // Five-Petal Lavender & Amethyst Wildflower
     return (
-      <svg width={size} height={size} viewBox="0 0 64 64" className={`overflow-visible ${shadowClass}`}>
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 64 64"
+        className={`overflow-visible ${shadowClass}`}
+        aria-hidden="true"
+      >
         <g transform="translate(32,32)">
           {[0, 72, 144, 216, 288].map((deg) => (
             <path
@@ -527,13 +544,43 @@ const PurpleFlowerSVG = ({ variant = 0, size = 36, noShadow = false }) => {
   }
   // Botanical Lavender Sprig with Violet Buds
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" className={`overflow-visible ${shadowClass}`}>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      className={`overflow-visible ${shadowClass}`}
+      aria-hidden="true"
+    >
       <g transform="translate(32,32) rotate(-20)">
-        <path d="M 0 24 Q 2 0 0 -24" stroke="#A7F3D0" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+        <path
+          d="M 0 24 Q 2 0 0 -24"
+          stroke="#A7F3D0"
+          strokeWidth="1.5"
+          fill="none"
+          strokeLinecap="round"
+        />
         {[-18, -11, -4, 3, 10].map((y, idx) => (
           <g key={idx} transform={`translate(0, ${y})`}>
-            <ellipse cx="-6" cy="-2" rx="5.5" ry="3.2" transform="rotate(-32 -6 -2)" fill="#A855F7" stroke="#F3E8FF" strokeWidth="0.6" />
-            <ellipse cx="6" cy="-2" rx="5.5" ry="3.2" transform="rotate(32 6 -2)" fill="#C084FC" stroke="#F3E8FF" strokeWidth="0.6" />
+            <ellipse
+              cx="-6"
+              cy="-2"
+              rx="5.5"
+              ry="3.2"
+              transform="rotate(-32 -6 -2)"
+              fill="#A855F7"
+              stroke="#F3E8FF"
+              strokeWidth="0.6"
+            />
+            <ellipse
+              cx="6"
+              cy="-2"
+              rx="5.5"
+              ry="3.2"
+              transform="rotate(32 6 -2)"
+              fill="#C084FC"
+              stroke="#F3E8FF"
+              strokeWidth="0.6"
+            />
             <circle cx="0" cy="-4" r="2.8" fill="#E9D5FF" />
           </g>
         ))}
@@ -553,7 +600,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
   const [scratchPercent, setScratchPercent] = useState(0);
   const [bloomCycle, setBloomCycle] = useState(0);
 
-  // Pre-computed purple flower burst particles around the revealed card
   const flowerParticles = [
     { id: 1, tx: '-135px', ty: '-105px', rot: '-28deg', scale: 1.15, delay: 0, variant: 0, size: 42 },
     { id: 2, tx: '135px', ty: '-100px', rot: '32deg', scale: 1.1, delay: 60, variant: 1, size: 40 },
@@ -573,7 +619,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
     { id: 16, tx: '108px', ty: '48px', rot: '-24deg', scale: 0.88, delay: 180, variant: 1, size: 32 },
   ];
 
-  // Corner bouquet clusters that stay anchored on the card once revealed
   const cornerBlossoms = [
     { pos: 'top-2 left-2', variant: 0, size: 36, delay: '120ms' },
     { pos: 'top-6 left-9', variant: 2, size: 28, delay: '260ms' },
@@ -583,22 +628,20 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
     { pos: 'bottom-2 right-2', variant: 0, size: 34, delay: '280ms' },
   ];
 
-  // Paint the luxury metallic pearl-gold & lavender foil cover onto the canvas
   const initFoilCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
+    canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+    canvas.height = Math.max(1, Math.floor(rect.height * dpr));
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     ctx.scale(dpr, dpr);
     ctx.globalCompositeOperation = 'source-over';
 
-    // Metallic champagne-lavender foil gradient
     const grad = ctx.createLinearGradient(0, 0, rect.width, rect.height);
     grad.addColorStop(0, '#DFC8D8');
     grad.addColorStop(0.28, '#F6ECF3');
@@ -609,7 +652,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, rect.width, rect.height);
 
-    // Subtle diagonal shimmer sheen lines
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
     ctx.lineWidth = 1;
     for (let x = -rect.height; x < rect.width + rect.height; x += 16) {
@@ -619,7 +661,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
       ctx.stroke();
     }
 
-    // Ornate double inner border
     ctx.strokeStyle = 'rgba(90, 24, 58, 0.35)';
     ctx.lineWidth = 1.4;
     ctx.strokeRect(12, 12, rect.width - 24, rect.height - 24);
@@ -629,7 +670,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
     ctx.strokeRect(18, 18, rect.width - 36, rect.height - 36);
     ctx.setLineDash([]);
 
-    // Decorative central emblem on foil
     const cx = rect.width / 2;
     const cy = rect.height / 2;
 
@@ -638,7 +678,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
     ctx.arc(cx, cy - 18, 34, 0, Math.PI * 2);
     ctx.fill();
 
-    // Sparkle stars on foil
     const sparkles = [
       [cx - 85, cy - 55],
       [cx + 85, cy - 52],
@@ -653,7 +692,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
       ctx.fill();
     });
 
-    // Editorial typography instructions on foil
     ctx.fillStyle = '#4A1222';
     ctx.font = 'italic 22px "Cormorant Garamond", Georgia, serif';
     ctx.textAlign = 'center';
@@ -684,34 +722,36 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
 
   const computeScratchedPercentage = () => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || canvas.width <= 0 || canvas.height <= 0) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    const { width, height } = canvas;
-    if (!width || !height) return;
-    const imageData = ctx.getImageData(0, 0, width, height).data;
-    let transparentPixels = 0;
-    let totalSampled = 0;
-    const stride = 32;
+    try {
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let transparentPixels = 0;
+      let totalSampled = 0;
+      const stride = 32;
 
-    for (let i = 3; i < imageData.length; i += stride) {
-      totalSampled++;
-      if (imageData[i] < 128) {
-        transparentPixels++;
+      for (let i = 3; i < imageData.length; i += stride) {
+        totalSampled++;
+        if (imageData[i] < 128) {
+          transparentPixels++;
+        }
       }
-    }
 
-    const pct = Math.min(100, Math.round((transparentPixels / Math.max(1, totalSampled)) * 100));
-    setScratchPercent(pct);
-    if (pct >= 35) {
-      triggerFullReveal();
+      const pct = Math.min(100, Math.round((transparentPixels / Math.max(1, totalSampled)) * 100));
+      setScratchPercent(pct);
+      if (pct >= 35) {
+        triggerFullReveal();
+      }
+    } catch {
+      // Ignore canvas readback restrictions
     }
   };
 
   const scratchAtPoint = (clientX, clientY) => {
     if (isRevealed) return;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || canvas.width <= 0 || canvas.height <= 0) return;
     const rect = canvas.getBoundingClientRect();
     const x = clientX - rect.left;
     const y = clientY - rect.top;
@@ -743,14 +783,14 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
   const handlePointerDown = (e) => {
     if (isRevealed) return;
     isDrawingRef.current = true;
-    const pt = e.touches ? e.touches[0] : e;
+    const pt = e.touches && e.touches[0] ? e.touches[0] : e;
     lastPointRef.current = null;
     scratchAtPoint(pt.clientX, pt.clientY);
   };
 
   const handlePointerMove = (e) => {
     if (!isDrawingRef.current || isRevealed) return;
-    const pt = e.touches ? e.touches[0] : e;
+    const pt = e.touches && e.touches[0] ? e.touches[0] : e;
     scratchAtPoint(pt.clientX, pt.clientY);
   };
 
@@ -799,7 +839,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
 
       {/* ORNATE COUNTDOWN & REVEALED DATE CARD */}
       <div className="relative rounded-3xl bg-[#3D0D1D]/90 border border-[#F4EEF1]/30 px-5 py-9 shadow-2xl overflow-hidden">
-        {/* Corner Blooming Purple Flower Clusters */}
         {isRevealed &&
           cornerBlossoms.map((cb, idx) => (
             <div
@@ -811,7 +850,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
             </div>
           ))}
 
-        {/* Revealed Date & Rising Numbers Content */}
         <div
           className={`relative z-10 transition-all duration-1000 ${
             isRevealed
@@ -840,7 +878,6 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
             {dateConfig.displayTime}
           </p>
 
-          {/* 4-Column Countdown Digits */}
           <div className="grid grid-cols-4 gap-2 max-w-[260px] mx-auto pt-2 border-t border-[#F4EEF1]/20">
             {[
               { value: timeLeft.days, label: 'DAYS', delay: '220ms' },
@@ -923,9 +960,7 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
                 dateConfig.calendarTitle
               )}&dates=${dateConfig.calendarStart}/${
                 dateConfig.calendarEnd
-              }&details=${encodeURIComponent(
-                coupleConfig.invitationText
-              )}`}
+              }&details=${encodeURIComponent(coupleConfig.invitationText)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#F4EEF1]/35 text-[10px] font-sans-clean tracking-[0.2em] uppercase text-[#F4EEF1]/90 hover:bg-[#F4EEF1]/10 transition"
@@ -944,85 +979,20 @@ const ScratchToRevealCountdown = ({ timeLeft, dateConfig, coupleConfig }) => {
 // 🎨 BESPOKE VINTAGE LINE-ART ILLUSTRATIONS WITH MICRO-ANIMATIONS
 // ============================================================================
 
-/** 1. Ornate Crystal Chandelier with Gently Swaying Pendants & Twinkling Candles */
-const ChandelierIllustration = () => (
-  <svg viewBox="0 0 320 160" className="w-60 h-auto mx-auto text-[#4A1222] overflow-visible lux-float-slow">
-    <g fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M 160 2 L 160 28" strokeWidth="1.3" />
-      <circle cx="160" cy="14" r="3" />
-      <path d="M 148 28 Q 160 22 172 28 Z" fill="currentColor" fillOpacity="0.12" />
-
-      {/* Central crystal baluster column */}
-      <path d="M 155 28 Q 160 40 153 54 L 167 54 Q 160 40 165 28 Z" fill="currentColor" fillOpacity="0.08" />
-      <ellipse cx="160" cy="62" rx="10" ry="5" fill="currentColor" fillOpacity="0.1" />
-      <path d="M 152 67 Q 160 85 168 67" />
-      <circle cx="160" cy="84" r="4" />
-      <path d="M 160 88 L 156 102 L 160 112 L 164 102 Z" fill="currentColor" fillOpacity="0.18" />
-
-      {/* Scrolling chandelier arms */}
-      <path d="M 150 62 C 125 62, 105 42, 82 54 C 72 60, 78 72, 90 68" />
-      <path d="M 150 65 C 115 75, 75 55, 48 64" />
-      <path d="M 170 62 C 195 62, 215 42, 238 54 C 248 60, 242 72, 230 68" />
-      <path d="M 170 65 C 205 75, 245 55, 272 64" />
-
-      {/* Candle cups & twinkling flames */}
-      {[48, 82, 118, 202, 238, 272].map((x, idx) => (
-        <g key={idx}>
-          <path d={`M ${x - 8} 54 Q ${x} 60 ${x + 8} 54 Z`} fill="currentColor" fillOpacity="0.15" />
-          <rect x={x - 2.5} y="34" width="5" height="20" rx="1" fill="#F8F4F6" />
-          <path
-            d={`M ${x} 23 Q ${x - 3.8} 30 ${x} 33 Q ${x + 3.8} 30 ${x} 23 Z`}
-            fill="currentColor"
-            fillOpacity="0.35"
-            className="lux-twinkle"
-            style={{ animationDelay: `${idx * 280}ms` }}
-          />
-          <path d={`M ${x - 4} 58 L ${x - 6} 76 L ${x - 4} 81 L ${x - 2} 76 Z`} />
-          <path d={`M ${x + 4} 58 L ${x + 2} 76 L ${x + 4} 81 L ${x + 6} 76 Z`} />
-        </g>
-      ))}
-
-      {/* Draped crystal & floral swags */}
-      <path d="M 48 58 Q 65 88 82 58" strokeDasharray="2 2" />
-      <path d="M 82 58 Q 100 94 118 58" strokeDasharray="2 2" />
-      <path d="M 118 58 Q 160 105 202 58" strokeDasharray="2 2" />
-      <path d="M 202 58 Q 220 94 238 58" strokeDasharray="2 2" />
-      <path d="M 238 58 Q 255 88 272 58" strokeDasharray="2 2" />
-
-      <path d="M 65 74 Q 90 112 120 78" />
-      <path d="M 120 78 Q 160 124 200 78" />
-      <path d="M 200 78 Q 230 112 255 74" />
-
-      {/* Hanging crystal prisms */}
-      {[65, 92, 120, 142, 160, 178, 200, 228, 255].map((x, idx) => {
-        const yTop = idx === 4 ? 110 : idx === 3 || idx === 5 ? 102 : 88;
-        return (
-          <g key={idx}>
-            <line x1={x} y1={yTop - 10} x2={x} y2={yTop + 8} />
-            <polygon
-              points={`${x},${yTop + 8} ${x - 3},${yTop + 16} ${x},${yTop + 23} ${x + 3},${yTop + 16}`}
-              fill="currentColor"
-              fillOpacity="0.16"
-            />
-          </g>
-        );
-      })}
-
-      {/* Etched roses along the central garland */}
-      {[82, 118, 160, 202, 238].map((x, i) => (
-        <g key={i} transform={`translate(${x}, ${i === 2 ? 72 : 62})`}>
-          <circle cx="0" cy="0" r="4.5" fill="#F2EAEF" />
-          <circle cx="0" cy="0" r="2" />
-        </g>
-      ))}
-    </g>
-  </svg>
-);
-
-/** 2. Kissing Swans Forming a Heart with Crown & Water Ripples (Section 2) */
+/** 1. Kissing Swans Forming a Heart with Crown & Water Ripples (Section 2) */
 const SwansIllustration = () => (
-  <svg viewBox="0 0 220 120" className="w-44 h-auto mx-auto text-[#4A1222] lux-float-slow">
-    <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 220 120"
+    className="w-44 h-auto mx-auto text-[#4A1222] lux-float-slow"
+    aria-hidden="true"
+  >
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.15"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M 102 18 L 105 10 L 110 16 L 115 10 L 118 18 Z" fill="currentColor" fillOpacity="0.15" />
       <circle cx="105" cy="8" r="1" fill="currentColor" />
       <circle cx="110" cy="6" r="1.3" fill="currentColor" />
@@ -1064,17 +1034,16 @@ const SwansIllustration = () => (
   </svg>
 );
 
-/** 3. Classical Architectural Etching inside an Intricate Double-Oval Lace Medallion (Section 4) */
+/** 2. Classical Architectural Etching inside an Intricate Double-Oval Lace Medallion (Section 4) */
 const VillaAureliaOvalIllustration = () => (
   <div className="relative w-72 sm:w-80 mx-auto my-6 lux-float-slow">
-    <svg viewBox="0 0 320 390" className="w-full h-auto text-[#4A1222]">
+    <svg viewBox="0 0 320 390" className="w-full h-auto text-[#4A1222]" aria-hidden="true">
       <defs>
         <clipPath id="villaOvalClip">
           <ellipse cx="160" cy="195" rx="112" ry="145" />
         </clipPath>
       </defs>
 
-      {/* Outer Scalloped Lace Medallion */}
       <g fill="none" stroke="currentColor">
         {Array.from({ length: 36 }).map((_, i) => {
           const angle = (i * 10 * Math.PI) / 180;
@@ -1117,12 +1086,10 @@ const VillaAureliaOvalIllustration = () => (
         <ellipse cx="160" cy="195" rx="112" ry="145" strokeWidth="1" strokeOpacity="0.85" />
       </g>
 
-      {/* Classical Architectural Etching */}
       <g clipPath="url(#villaOvalClip)" stroke="currentColor" fill="none" strokeWidth="1">
         <path d="M 60 110 Q 110 95 160 108 T 260 105" strokeOpacity="0.25" />
         <path d="M 75 85 Q 140 72 210 88" strokeOpacity="0.2" />
 
-        {/* Cypress Trees */}
         {[68, 82, 245, 258].map((cx, i) => (
           <path
             key={i}
@@ -1132,7 +1099,6 @@ const VillaAureliaOvalIllustration = () => (
           />
         ))}
 
-        {/* Main Classical Facade */}
         <rect x="92" y="138" width="136" height="122" fill="#F6F0F3" strokeWidth="1.3" />
         <line x1="88" y1="138" x2="232" y2="138" strokeWidth="1.8" />
         <rect x="94" y="130" width="132" height="8" fill="#EFE7EB" />
@@ -1180,9 +1146,9 @@ const VillaAureliaOvalIllustration = () => (
   </div>
 );
 
-/** 4. Hanging Crystal & Floral Garland (Top of "The Day" Section) */
+/** 3. Hanging Crystal & Floral Garland (Top of "The Day" Section) */
 const HangingGarlandIllustration = () => (
-  <svg viewBox="0 0 400 110" className="w-full h-auto text-[#4A1222] mb-2">
+  <svg viewBox="0 0 400 110" className="w-full h-auto text-[#4A1222] mb-2" aria-hidden="true">
     <g fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
       <path d="M 0 18 Q 50 64 100 22" />
       <path d="M 100 22 Q 150 72 200 26" />
@@ -1220,12 +1186,12 @@ const HangingGarlandIllustration = () => (
   </svg>
 );
 
-/** 5. Timeline Fine-Line Icons (Welcome Flutes, Ceremony Rings, Dinner Cloche) */
+/** 4. Timeline Fine-Line Icons (Welcome Flutes, Ceremony Rings, Dinner Cloche) */
 const TimelineIcon = ({ type }) => {
   switch (type) {
     case 'welcome_flutes':
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#4A1222]">
+        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#4A1222]" aria-hidden="true">
           <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
             <path d="M 18 12 L 26 14 L 22 30 Q 20 33 18 29 Z" fill="currentColor" fillOpacity="0.09" />
             <line x1="20" y1="31" x2="17" y2="46" />
@@ -1240,7 +1206,7 @@ const TimelineIcon = ({ type }) => {
       );
     case 'ceremony_rings':
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#4A1222]">
+        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#4A1222]" aria-hidden="true">
           <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
             <circle cx="25" cy="32" r="11" />
             <circle cx="39" cy="32" r="11" />
@@ -1254,7 +1220,7 @@ const TimelineIcon = ({ type }) => {
     case 'dinner_cloche':
     default:
       return (
-        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#4A1222]">
+        <svg viewBox="0 0 64 56" className="w-14 h-12 text-[#4A1222]" aria-hidden="true">
           <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
             <path d="M 12 36 A 20 18 0 0 1 52 36 Z" fill="currentColor" fillOpacity="0.09" />
             <circle cx="32" cy="15" r="3" />
@@ -1266,10 +1232,16 @@ const TimelineIcon = ({ type }) => {
   }
 };
 
-/** 6. Long Banquet Table Setting Illustration (Bottom of "The Day" Section) */
+/** 5. Long Banquet Table Setting Illustration (Bottom of "The Day" Section) */
 const BanquetTableIllustration = () => (
-  <svg viewBox="0 0 400 135" className="w-full h-auto text-[#4A1222] mt-6">
-    <g fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 400 135" className="w-full h-auto text-[#4A1222] mt-6" aria-hidden="true">
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <line x1="0" y1="78" x2="400" y2="78" strokeWidth="1.2" />
       <line x1="0" y1="112" x2="400" y2="112" strokeWidth="1.4" />
       <path d="M 0 112 Q 35 125 70 112 Q 115 126 160 112 Q 205 126 250 112 Q 295 126 340 112 Q 370 124 400 112" />
@@ -1278,7 +1250,6 @@ const BanquetTableIllustration = () => (
       <line x1="250" y1="112" x2="252" y2="132" strokeOpacity="0.5" />
       <line x1="340" y1="112" x2="344" y2="132" strokeOpacity="0.5" />
 
-      {/* 3-Tier Engagement Cake */}
       <g transform="translate(55, 22)">
         <ellipse cx="0" cy="54" rx="26" ry="5" fill="#F2EAEF" />
         <path d="M -8 59 L -14 67 L 14 67 L 8 59" fill="currentColor" fillOpacity="0.1" />
@@ -1292,7 +1263,6 @@ const BanquetTableIllustration = () => (
         <circle cx="4" cy="8" r="3" fill="currentColor" fillOpacity="0.2" />
       </g>
 
-      {/* Taper Candles */}
       {[128, 222, 315, 332].map((cx, i) => {
         const h = i % 2 === 0 ? 32 : 24;
         return (
@@ -1304,12 +1274,15 @@ const BanquetTableIllustration = () => (
               fillOpacity="0.35"
               className="lux-twinkle"
             />
-            <path d={`M -6 ${h} L 6 ${h} L 3 ${h + 6} L -3 ${h + 6} Z`} fill="currentColor" fillOpacity="0.15" />
+            <path
+              d={`M -6 ${h} L 6 ${h} L 3 ${h + 6} L -3 ${h + 6} Z`}
+              fill="currentColor"
+              fillOpacity="0.15"
+            />
           </g>
         );
       })}
 
-      {/* Glasses */}
       {[155, 195, 255, 285].map((gx, i) => (
         <g key={i} transform={`translate(${gx}, 58)`}>
           {i % 2 === 0 ? (
@@ -1328,7 +1301,6 @@ const BanquetTableIllustration = () => (
         </g>
       ))}
 
-      {/* Plates & Cutlery */}
       {[55, 155, 255, 355].map((px, i) => (
         <g key={i} transform={`translate(${px}, 95)`}>
           <ellipse cx="0" cy="0" rx="24" ry="8" fill="#F7F2F5" />
@@ -1342,10 +1314,20 @@ const BanquetTableIllustration = () => (
   </svg>
 );
 
-/** 7. Intertwined Diamond Engagement / Wedding Rings (Closing Footer) */
+/** 6. Intertwined Diamond Engagement / Wedding Rings (Closing Footer) */
 const WeddingRingsIllustration = () => (
-  <svg viewBox="0 0 160 95" className="w-32 h-auto mx-auto mb-4 text-[#4A1222] lux-float-slow">
-    <g fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 160 95"
+    className="w-32 h-auto mx-auto mb-4 text-[#4A1222] lux-float-slow"
+    aria-hidden="true"
+  >
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <ellipse cx="64" cy="56" rx="28" ry="20" transform="rotate(-12 64 56)" />
       <ellipse cx="64" cy="56" rx="23" ry="15.5" transform="rotate(-12 64 56)" strokeWidth="0.9" />
       <ellipse cx="96" cy="54" rx="28" ry="20" transform="rotate(14 96 54)" />
@@ -1363,158 +1345,114 @@ const WeddingRingsIllustration = () => (
 );
 
 // ============================================================================
-// 🎀 CUTE LUXURY HERO ARCH ORNAMENTS (Satin Bow Crest & Botanical Lavender Sprigs)
+// 🌿 TUCKED PRESSED-LAVENDER & CHAMPAGNE-GOLD BOTANICAL SPRIG BEHIND WAX SEAL
 // ============================================================================
-
-/** Delicate Parisian Satin Ribbon Bow Crest with Embossed Pearl Knot */
-const HeroSatinBowCrest = () => (
+const TuckedWaxSealSprig = () => (
   <svg
-    viewBox="0 0 160 74"
-    className="w-32 h-auto mx-auto overflow-visible select-none"
+    viewBox="0 0 220 220"
+    className="absolute w-[198px] h-[198px] pointer-events-none select-none z-[2]"
+    style={{
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    }}
     aria-hidden="true"
   >
     <defs>
-      <linearGradient id="heroBowSilk" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#FDF9FF" />
-        <stop offset="45%" stopColor="#E9D5FF" />
-        <stop offset="100%" stopColor="#C9A8E8" />
-      </linearGradient>
-      <linearGradient id="heroBowGold" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#F2DCAA" />
-        <stop offset="55%" stopColor="#C8A878" />
+      <linearGradient id="tuckedStemGold" x1="10%" y1="10%" x2="90%" y2="90%">
+        <stop offset="0%" stopColor="#F0D89E" />
+        <stop offset="50%" stopColor="#C9A462" />
         <stop offset="100%" stopColor="#9E783B" />
       </linearGradient>
-      <radialGradient id="heroBowPearl" cx="32%" cy="28%" r="70%">
-        <stop offset="0%" stopColor="#FFFFFF" />
-        <stop offset="50%" stopColor="#F3E8FF" />
-        <stop offset="100%" stopColor="#B89FD4" />
+      <linearGradient id="tuckedLeafLavender" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#F5EBFF" />
+        <stop offset="55%" stopColor="#D8BBE8" />
+        <stop offset="100%" stopColor="#A987C4" />
+      </linearGradient>
+      <radialGradient id="tuckedBudViolet" cx="35%" cy="30%" r="70%">
+        <stop offset="0%" stopColor="#FAF2FF" />
+        <stop offset="52%" stopColor="#C8A2E8" />
+        <stop offset="100%" stopColor="#7C52A3" />
       </radialGradient>
     </defs>
 
-    {/* Flowing Tapered Ribbon Tails */}
+    {/* Primary & Companion Diagonal Champagne-Gold Botanical Stems */}
     <path
-      d="M 76 30 C 66 44, 52 56, 38 68 C 44 65, 50 64, 54 67 C 62 55, 72 44, 79 34 Z"
-      fill="url(#heroBowSilk)"
-      stroke="#7B58A3"
-      strokeWidth="0.9"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M 84 30 C 94 44, 108 56, 122 68 C 116 65, 110 64, 106 67 C 98 55, 88 44, 81 34 Z"
-      fill="url(#heroBowSilk)"
-      stroke="#7B58A3"
-      strokeWidth="0.9"
-      strokeLinejoin="round"
-    />
-
-    {/* Left & Right Sculpted Satin Loops */}
-    <path
-      d="M 77 28 C 60 6, 26 8, 22 26 C 18 42, 48 44, 76 31 Z"
-      fill="url(#heroBowSilk)"
-      stroke="#7B58A3"
-      strokeWidth="1"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M 83 28 C 100 6, 134 8, 138 26 C 142 42, 112 44, 84 31 Z"
-      fill="url(#heroBowSilk)"
-      stroke="#7B58A3"
-      strokeWidth="1"
-      strokeLinejoin="round"
-    />
-
-    {/* Inner Satin Fold & Champagne-Gold Highlight Lines */}
-    <path
-      d="M 73 28 C 58 17, 38 19, 34 27 C 39 33, 56 34, 73 29"
+      d="M 28 34 C 54 56, 80 80, 110 110 C 140 140, 166 164, 192 186"
       fill="none"
-      stroke="url(#heroBowGold)"
-      strokeWidth="0.85"
+      stroke="url(#tuckedStemGold)"
+      strokeWidth="1.25"
       strokeLinecap="round"
     />
     <path
-      d="M 87 28 C 102 17, 122 19, 126 27 C 121 33, 104 34, 87 29"
+      d="M 48 24 C 64 48, 86 76, 112 108 C 138 138, 156 166, 174 194"
       fill="none"
-      stroke="url(#heroBowGold)"
+      stroke="url(#tuckedStemGold)"
       strokeWidth="0.85"
+      strokeOpacity="0.85"
       strokeLinecap="round"
     />
 
-    {/* Center Knot + Tiny Embossed Pearl */}
-    <rect
-      x="73"
-      y="22"
-      width="14"
-      height="13"
-      rx="5"
-      fill="url(#heroBowSilk)"
-      stroke="#7B58A3"
-      strokeWidth="0.95"
+    {/* Upper-Left Emerging Shoots & Pressed Leaves */}
+    <path d="M 55 58 C 40 54, 28 48, 18 40" fill="none" stroke="url(#tuckedStemGold)" strokeWidth="0.85" strokeLinecap="round" />
+    <path d="M 62 62 C 60 45, 58 32, 56 18" fill="none" stroke="url(#tuckedStemGold)" strokeWidth="0.85" strokeLinecap="round" />
+    <path
+      d="M 56 56 C 46 67, 34 69, 28 60 C 38 55, 47 54, 56 56 Z"
+      fill="url(#tuckedLeafLavender)"
+      stroke="#B59460"
+      strokeWidth="0.6"
     />
-    <circle
-      cx="80"
-      cy="28.5"
-      r="4.2"
-      fill="url(#heroBowPearl)"
-      stroke="url(#heroBowGold)"
-      strokeWidth="0.85"
+    <path
+      d="M 65 44 C 74 35, 76 23, 68 18 C 62 28, 61 36, 65 44 Z"
+      fill="url(#tuckedLeafLavender)"
+      stroke="#B59460"
+      strokeWidth="0.6"
     />
-  </svg>
-);
 
-/** Soft Translucent Pastel-Lavender Rosebud & Botanical Sprig Accent */
-const HeroBotanicalSprig = ({ flip = false, className = '' }) => (
-  <svg
-    viewBox="0 0 110 110"
-    className={`pointer-events-none select-none ${className}`}
-    style={{ transform: flip ? 'scaleX(-1) rotate(-8deg)' : 'rotate(6deg)' }}
-    aria-hidden="true"
-  >
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-      {/* Graceful Curved Botanical Stem */}
-      <path d="M 18 92 C 34 74, 54 50, 88 22" stroke="#8C6BAE" strokeWidth="1.05" strokeOpacity="0.6" />
-      <path d="M 38 72 C 42 52, 54 38, 66 28" stroke="#9B7BC0" strokeWidth="0.85" strokeOpacity="0.5" />
-      <path d="M 48 64 C 66 60, 80 50, 92 38" stroke="#9B7BC0" strokeWidth="0.85" strokeOpacity="0.5" />
+    {/* Lower-Right Emerging Shoots & Pressed Leaves */}
+    <path d="M 162 158 C 176 162, 188 168, 198 176" fill="none" stroke="url(#tuckedStemGold)" strokeWidth="0.85" strokeLinecap="round" />
+    <path d="M 154 152 C 156 170, 158 184, 160 198" fill="none" stroke="url(#tuckedStemGold)" strokeWidth="0.85" strokeLinecap="round" />
+    <path
+      d="M 160 160 C 170 149, 182 147, 188 156 C 178 161, 169 162, 160 160 Z"
+      fill="url(#tuckedLeafLavender)"
+      stroke="#B59460"
+      strokeWidth="0.6"
+    />
+    <path
+      d="M 151 170 C 142 179, 140 191, 148 196 C 154 186, 155 178, 151 170 Z"
+      fill="url(#tuckedLeafLavender)"
+      stroke="#B59460"
+      strokeWidth="0.6"
+    />
 
-      {/* Soft Lavender Leaves */}
-      <path d="M 36 74 C 24 66, 22 52, 32 48 C 40 54, 42 66, 36 74 Z" fill="#E9D5FF" fillOpacity="0.55" stroke="#8B68B0" strokeWidth="0.7" />
-      <path d="M 52 56 C 46 42, 54 30, 64 32 C 66 42, 60 52, 52 56 Z" fill="#F3E8FF" fillOpacity="0.62" stroke="#8B68B0" strokeWidth="0.7" />
-      <path d="M 60 58 C 72 52, 84 56, 86 64 C 76 68, 66 64, 60 58 Z" fill="#E2CCF8" fillOpacity="0.52" stroke="#8B68B0" strokeWidth="0.7" />
-
-      {/* Translucent Pastel-Purple Watercolor Rosebud */}
-      <g transform="translate(32, 74)">
-        <circle cx="0" cy="0" r="11" fill="#D8B4FE" fillOpacity="0.45" />
-        <circle cx="-3" cy="-2" r="7.5" fill="#E9D5FF" fillOpacity="0.72" stroke="#7B58A3" strokeWidth="0.65" />
-        <circle cx="3" cy="2" r="6.5" fill="#C084FC" fillOpacity="0.38" stroke="#7B58A3" strokeWidth="0.6" />
-        <circle cx="0" cy="0" r="3" fill="#FAF5FF" fillOpacity="0.9" />
-      </g>
-
-      {/* Dainty Lavender Blossom Tips */}
-      {[
-        { cx: 88, cy: 22, r: 4 },
-        { cx: 81, cy: 27, r: 3.4 },
-        { cx: 74, cy: 33, r: 3.2 },
-        { cx: 66, cy: 28, r: 3.2 },
-        { cx: 92, cy: 38, r: 3.4 },
-      ].map((bud, idx) => (
-        <circle
-          key={idx}
-          cx={bud.cx}
-          cy={bud.cy}
-          r={bud.r}
-          fill={idx % 2 === 0 ? '#D8B4FE' : '#EFE2FA'}
-          fillOpacity="0.82"
-          stroke="#7B58A3"
-          strokeWidth="0.6"
-        />
-      ))}
-
-      {/* Tiny Champagne-Gold Sparkle */}
-      <path
-        d="M 76 16 Q 76.6 19.4 80 20 Q 76.6 20.6 76 24 Q 75.4 20.6 72 20 Q 75.4 19.4 76 16 Z"
-        fill="#C8A878"
-        fillOpacity="0.85"
+    {/* Pressed Lavender & Gold-Rimmed Buds */}
+    {[
+      { cx: 28, cy: 33, rx: 3.1, ry: 5.2, rot: -44 },
+      { cx: 37, cy: 40, rx: 3.3, ry: 5.4, rot: -66 },
+      { cx: 44, cy: 47, rx: 3.0, ry: 5.0, rot: -22 },
+      { cx: 47, cy: 25, rx: 3.0, ry: 4.9, rot: -18 },
+      { cx: 56, cy: 20, rx: 2.7, ry: 4.6, rot: 10 },
+      { cx: 19, cy: 41, rx: 2.7, ry: 4.4, rot: -74 },
+      { cx: 190, cy: 184, rx: 3.1, ry: 5.2, rot: 136 },
+      { cx: 181, cy: 176, rx: 3.3, ry: 5.4, rot: 114 },
+      { cx: 173, cy: 169, rx: 3.0, ry: 5.0, rot: 158 },
+      { cx: 173, cy: 193, rx: 3.0, ry: 4.9, rot: 162 },
+      { cx: 160, cy: 196, rx: 2.7, ry: 4.6, rot: -170 },
+      { cx: 197, cy: 175, rx: 2.7, ry: 4.4, rot: 106 },
+    ].map((bud, idx) => (
+      <ellipse
+        key={idx}
+        cx={bud.cx}
+        cy={bud.cy}
+        rx={bud.rx}
+        ry={bud.ry}
+        transform={`rotate(${bud.rot} ${bud.cx} ${bud.cy})`}
+        fill="url(#tuckedBudViolet)"
+        stroke="#DFC085"
+        strokeWidth="0.55"
+        opacity="0.94"
       />
-    </g>
+    ))}
   </svg>
 );
 
@@ -1894,15 +1832,15 @@ const ArtisanalWaxSeal = ({ monogram, stage, isUnsealing, onTriggerOpen }) => {
 };
 
 // ============================================================================
-// 💌 MULTI-STAGE CEREMONIAL 3D PEARL, RIBBON & LACE ENVELOPE CHOREOGRAPHY
+// 💌 PASTEL MATTE COTTON-PAPER & BAROQUE FILIGREE ENVELOPE COVER (60FPS)
 // ============================================================================
 const EnvelopeIntroOverlay = ({ stage, onTriggerOpen, monogram }) => {
   // Multi-Stage Slow Royal Choreography:
-  // stage 0: Idle closed envelope with silk ribbon bow & breathing wax seal
-  // stage 1: Wax seal presses, glows & silk ribbons untie
-  // stage 2: Top & Bottom pleated lace flaps slowly fold open in 3D space
-  // stage 3: Left & Right satin wings + inner sheer lavender vellum doors part + floating petals
-  // stage 4: Complete & hidden
+  // stage 0: Idle closed matte cotton-paper envelope with Baroque filigree & aubergine wax seal
+  // stage 1 (0ms): Wax seal presses, glows & horizontal + swallowtail satin ribbons untie
+  // stage 2 (1800ms): Top & Bottom cotton-paper flaps slowly fold open in 3D space
+  // stage 3 (3200ms): Left & Right flaps + sheer pastel-lavender vellum doors part + floating petals
+  // stage 4 (11200ms): Complete & hidden
   const isUnsealing = stage >= 1;
   const isTopBottomParting = stage >= 2;
   const isSideFlapsParting = stage >= 3;
@@ -1934,7 +1872,7 @@ const EnvelopeIntroOverlay = ({ stage, onTriggerOpen, monogram }) => {
         }`}
       />
 
-      {/* INNER SHEER PASTEL PURPLE TULLE / VELLUM CURTAIN (No backdrop-blur for 60fps) */}
+      {/* INNER SHEER PASTEL PURPLE TULLE / VELLUM CURTAIN (Zero backdrop-blur for 60fps) */}
       <div className={`lux-vellum-door lux-vellum-left ${isSideFlapsParting ? 'is-open' : ''}`}>
         <div
           className="w-full h-full border-r border-white/65"
@@ -1976,95 +1914,234 @@ const EnvelopeIntroOverlay = ({ stage, onTriggerOpen, monogram }) => {
         </div>
       )}
 
-      {/* LEFT PLEATED SATIN & LACE FLAP (Built-in SVG crease shadow) */}
+      {/* ====================================================================
+          LEFT COUTURE MATTE COTTON-PAPER FLAP (Baroque Filigree & Double Gold Piping)
+      ==================================================================== */}
       <div className={`lux-flap lux-flap-left ${isSideFlapsParting ? 'is-open' : ''}`}>
-        <svg viewBox="0 0 200 400" preserveAspectRatio="none" className="w-full h-full">
+        <svg viewBox="0 0 200 400" preserveAspectRatio="none" className="w-full h-full" aria-hidden="true">
           <defs>
-            <linearGradient id="leftSatinGrad" x1="0%" y1="0%" x2="100%" y2="50%">
-              <stop offset="0%" stopColor="#E4D7EE" />
-              <stop offset="45%" stopColor="#F0E6F7" />
-              <stop offset="80%" stopColor="#D6C2E6" />
-              <stop offset="100%" stopColor="#C1A8D6" />
+            <linearGradient id="leftCottonGrad" x1="0%" y1="0%" x2="100%" y2="50%">
+              <stop offset="0%" stopColor="#F8F4FC" />
+              <stop offset="48%" stopColor="#EDE2F6" />
+              <stop offset="85%" stopColor="#DFCEF0" />
+              <stop offset="100%" stopColor="#D6C2E8" />
             </linearGradient>
           </defs>
-          <polygon points="0,0 118,200 0,400" fill="rgba(48, 16, 76, 0.14)" />
-          <polygon points="0,0 112,200 0,400" fill="url(#leftSatinGrad)" />
-          <line x1="0" y1="35" x2="112" y2="200" stroke="#FFFFFF" strokeWidth="1.2" strokeOpacity="0.75" />
-          <line x1="0" y1="90" x2="112" y2="200" stroke="#A68BBF" strokeWidth="0.9" strokeOpacity="0.45" />
-          <line x1="0" y1="150" x2="112" y2="200" stroke="#FFFFFF" strokeWidth="1.4" strokeOpacity="0.8" />
-          <line x1="0" y1="250" x2="112" y2="200" stroke="#A68BBF" strokeWidth="0.9" strokeOpacity="0.45" />
-          <line x1="0" y1="320" x2="112" y2="200" stroke="#FFFFFF" strokeWidth="1.2" strokeOpacity="0.75" />
-          <path d="M 0 0 L 112 200 L 0 400" fill="none" stroke="#FBF8FE" strokeWidth="6" strokeDasharray="6 4" />
-          <path d="M 0 6 L 106 200 L 0 394" fill="none" stroke="#9476B0" strokeWidth="1.2" strokeDasharray="2 3" />
+          {/* Built-in SVG fold shadow */}
+          <polygon points="0,0 119,200 0,400" fill="rgba(54, 22, 82, 0.14)" />
+          {/* Matte cotton-paper flap */}
+          <polygon points="0,0 112,200 0,400" fill="url(#leftCottonGrad)" />
+          {/* Double solid champagne-gold foil piping along V-edge */}
+          <path d="M 0 0 L 112 200 L 0 400" fill="none" stroke="#C9A462" strokeWidth="1.25" />
+          <path d="M 0 10 L 106 200 L 0 390" fill="none" stroke="#DFC085" strokeWidth="0.7" />
+
+          {/* Symmetrical Fine-Line Baroque Filigree Scrollwork */}
+          <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path
+              d="M 10 154 C 30 156, 48 176, 66 200 C 48 224, 30 244, 10 246"
+              stroke="#B59460"
+              strokeWidth="0.95"
+              strokeOpacity="0.45"
+            />
+            <path
+              d="M 10 172 C 26 174, 38 186, 52 200 C 38 214, 26 226, 10 228"
+              stroke="#9E7DB8"
+              strokeWidth="0.85"
+              strokeOpacity="0.42"
+            />
+            <path
+              d="M 10 190 C 20 190, 28 195, 36 200 C 28 205, 20 210, 10 210"
+              stroke="#B59460"
+              strokeWidth="0.75"
+              strokeOpacity="0.45"
+            />
+            {/* Upper & Lower Corner Baroque Scrolls */}
+            <path
+              d="M 8 68 C 22 72, 30 88, 20 98 C 14 104, 8 98, 12 91 C 16 86, 22 90, 20 95"
+              stroke="#9E7DB8"
+              strokeWidth="0.85"
+              strokeOpacity="0.38"
+            />
+            <path
+              d="M 8 118 C 18 116, 26 124, 22 134"
+              stroke="#B59460"
+              strokeWidth="0.7"
+              strokeOpacity="0.38"
+            />
+            <path
+              d="M 8 332 C 22 328, 30 312, 20 302 C 14 296, 8 302, 12 309 C 16 314, 22 310, 20 305"
+              stroke="#9E7DB8"
+              strokeWidth="0.85"
+              strokeOpacity="0.38"
+            />
+            <path
+              d="M 8 282 C 18 284, 26 276, 22 266"
+              stroke="#B59460"
+              strokeWidth="0.7"
+              strokeOpacity="0.38"
+            />
+          </g>
         </svg>
-        <Pearl size={10} style={{ top: '26%', left: '16%' }} delay={100} isOpening={isUnsealing} />
-        <Pearl size={12} style={{ top: '44%', left: '28%' }} delay={400} isOpening={isUnsealing} />
-        <Pearl size={9} style={{ top: '54%', left: '12%' }} delay={700} isOpening={isUnsealing} />
-        <Pearl size={11} style={{ top: '68%', left: '20%' }} delay={250} isOpening={isUnsealing} />
-        <Pearl size={8} style={{ top: '36%', left: '8%' }} delay={550} isOpening={isUnsealing} />
       </div>
 
-      {/* RIGHT PLEATED SATIN & LACE FLAP (Built-in SVG crease shadow) */}
+      {/* ====================================================================
+          RIGHT COUTURE MATTE COTTON-PAPER FLAP (Baroque Filigree & Double Gold Piping)
+      ==================================================================== */}
       <div className={`lux-flap lux-flap-right ${isSideFlapsParting ? 'is-open' : ''}`}>
-        <svg viewBox="0 0 200 400" preserveAspectRatio="none" className="w-full h-full">
+        <svg viewBox="0 0 200 400" preserveAspectRatio="none" className="w-full h-full" aria-hidden="true">
           <defs>
-            <linearGradient id="rightSatinGrad" x1="100%" y1="0%" x2="0%" y2="50%">
-              <stop offset="0%" stopColor="#E4D7EE" />
-              <stop offset="45%" stopColor="#F0E6F7" />
-              <stop offset="80%" stopColor="#D6C2E6" />
-              <stop offset="100%" stopColor="#C1A8D6" />
+            <linearGradient id="rightCottonGrad" x1="100%" y1="0%" x2="0%" y2="50%">
+              <stop offset="0%" stopColor="#F8F4FC" />
+              <stop offset="48%" stopColor="#EDE2F6" />
+              <stop offset="85%" stopColor="#DFCEF0" />
+              <stop offset="100%" stopColor="#D6C2E8" />
             </linearGradient>
           </defs>
-          <polygon points="200,0 82,200 200,400" fill="rgba(48, 16, 76, 0.14)" />
-          <polygon points="200,0 88,200 200,400" fill="url(#rightSatinGrad)" />
-          <line x1="200" y1="35" x2="88" y2="200" stroke="#FFFFFF" strokeWidth="1.2" strokeOpacity="0.75" />
-          <line x1="200" y1="90" x2="88" y2="200" stroke="#A68BBF" strokeWidth="0.9" strokeOpacity="0.45" />
-          <line x1="200" y1="150" x2="88" y2="200" stroke="#FFFFFF" strokeWidth="1.4" strokeOpacity="0.8" />
-          <line x1="200" y1="250" x2="88" y2="200" stroke="#A68BBF" strokeWidth="0.9" strokeOpacity="0.45" />
-          <line x1="200" y1="320" x2="88" y2="200" stroke="#FFFFFF" strokeWidth="1.2" strokeOpacity="0.75" />
-          <path d="M 200 0 L 88 200 L 200 400" fill="none" stroke="#FBF8FE" strokeWidth="6" strokeDasharray="6 4" />
-          <path d="M 200 6 L 94 200 L 200 394" fill="none" stroke="#9476B0" strokeWidth="1.2" strokeDasharray="2 3" />
+          {/* Built-in SVG fold shadow */}
+          <polygon points="200,0 81,200 200,400" fill="rgba(54, 22, 82, 0.14)" />
+          {/* Matte cotton-paper flap */}
+          <polygon points="200,0 88,200 200,400" fill="url(#rightCottonGrad)" />
+          {/* Double solid champagne-gold foil piping along V-edge */}
+          <path d="M 200 0 L 88 200 L 200 400" fill="none" stroke="#C9A462" strokeWidth="1.25" />
+          <path d="M 200 10 L 94 200 L 200 390" fill="none" stroke="#DFC085" strokeWidth="0.7" />
+
+          {/* Symmetrical Fine-Line Baroque Filigree Scrollwork */}
+          <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path
+              d="M 190 154 C 170 156, 152 176, 134 200 C 152 224, 170 244, 190 246"
+              stroke="#B59460"
+              strokeWidth="0.95"
+              strokeOpacity="0.45"
+            />
+            <path
+              d="M 190 172 C 174 174, 162 186, 148 200 C 162 214, 174 226, 190 228"
+              stroke="#9E7DB8"
+              strokeWidth="0.85"
+              strokeOpacity="0.42"
+            />
+            <path
+              d="M 190 190 C 180 190, 172 195, 164 200 C 172 205, 180 210, 190 210"
+              stroke="#B59460"
+              strokeWidth="0.75"
+              strokeOpacity="0.45"
+            />
+            {/* Upper & Lower Corner Baroque Scrolls */}
+            <path
+              d="M 192 68 C 178 72, 170 88, 180 98 C 186 104, 192 98, 188 91 C 184 86, 178 90, 180 95"
+              stroke="#9E7DB8"
+              strokeWidth="0.85"
+              strokeOpacity="0.38"
+            />
+            <path
+              d="M 192 118 C 182 116, 174 124, 178 134"
+              stroke="#B59460"
+              strokeWidth="0.7"
+              strokeOpacity="0.38"
+            />
+            <path
+              d="M 192 332 C 178 328, 170 312, 180 302 C 186 296, 192 302, 188 309 C 184 314, 178 310, 180 305"
+              stroke="#9E7DB8"
+              strokeWidth="0.85"
+              strokeOpacity="0.38"
+            />
+            <path
+              d="M 192 282 C 182 284, 174 276, 178 266"
+              stroke="#B59460"
+              strokeWidth="0.7"
+              strokeOpacity="0.38"
+            />
+          </g>
         </svg>
-        <Pearl size={10} style={{ top: '26%', right: '16%' }} delay={200} isOpening={isUnsealing} />
-        <Pearl size={12} style={{ top: '44%', right: '28%' }} delay={500} isOpening={isUnsealing} />
-        <Pearl size={9} style={{ top: '54%', right: '12%' }} delay={800} isOpening={isUnsealing} />
-        <Pearl size={11} style={{ top: '68%', right: '20%' }} delay={350} isOpening={isUnsealing} />
-        <Pearl size={8} style={{ top: '36%', right: '8%' }} delay={650} isOpening={isUnsealing} />
       </div>
 
-      {/* BOTTOM PLEATED SATIN & CHANTILLY LACE FLAP (Built-in SVG crease shadow) */}
+      {/* ====================================================================
+          BOTTOM COUTURE MATTE COTTON-PAPER FLAP (Filigree Border & Letterpress)
+      ==================================================================== */}
       <div className={`lux-flap lux-flap-bottom ${isTopBottomParting ? 'is-open' : ''}`}>
-        <svg viewBox="0 0 300 300" preserveAspectRatio="none" className="w-full h-full">
-          <defs>
-            <linearGradient id="bottomSatinGrad" x1="50%" y1="100%" x2="50%" y2="40%">
-              <stop offset="0%" stopColor="#D5C0E5" />
-              <stop offset="52%" stopColor="#EDE2F6" />
-              <stop offset="100%" stopColor="#FAF6FE" />
-            </linearGradient>
-          </defs>
-          <polygon points="0,300 150,124 300,300" fill="rgba(48, 16, 76, 0.14)" />
-          <polygon points="0,300 150,132 300,300" fill="url(#bottomSatinGrad)" />
-          <line x1="150" y1="132" x2="25" y2="300" stroke="#FFFFFF" strokeWidth="1.6" strokeOpacity="0.8" />
-          <line x1="150" y1="132" x2="65" y2="300" stroke="#A68BBF" strokeWidth="1.1" strokeOpacity="0.5" />
-          <line x1="150" y1="132" x2="105" y2="300" stroke="#FFFFFF" strokeWidth="2.2" strokeOpacity="0.9" />
-          <line x1="150" y1="132" x2="150" y2="300" stroke="#A68BBF" strokeWidth="1" strokeOpacity="0.45" />
-          <line x1="150" y1="132" x2="195" y2="300" stroke="#FFFFFF" strokeWidth="2.2" strokeOpacity="0.9" />
-          <line x1="150" y1="132" x2="235" y2="300" stroke="#A68BBF" strokeWidth="1.1" strokeOpacity="0.5" />
-          <line x1="150" y1="132" x2="275" y2="300" stroke="#FFFFFF" strokeWidth="1.6" strokeOpacity="0.8" />
-          <path d="M 0 300 L 150 132 L 300 300" fill="none" stroke="#FFFFFF" strokeWidth="7" strokeDasharray="7 4" />
-          <path d="M 10 300 L 150 142 L 290 300" fill="none" stroke="#9476B0" strokeWidth="1.3" strokeDasharray="3 3" />
-        </svg>
-        <Pearl size={12} style={{ bottom: '38%', left: '48%' }} delay={150} isOpening={isUnsealing} />
-        <Pearl size={10} style={{ bottom: '28%', left: '34%' }} delay={320} isOpening={isUnsealing} />
-        <Pearl size={11} style={{ bottom: '27%', right: '32%' }} delay={480} isOpening={isUnsealing} />
-        <Pearl size={9} style={{ bottom: '18%', left: '22%' }} delay={620} isOpening={isUnsealing} />
-        <Pearl size={12} style={{ bottom: '19%', left: '44%' }} delay={210} isOpening={isUnsealing} />
-        <Pearl size={10} style={{ bottom: '16%', right: '24%' }} delay={540} isOpening={isUnsealing} />
-        <Pearl size={9} style={{ bottom: '9%', left: '56%' }} delay={790} isOpening={isUnsealing} />
-        <Pearl size={10} style={{ bottom: '11%', left: '30%' }} delay={410} isOpening={isUnsealing} />
+        <div className="relative w-full h-full">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="none" className="w-full h-full" aria-hidden="true">
+            <defs>
+              <linearGradient id="bottomCottonGrad" x1="50%" y1="35%" x2="50%" y2="100%">
+                <stop offset="0%" stopColor="#F8F4FC" />
+                <stop offset="52%" stopColor="#EDE2F6" />
+                <stop offset="100%" stopColor="#D6C2E8" />
+              </linearGradient>
+            </defs>
+            {/* Built-in SVG fold shadow */}
+            <polygon points="0,300 150,124 300,300" fill="rgba(54, 22, 82, 0.14)" />
+            {/* Matte cotton-paper flap */}
+            <polygon points="0,300 150,132 300,300" fill="url(#bottomCottonGrad)" />
+            {/* Double solid champagne-gold foil piping along V-edge */}
+            <path d="M 0 300 L 150 132 L 300 300" fill="none" stroke="#C9A462" strokeWidth="1.25" />
+            <path d="M 10 300 L 150 142 L 290 300" fill="none" stroke="#DFC085" strokeWidth="0.7" />
+          </svg>
+
+          {/* Bottom-Flap Baroque Filigree Scroll Flourish & Letterpress Editorial Typography */}
+          <div className="absolute inset-x-0 bottom-7 sm:bottom-9 flex flex-col items-center justify-center text-center px-6 pointer-events-none select-none z-10">
+            {/* Delicate Fine-Line Baroque Filigree Scroll Border */}
+            <svg viewBox="0 0 220 26" className="w-44 h-auto mb-2" aria-hidden="true">
+              <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path
+                  d="M 16 14 C 36 14, 48 4, 66 8 C 80 11, 90 18, 110 18 C 130 18, 140 11, 154 8 C 172 4, 184 14, 204 14"
+                  stroke="#C9A462"
+                  strokeWidth="0.95"
+                  strokeOpacity="0.8"
+                />
+                <path
+                  d="M 46 16 C 58 21, 74 20, 88 14 M 174 16 C 162 21, 146 20, 132 14"
+                  stroke="#9E7DB8"
+                  strokeWidth="0.8"
+                  strokeOpacity="0.55"
+                />
+                <polygon
+                  points="110,6 114.5,11 110,16 105.5,11"
+                  fill="#DFC085"
+                  fillOpacity="0.45"
+                  stroke="#C9A462"
+                  strokeWidth="0.85"
+                />
+              </g>
+            </svg>
+
+            <p className="font-serif-editorial italic text-[21px] sm:text-[23px] tracking-[0.04em] text-[#4E1B42] leading-tight">
+              Engagement Invitation
+            </p>
+
+            {/* Ornamental Champagne-Gold Diamond Divider (— ◇ —) */}
+            <div className="flex items-center justify-center gap-2.5 my-2">
+              <span className="w-9 h-[1px] bg-[#C9A462]/80" />
+              <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+                <polygon
+                  points="5,0.8 9.2,5 5,9.2 0.8,5"
+                  fill="#DFC085"
+                  fillOpacity="0.4"
+                  stroke="#C9A462"
+                  strokeWidth="0.85"
+                />
+              </svg>
+              <span className="w-9 h-[1px] bg-[#C9A462]/80" />
+            </div>
+
+            <p className="font-sans-clean text-[10px] tracking-[0.28em] uppercase text-[#5C3A72] font-medium">
+              10 &middot; 12 &middot; 2026
+            </p>
+
+            <span
+              className={`mt-2.5 font-sans-clean text-[8.5px] uppercase tracking-[0.32em] text-[#8F6D39] transition-opacity duration-700 ${
+                isUnsealing ? 'opacity-0' : 'opacity-90'
+              }`}
+            >
+              TAP SEAL TO OPEN
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* TOP PLEATED SATIN & CHANTILLY LACE FLAP (Carries the Wax Seal Upward) */}
+      {/* ====================================================================
+          TOP COUTURE MATTE COTTON-PAPER FLAP
+          (Blind-Embossed Baroque Filigree Arch & Fleur-de-Lis Crest +
+           Tucked Sprigs + Swallowtail Satin Ribbons + Aubergine Wax Seal)
+      ==================================================================== */}
       <div className={`lux-flap lux-flap-top ${isTopBottomParting ? 'is-open' : ''}`}>
         <div className="relative w-full h-full">
           <svg
@@ -2072,53 +2149,116 @@ const EnvelopeIntroOverlay = ({ stage, onTriggerOpen, monogram }) => {
             preserveAspectRatio="none"
             className="w-full h-full"
             style={{ clipPath: 'polygon(0 0, 100% 0, 50% 60%)' }}
+            aria-hidden="true"
           >
             <defs>
-              <linearGradient id="topSatinGrad" x1="50%" y1="0%" x2="50%" y2="60%">
-                <stop offset="0%" stopColor="#D5C0E5" />
-                <stop offset="52%" stopColor="#EDE2F6" />
-                <stop offset="100%" stopColor="#FBF8FF" />
+              <linearGradient id="topCottonGrad" x1="50%" y1="0%" x2="50%" y2="60%">
+                <stop offset="0%" stopColor="#D6C2E8" />
+                <stop offset="48%" stopColor="#EDE2F6" />
+                <stop offset="100%" stopColor="#F8F4FC" />
               </linearGradient>
             </defs>
-            <polygon points="0,0 300,0 150,178" fill="rgba(48, 16, 76, 0.16)" />
-            <polygon points="0,0 300,0 150,168" fill="url(#topSatinGrad)" />
-            <line x1="150" y1="168" x2="25" y2="0" stroke="#FFFFFF" strokeWidth="1.6" strokeOpacity="0.8" />
-            <line x1="150" y1="168" x2="65" y2="0" stroke="#A68BBF" strokeWidth="1.1" strokeOpacity="0.5" />
-            <line x1="150" y1="168" x2="105" y2="0" stroke="#FFFFFF" strokeWidth="2.2" strokeOpacity="0.9" />
-            <line x1="150" y1="168" x2="150" y2="0" stroke="#A68BBF" strokeWidth="1" strokeOpacity="0.45" />
-            <line x1="150" y1="168" x2="195" y2="0" stroke="#FFFFFF" strokeWidth="2.2" strokeOpacity="0.9" />
-            <line x1="150" y1="168" x2="235" y2="0" stroke="#A68BBF" strokeWidth="1.1" strokeOpacity="0.5" />
-            <line x1="150" y1="168" x2="275" y2="0" stroke="#FFFFFF" strokeWidth="1.6" strokeOpacity="0.8" />
-            <path d="M 0 0 L 150 168 L 300 0" fill="none" stroke="#FFFFFF" strokeWidth="7" strokeDasharray="7 4" />
-            <path d="M 10 0 L 150 158 L 290 0" fill="none" stroke="#9476B0" strokeWidth="1.3" strokeDasharray="3 3" />
+            {/* Built-in SVG fold shadow */}
+            <polygon points="0,0 300,0 150,178" fill="rgba(54, 22, 82, 0.16)" />
+            {/* Matte cotton-paper flap */}
+            <polygon points="0,0 300,0 150,168" fill="url(#topCottonGrad)" />
+            {/* Double solid champagne-gold foil piping along V-edge */}
+            <path d="M 0 0 L 150 168 L 300 0" fill="none" stroke="#C9A462" strokeWidth="1.35" />
+            <path d="M 10 0 L 150 158 L 290 0" fill="none" stroke="#DFC085" strokeWidth="0.7" />
+
+            {/* Tone-on-Tone Blind-Embossed Baroque Filigree Arch & Fleur-de-Lis Crest */}
+            <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+              {/* Blind-embossed shadow pass */}
+              <g transform="translate(0.9, 1.1)" stroke="#B79CD0" strokeOpacity="0.58">
+                <path
+                  d="M 58 14 C 82 14, 104 28, 126 42 C 136 48, 143 52, 150 56 C 157 52, 164 48, 174 42 C 196 28, 218 14, 242 14"
+                  strokeWidth="1.25"
+                />
+                <path
+                  d="M 80 24 C 100 24, 118 35, 136 46 C 142 50, 146 53, 150 56 C 154 53, 158 50, 164 46 C 182 35, 200 24, 220 24"
+                  strokeWidth="0.95"
+                />
+                {/* Fleur-de-Lis Crest */}
+                <g transform="translate(150, 34)">
+                  <path d="M 0 -16 C 5 -8, 5 1, 0 8 C -5 1, -5 -8, 0 -16 Z" strokeWidth="1.15" />
+                  <path d="M -1 6 C -11 2, -16 -6, -12 -12 C -7 -10, -4 -3, -2 5" strokeWidth="1" />
+                  <path d="M 1 6 C 11 2, 16 -6, 12 -12 C 7 -10, 4 -3, 2 5" strokeWidth="1" />
+                  <path d="M -8 7 L 8 7" strokeWidth="1.1" />
+                  <path d="M -4 8 C -4 12, -2 14, 0 16 C 2 14, 4 12, 4 8" strokeWidth="0.95" />
+                </g>
+              </g>
+
+              {/* Blind-embossed highlight pass */}
+              <g transform="translate(-0.7, -0.8)" stroke="#FFFFFF" strokeOpacity="0.92">
+                <path
+                  d="M 58 14 C 82 14, 104 28, 126 42 C 136 48, 143 52, 150 56 C 157 52, 164 48, 174 42 C 196 28, 218 14, 242 14"
+                  strokeWidth="1.25"
+                />
+                <path
+                  d="M 80 24 C 100 24, 118 35, 136 46 C 142 50, 146 53, 150 56 C 154 53, 158 50, 164 46 C 182 35, 200 24, 220 24"
+                  strokeWidth="0.95"
+                />
+                <g transform="translate(150, 34)">
+                  <path d="M 0 -16 C 5 -8, 5 1, 0 8 C -5 1, -5 -8, 0 -16 Z" strokeWidth="1.15" />
+                  <path d="M -1 6 C -11 2, -16 -6, -12 -12 C -7 -10, -4 -3, -2 5" strokeWidth="1" />
+                  <path d="M 1 6 C 11 2, 16 -6, 12 -12 C 7 -10, 4 -3, 2 5" strokeWidth="1" />
+                  <path d="M -8 7 L 8 7" strokeWidth="1.1" />
+                  <path d="M -4 8 C -4 12, -2 14, 0 16 C 2 14, 4 12, 4 8" strokeWidth="0.95" />
+                </g>
+              </g>
+
+              {/* Delicate Champagne-Gold Foil Highlights */}
+              <g stroke="#C9A462" strokeOpacity="0.62">
+                <path
+                  d="M 58 14 C 82 14, 104 28, 126 42 C 136 48, 143 52, 150 56 C 157 52, 164 48, 174 42 C 196 28, 218 14, 242 14"
+                  strokeWidth="0.6"
+                />
+                <g transform="translate(150, 34)">
+                  <path
+                    d="M 0 -16 C 5 -8, 5 1, 0 8 C -5 1, -5 -8, 0 -16 Z"
+                    fill="#DFC085"
+                    fillOpacity="0.18"
+                    strokeWidth="0.65"
+                  />
+                  <polygon
+                    points="0,21 3.4,24.4 0,27.8 -3.4,24.4"
+                    fill="#DFC085"
+                    fillOpacity="0.55"
+                    stroke="#C9A462"
+                    strokeWidth="0.6"
+                  />
+                </g>
+              </g>
+            </g>
           </svg>
 
-          {/* Studded 3D Pearls on Top Flap */}
-          <Pearl size={11} style={{ top: '34%', left: '47%' }} delay={120} isOpening={isUnsealing} />
-          <Pearl size={9} style={{ top: '25%', left: '32%' }} delay={290} isOpening={isUnsealing} />
-          <Pearl size={12} style={{ top: '24%', right: '31%' }} delay={460} isOpening={isUnsealing} />
-          <Pearl size={9} style={{ top: '14%', left: '20%' }} delay={640} isOpening={isUnsealing} />
-          <Pearl size={11} style={{ top: '16%', left: '53%' }} delay={330} isOpening={isUnsealing} />
-          <Pearl size={10} style={{ top: '12%', right: '22%' }} delay={510} isOpening={isUnsealing} />
-          <Pearl size={8} style={{ top: '8%', left: '38%' }} delay={720} isOpening={isUnsealing} />
-
-          {/* PASTEL LAVENDER SILK RIBBONS & HAUTE-COUTURE WAX SEAL */}
+          {/* CHAMPAGNE-EDGED DUSTY-LILAC SATIN RIBBONS, SWALLOWTAIL TAILS, TUCKED SPRIG & WAX SEAL */}
           <div
             className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-30"
             style={{ top: '52%' }}
           >
+            {/* 16px Champagne-Edged Dusty-Lilac Satin Horizontal Bands */}
             <div className={`lux-silk-ribbon lux-silk-ribbon-left ${isUnsealing ? 'is-untied' : ''}`} />
             <div className={`lux-silk-ribbon lux-silk-ribbon-right ${isUnsealing ? 'is-untied' : ''}`} />
+
+            {/* Angled V-Cut Swallowtail Satin Ribbon Tails */}
+            <div className={`lux-ribbon-tail lux-ribbon-tail-left ${isUnsealing ? 'is-untied' : ''}`} />
+            <div className={`lux-ribbon-tail lux-ribbon-tail-right ${isUnsealing ? 'is-untied' : ''}`} />
+
+            {/* Tucked Pressed-Lavender & Champagne-Gold Botanical Sprigs */}
+            <TuckedWaxSealSprig />
 
             {isUnsealing && <span className="lux-seal-burst" />}
             {isUnsealing && <span className="lux-seal-burst-secondary" />}
 
-            <ArtisanalWaxSeal
-              monogram={monogram}
-              stage={stage}
-              isUnsealing={isUnsealing}
-              onTriggerOpen={onTriggerOpen}
-            />
+            <div className="relative z-10">
+              <ArtisanalWaxSeal
+                monogram={monogram}
+                stage={stage}
+                isUnsealing={isUnsealing}
+                onTriggerOpen={onTriggerOpen}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -2133,8 +2273,8 @@ export default function App() {
   // Multi-Stage Ceremonial Unfolding & Pastel Purple Color Morph State:
   // 0 = Closed Envelope Idle
   // 1 = Wax seal slowly presses, glows & silk ribbon unties + Pastel Purple bloom begins
-  // 2 = Top & Bottom pleated lace flaps slowly fold open in 3D space
-  // 3 = Left & Right satin wings + sheer lavender vellum doors part slowly
+  // 2 = Top & Bottom cotton-paper flaps slowly fold open in 3D space
+  // 3 = Left & Right flaps + sheer lavender vellum doors part slowly
   // 4 = Envelope overlay complete & hidden
   const [introStage, setIntroStage] = useState(0);
   const [heroRevealed, setHeroRevealed] = useState(false);
@@ -2146,7 +2286,7 @@ export default function App() {
   const [activeModal, setActiveModal] = useState(null); // 'vercel' | 'map' | null
 
   // Live Countdown State (Target: December 10, 2026 at 6:00 PM)
-  const [timeLeft, setTimeLeft] = useState({ days: 25, hours: 17, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ days: 14, hours: 6, minutes: 0, seconds: 0 });
   const timeoutsRef = useRef([]);
 
   const clearChoreographyTimers = () => {
@@ -2237,8 +2377,12 @@ export default function App() {
   };
 
   const copyToClipboard = (text, label) => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text);
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text);
+      }
+    } catch {
+      // Ignore clipboard restrictions
     }
     showToast(`${label} copied to clipboard`);
   };
@@ -2324,38 +2468,6 @@ export default function App() {
           background: radial-gradient(circle at 50% 22%, #5D2E86 0%, #461E68 58%, #2E1147 100%);
         }
 
-        /* 3D Specular Pearl Bead (Pure GPU transform/opacity, paused while opening) */
-        .luxury-pearl {
-          display: inline-block;
-          position: absolute;
-          border-radius: 9999px;
-          pointer-events: none;
-          user-select: none;
-          background: radial-gradient(circle at 30% 28%, #FFFFFF 0%, #FDFBFF 26%, #EADCF5 62%, #BEA8D4 88%, #866B9E 100%);
-          box-shadow:
-            0 4px 8px rgba(42, 14, 68, 0.34),
-            0 1px 2px rgba(42, 14, 68, 0.22),
-            inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.9);
-          will-change: transform, opacity;
-          animation: pearlBreathe 4.2s ease-in-out infinite;
-        }
-
-        .luxury-pearl.is-paused,
-        .lux-envelope-overlay.is-opening .luxury-pearl {
-          animation-play-state: paused;
-        }
-
-        @keyframes pearlBreathe {
-          0%, 100% {
-            transform: translate3d(0, 0, 0) scale(1);
-            opacity: 0.94;
-          }
-          50% {
-            transform: translate3d(0, -1.5px, 0) scale(1.08);
-            opacity: 1;
-          }
-        }
-
         /* Envelope Overlay Container */
         .lux-envelope-overlay {
           position: absolute;
@@ -2423,17 +2535,19 @@ export default function App() {
           opacity: 0;
         }
 
-        /* Pastel Lavender Silk Ribbons */
+        /* 16px Champagne-Edged Dusty-Lilac Satin Horizontal Bands */
         .lux-silk-ribbon {
           position: absolute;
           top: 50%;
-          width: 190px;
-          height: 24px;
-          margin-top: -12px;
-          background: linear-gradient(180deg, #F5EBFF 0%, #D8B4FE 52%, #B689E8 100%);
-          box-shadow: 0 6px 16px rgba(59, 30, 84, 0.28), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+          width: 200px;
+          height: 16px;
+          margin-top: -8px;
+          background: linear-gradient(180deg, #F4E9FC 0%, #D9BCEF 52%, #B890DC 100%);
+          border-top: 1px solid #DFC085;
+          border-bottom: 1px solid #DFC085;
+          box-shadow: 0 5px 14px rgba(59, 30, 84, 0.24), inset 0 1px 2px rgba(255, 255, 255, 0.88);
           pointer-events: none;
-          z-index: -1;
+          z-index: -2;
           will-change: transform, opacity;
           backface-visibility: hidden;
           transition:
@@ -2456,6 +2570,47 @@ export default function App() {
         }
         .lux-silk-ribbon-right.is-untied {
           transform: translate3d(140px, 0, 0) scaleY(0.65) rotate(12deg);
+          opacity: 0;
+        }
+
+        /* Angled V-Cut Swallowtail Satin Ribbon Tails */
+        .lux-ribbon-tail {
+          position: absolute;
+          top: 52%;
+          left: 50%;
+          width: 16px;
+          height: 92px;
+          margin-left: -8px;
+          pointer-events: none;
+          z-index: -1;
+          background: linear-gradient(
+            90deg,
+            #DFC085 0%,
+            #F4E9FC 9%,
+            #D9BCEF 52%,
+            #B890DC 91%,
+            #DFC085 100%
+          );
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+          transform-origin: top center;
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+          transition:
+            transform 2100ms cubic-bezier(0.45, 0, 0.2, 1),
+            opacity 1900ms ease-in-out;
+        }
+        .lux-ribbon-tail-left {
+          transform: translate3d(-12px, 10px, 0) rotate(20deg);
+        }
+        .lux-ribbon-tail-right {
+          transform: translate3d(12px, 10px, 0) rotate(-20deg);
+        }
+        .lux-ribbon-tail-left.is-untied {
+          transform: translate3d(-58px, 46px, 0) rotate(36deg) scaleY(0.86);
+          opacity: 0;
+        }
+        .lux-ribbon-tail-right.is-untied {
+          transform: translate3d(58px, 46px, 0) rotate(-36deg) scaleY(0.86);
           opacity: 0;
         }
 
@@ -2486,7 +2641,7 @@ export default function App() {
           }
         }
 
-        /* 4 PLEATED SATIN & LACE FLAPS (GPU-Only, Zero CSS filter drop-shadow) */
+        /* 4 COUTURE COTTON-PAPER FLAPS (GPU-Only, Zero CSS filter drop-shadow) */
         .lux-flap {
           position: absolute;
           inset: 0;
@@ -2796,6 +2951,7 @@ export default function App() {
       {introStage <= 0 && (
         <div className="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2B0916]/90 backdrop-blur-md border border-[#F4EEF1]/20 text-[#F4EEF1] shadow-2xl text-xs font-sans-clean whitespace-nowrap">
           <button
+            type="button"
             onClick={handleReplayEnvelope}
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-white/15 transition cursor-pointer"
             title="Tap Wax Seal to Open"
@@ -2833,7 +2989,7 @@ export default function App() {
             : 'min-h-[100dvh]'
         }`}
       >
-        {/* MULTI-STAGE 3D PEARL & LACE ENVELOPE OVERLAY */}
+        {/* PASTEL MATTE COTTON-PAPER & BAROQUE FILIGREE ENVELOPE OVERLAY */}
         <EnvelopeIntroOverlay
           stage={introStage}
           onTriggerOpen={handleTriggerOpenEnvelope}
@@ -2861,7 +3017,6 @@ export default function App() {
 
           {/* Signature Double-Line Concave-Cornered Champagne-Gold Frame */}
           <div className="absolute inset-4 sm:inset-5 pointer-events-none select-none">
-            {/* Connecting Outer & Inner Hairlines (Unstretched at any aspect ratio) */}
             <div className="absolute top-0 left-[20px] right-[20px] h-[1px] bg-[#C9AE7A]" />
             <div className="absolute bottom-0 left-[20px] right-[20px] h-[1px] bg-[#C9AE7A]" />
             <div className="absolute left-0 top-[20px] bottom-[20px] w-[1px] bg-[#C9AE7A]" />
@@ -2872,7 +3027,6 @@ export default function App() {
             <div className="absolute left-[5px] top-[24px] bottom-[24px] w-[1px] bg-[#DFCBA2]" />
             <div className="absolute right-[5px] top-[24px] bottom-[24px] w-[1px] bg-[#DFCBA2]" />
 
-            {/* 4 Concave-Notched Quarter-Circle Corners with Nestled Gold Diamonds */}
             {[
               { pos: 'top-0 left-0', rot: '0deg' },
               { pos: 'top-0 right-0', rot: '90deg' },
@@ -2888,25 +3042,19 @@ export default function App() {
                 style={{ transform: `rotate(${corner.rot})` }}
                 aria-hidden="true"
               >
-                {/* Outer concave quarter-circle notch */}
                 <path
                   d="M 0.5 20 A 19.5 19.5 0 0 0 20 0.5"
                   fill="none"
                   stroke="#C9AE7A"
                   strokeWidth="1"
                 />
-                {/* Inner parallel concave quarter-circle notch */}
                 <path
                   d="M 5.5 24 A 18.5 18.5 0 0 0 24 5.5"
                   fill="none"
                   stroke="#DFCBA2"
                   strokeWidth="1"
                 />
-                {/* Delicate gold diamond accent nestled along the concave corner */}
-                <polygon
-                  points="13.8,10.8 16.8,13.8 13.8,16.8 10.8,13.8"
-                  fill="#C9AE7A"
-                />
+                <polygon points="13.8,10.8 16.8,13.8 13.8,16.8 10.8,13.8" fill="#C9AE7A" />
               </svg>
             ))}
           </div>
@@ -2999,14 +3147,12 @@ export default function App() {
               } w-full max-w-[290px] border-y border-[#D4BC8E]/80 py-5`}
             >
               <div className="grid grid-cols-3 items-center">
-                {/* Left Column: Day of Week */}
                 <div className="px-1 text-center">
                   <span className="font-sans-clean text-[9px] sm:text-[9.5px] tracking-[0.22em] uppercase text-[#5B4B66]">
                     THURSDAY
                   </span>
                 </div>
 
-                {/* Center Column: Month / Day / Year */}
                 <div className="border-x border-[#D4BC8E]/60 px-2 py-0.5 flex flex-col items-center justify-center">
                   <span className="font-sans-clean text-[9px] sm:text-[9.5px] tracking-[0.22em] uppercase text-[#B39154] mb-1">
                     DECEMBER
@@ -3019,7 +3165,6 @@ export default function App() {
                   </span>
                 </div>
 
-                {/* Right Column: Time */}
                 <div className="px-1 text-center">
                   <span className="font-sans-clean text-[9px] sm:text-[9.5px] tracking-[0.22em] uppercase text-[#5B4B66]">
                     6:00 PM
@@ -3137,7 +3282,8 @@ export default function App() {
           <RevealOnScroll delay={350}>
             <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
               <button
-                onClick={() => window.open(WEDDING_CONFIG.venue.mapsUrl, '_blank')}
+                type="button"
+                onClick={() => window.open(WEDDING_CONFIG.venue.mapsUrl, '_blank', 'noopener,noreferrer')}
                 className="px-8 py-3 rounded-full border border-[#4A1222]/60 text-[#4A1222] font-sans-clean text-[10px] tracking-[0.25em] uppercase hover:bg-[#4A1222] hover:text-[#F4EEF1] transition cursor-pointer"
               >
                 Open Google Maps
@@ -3254,7 +3400,9 @@ export default function App() {
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="relative w-full max-w-md rounded-3xl bg-[#F5EFF2] text-[#4A1222] border border-[#4A1222]/25 p-6 shadow-2xl">
             <button
+              type="button"
               onClick={() => setActiveModal(null)}
+              aria-label="Close modal"
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#4A1222]/10 flex items-center justify-center hover:bg-[#4A1222]/20 transition cursor-pointer"
             >
               <X className="w-4 h-4" />
@@ -3281,6 +3429,7 @@ export default function App() {
                 </div>
                 <div className="flex gap-2 justify-center pt-2">
                   <button
+                    type="button"
                     onClick={() => copyToClipboard(WEDDING_CONFIG.venue.address, 'Venue Address')}
                     className="px-4 py-2.5 rounded-full border border-[#4A1222]/40 text-[10px] font-sans-clean uppercase tracking-widest hover:bg-[#4A1222]/10 transition cursor-pointer"
                   >
@@ -3340,6 +3489,7 @@ export default function App() {
 
                 <div className="text-right pt-1">
                   <button
+                    type="button"
                     onClick={() => setActiveModal(null)}
                     className="px-5 py-2 rounded-full bg-[#4A1222] text-[#F4EEF1] font-sans-clean text-[10px] uppercase tracking-widest cursor-pointer"
                   >
