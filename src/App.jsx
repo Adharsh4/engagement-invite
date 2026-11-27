@@ -23,7 +23,7 @@ const WEDDING_CONFIG = {
     crestInitial: 'A',
     tagline: 'Together with their families',
     invitationText:
-      'Harini & Adharsh joyfully request the pleasure of your company as they celebrate their engagement and begin this beautiful new chapter surrounded by the people they love most.',
+      'Harini & Adharsh joyfully request the pleasure of your company as we celebrate their engagement and begin this beautiful new chapter surrounded by the people they love most.',
   },
   date: {
     displayDots: '10.12.2026',
