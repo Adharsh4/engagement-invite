@@ -23,7 +23,7 @@ const WEDDING_CONFIG = {
     crestInitial: 'A',
     tagline: 'Together with their families',
     invitationText:
-      'Harini & Adharsh joyfully request the pleasure of your company as we celebrate their engagement and begin this beautiful new chapter surrounded by the people they love most.',
+      'Harini & Adharsh joyfully request the pleasure of your company as we celebrate our engagement and begin this beautiful new chapter surrounded by the people we love most.',
   },
   date: {
     displayDots: '10.12.2026',
@@ -47,15 +47,15 @@ const WEDDING_CONFIG = {
   },
   timeline: [
     {
-      time: '6:00 PM',
+      time: '6:30 PM',
       dateLabel: 'DECEMBER 10, 2026',
       title: 'WELCOME',
       description:
-        'Warm welcome drinks and gathering of family and friends at the mahal on December 10, 2026.',
+        'Warm welcome and gathering of family and friends on December 10, 2026.',
       icon: 'welcome_flutes',
     },
     {
-      time: '6:30 PM',
+      time: '7:00 PM',
       dateLabel: 'THE EXCHANGE OF RINGS',
       title: 'ENGAGEMENT CEREMONY',
       description:
@@ -63,7 +63,7 @@ const WEDDING_CONFIG = {
       icon: 'ceremony_rings',
     },
     {
-      time: '7:00 PM',
+      time: '7:30 PM',
       dateLabel: 'CELEBRATORY BANQUET',
       title: 'DINNER',
       description: 'A dinner filled with tasty foods and deserts.',
